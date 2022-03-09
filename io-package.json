@@ -1,0 +1,101 @@
+{
+	"common": {
+		"name": "husqvarna-automower",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "Husqvarna-Automower",
+		"titleLang": {
+			"en": "Husqvarna-Automower",
+			"de": "Husqvarna-Automower",
+			"ru": "Husqvarna-Automower",
+			"pt": "Husqvarna-Automower",
+			"nl": "Husqvarna-Automower",
+			"fr": "Husqvarna-Automower",
+			"it": "Husqvarna-Automower",
+			"es": "Husqvarna-Automower",
+			"pl": "Husqvarna-Automower",
+			"zh-cn": "Husqvarna-Automower"
+		},
+		"desc": {
+			"en": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",
+			"de": "Dieser Adapter für verwendet die Husqvarna API, um Daten für Ihren Husqvarna Automower über das Connect-Modul anzufordern.",
+			"ru": "Этот адаптер использует API Husqvarna для запроса данных для вашей газонокосилки Husqvarna через модуль подключения.",
+			"pt": "Este adaptador usa a API Husqvarna para solicitar dados para o Husqvarna Automower por meio do módulo de conexão.",
+			"nl": "Deze adapter maakt gebruik van de Husqvarna API om gegevens voor uw Husqvarna Automower op te vragen via de connect module.",
+			"fr": "Cet adaptateur utilise l'API Husqvarna pour demander des données pour votre Husqvarna Automower via le module de connexion.",
+			"it": "Questo adattatore utilizza l'API Husqvarna per richiedere dati per il tuo Husqvarna Automower tramite il modulo di connessione.",
+			"es": "Este adaptador utiliza la API de Husqvarna para solicitar datos para su Husqvarna Automower a través del módulo de conexión.",
+			"pl": "Ten adapter wykorzystuje interfejs API Husqvarna do żądania danych dla kosiarki Husqvarna Automower za pośrednictwem modułu Connect.",
+			"zh-cn": "此适配器使用 Husqvarna API 通过连接模块为您的 Husqvarna Automower 请求数据。"
+		},
+		"authors": [
+			"ice987987 <mathias.frei1@gmail.com>"
+		],
+		"keywords": [
+			"smarthome",
+			"iobroker",
+			"husqvarna-automower"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "husqvarna-automower.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/ice987987/ioBroker.husqvarna-automower/main/admin/husqvarna-automower.png",
+		"readme": "https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "garden",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"dependencies": [
+			{
+				"js-controller": ">=3.0.0"
+			}
+		]
+	},
+	"native": {
+		"username": "",
+		"password": "",
+		"apikey": ""
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}
