@@ -45,6 +45,9 @@ You can send the following values to your Husqvarna lawn mower:
 
 <!-- ### **WORK IN PROGRESS** -->
 
+### 0.0.2 (11.03.2022)
+* (ice987987) initial npm release
+
 ### 0.0.1 (04.03.2022)
 * (ice987987) initial release
 
