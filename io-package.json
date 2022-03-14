@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "husqvarna-automower",
-		"version": "0.0.2",
+		"version": "0.0.3",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -16,6 +16,18 @@
 				"zh-cn": "首次出版"
 			},
 			"0.0.2": {
+				"en": "initial npm release",
+				"de": "erste npm-Veröffentlichung",
+				"ru": "первоначальный выпуск npm",
+				"pt": "lançamento inicial do npm",
+				"nl": "initiële npm-release",
+				"fr": "version initiale de npm",
+				"it": "rilascio iniziale di npm",
+				"es": "versión inicial de npm",
+				"pl": "pierwsze wydanie npm",
+				"zh-cn": "初始 npm 版本"
+			},
+			"0.0.3": {
 				"en": "initial npm release",
 				"de": "erste npm-Veröffentlichung",
 				"ru": "первоначальный выпуск npm",
