@@ -37,7 +37,9 @@ You can send the following values to your Husqvarna lawn mower:
 * `.ACTIONS.HEADLIGHT`: Update headlight
 * `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday`. 
 
-## Available values
+## Available values (readonly)
+
+You get the following values from your Husqvarna lawn mower:
 * `.battery.batteryPercent`: Information about the battery in the mower
 * `.calendar.[0-3].start`: Start time expressed in minutes after midnight
 * `.calendar.[0-3].duration`: Duration time expressed in minutes
@@ -78,7 +80,8 @@ You can send the following values to your Husqvarna lawn mower:
 <!-- ### **WORK IN PROGRESS** -->
 
 ### **WORK IN PROGRESS**
-- (ice987987) update dependencies
+* (ice987987) update dependencies
+* (ice978987) add section "Available values" in changelog
 
 ### 0.0.3 (14.03.2022)
 * (ice987987) initial npm release
