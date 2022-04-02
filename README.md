@@ -37,6 +37,38 @@ You can send the following values to your Husqvarna lawn mower:
 * `.ACTIONS.HEADLIGHT`: Update headlight
 * `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday`. 
 
+## Available values
+* `.battery.batteryPercent`: Information about the battery in the mower
+* `.calendar.[0-3].start`: Start time expressed in minutes after midnight
+* `.calendar.[0-3].duration`: Duration time expressed in minutes
+* `.calendar.[0-3].monday`: Enabled on Mondays
+* `.calendar.[0-3].tuesday`: Enabled on Tuesdays
+* `.calendar.[0-3].wednesday`: Enabled on Wednesdays
+* `.calendar.[0-3].thurdsay`: Enabled on Thursdays
+* `.calendar.[0-3].friday`: Enabled on Fridays
+* `.calendar.[0-3].saturday`: Enabled on Saturdays
+* `.calendar.[0-3].sunday`: Enabled on Sundays
+* `.metadata.connected`: is the mower currently connected
+* `.metadata.statusTimestamp`: is the mower currently connected, time in ms
+* `.mower.activity`: Information about the mowers current activity
+* `.mower.errorCode`: Information about the mowers current error status
+* `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
+* `.mower.mode`: Information about the mowers current mode
+* `.mower.state`: Information about the mowers current status
+* `.planner.action`: TODO
+* `.planner.nextStartTimestamp`: Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower
+* `.planner.restrictedReason`: restrictedReason
+* `.positions.latitude`: Position latitude
+* `.positions.longitude`: Position longitude
+* `.positions.latlong`: Position "latitude;longitude"
+* `.settings.cuttingHeight`: Prescaled cutting height, Range: 1...9
+* `.settings.headlight`: Headlight status
+* `.system.id`: Device ID
+* `.system.model`: Device model
+* `.system.name`: Device name
+* `.system.serialNumber`: Device serialnumber
+* `.system.type`: Device type
+
 ## Limitation
 
 * maximum 4 schedules are available
