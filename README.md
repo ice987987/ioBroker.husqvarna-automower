@@ -4,8 +4,8 @@
 [![NPM version](https://img.shields.io/npm/v/iobroker.husqvarna-automower.svg)](https://www.npmjs.com/package/iobroker.husqvarna-automower)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.husqvarna-automower.svg)](https://www.npmjs.com/package/iobroker.husqvarna-automower)
 ![Number of Installations](https://iobroker.live/badges/husqvarna-automower-installed.svg)
-<!-- ![Current version in stable repository](https://iobroker.live/badges/husqvarna-automower-stable.svg) -->
 ![Current version in stable repository](https://img.shields.io/badge/stable-not%20published-%23264777)
+<!-- ![Current version in stable repository](https://iobroker.live/badges/husqvarna-automower-stable.svg) -->
 <!-- [![Dependency Status](https://img.shields.io/david/ice987987/iobroker.husqvarna-automower.svg)](https://david-dm.org/ice987987/iobroker.husqvarna-automower) -->
 
 [![NPM](https://nodei.co/npm/iobroker.husqvarna-automower.png?downloads=true)](https://nodei.co/npm/iobroker.husqvarna-automower/)
@@ -54,7 +54,7 @@ You get the following values from your Husqvarna lawn mower:
 * `.metadata.statusTimestamp`: is the mower currently connected, time in ms
 * `.mower.activity`: Information about the mowers current activity
 * `.mower.errorCode`: Information about the mowers current error status
-* `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
+* `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower
 * `.mower.mode`: Information about the mowers current mode
 * `.mower.state`: Information about the mowers current status
 * `.planner.action`: TODO
