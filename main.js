@@ -421,7 +421,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 								desc: 'Duration time expressed in minutes',
 								type: 'number',
 								role: 'value',
-								min: 1,
+								min: 0,
 								max: 1440,
 								unit: 'min',
 								read: true,
@@ -1077,6 +1077,44 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.setStateAsync(listMowers[i].id + '.system.name', {val: listMowers[i].attributes.system.name, ack: true});
 			this.setStateAsync(listMowers[i].id + '.system.model', {val: listMowers[i].attributes.system.model, ack: true});
 			this.setStateAsync(listMowers[i].id + '.system.serialNumber', {val: listMowers[i].attributes.system.serialNumber, ack: true});
+
+			this.setStateAsync(listMowers[i].id + '.battery.batteryPercent', {val: listMowers[i].attributes.battery.batteryPercent, ack: true});
+
+			this.setStateAsync(listMowers[i].id + '.mower.mode', {val: listMowers[i].attributes.mower.mode, ack: true});
+			this.setStateAsync(listMowers[i].id + '.mower.activity', {val: listMowers[i].attributes.mower.activity, ack: true});
+			this.setStateAsync(listMowers[i].id + '.mower.state', {val: listMowers[i].attributes.mower.state, ack: true});
+			this.setStateAsync(listMowers[i].id + '.mower.errorCode', {val: listMowers[i].attributes.mower.errorCode, ack: true});
+			this.setStateAsync(listMowers[i].id + '.mower.errorCodeTimestamp', {val: listMowers[i].attributes.mower.errorCodeTimestamp, ack: true});
+
+			//set all values in "calendar"
+			for (let j = 0; j < Object.keys(listMowers[i].attributes.calendar.tasks).length; j++) {
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.start', {val: listMowers[i].attributes.calendar.tasks[j].start, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.duration', {val: listMowers[i].attributes.calendar.tasks[j].duration, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.monday', {val: listMowers[i].attributes.calendar.tasks[j].monday, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.tuesday', {val: listMowers[i].attributes.calendar.tasks[j].tuesday, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.wednesday', {val: listMowers[i].attributes.calendar.tasks[j].wednesday, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.thursday', {val: listMowers[i].attributes.calendar.tasks[j].thursday, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.friday', {val: listMowers[i].attributes.calendar.tasks[j].friday, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.saturday', {val: listMowers[i].attributes.calendar.tasks[j].saturday, ack: true});
+				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.sunday', {val: listMowers[i].attributes.calendar.tasks[j].sunday, ack: true});
+				if (j === 3) {
+					break;
+				}
+			}
+
+			this.setStateAsync(listMowers[i].id + '.planner.nextStartTimestamp', {val: listMowers[i].attributes.planner.nextStartTimestamp, ack: true});
+			this.setStateAsync(listMowers[i].id + '.planner.action', {val: listMowers[i].attributes.planner.override.action, ack: true});
+			this.setStateAsync(listMowers[i].id + '.planner.restrictedReason', {val: listMowers[i].attributes.planner.restrictedReason, ack: true});
+
+			this.setStateAsync(listMowers[i].id + '.metadata.connected', {val: listMowers[i].attributes.metadata.connected, ack: true});
+			this.setStateAsync(listMowers[i].id + '.metadata.statusTimestamp', {val: listMowers[i].attributes.metadata.statusTimestamp, ack: true});
+
+			this.setStateAsync(listMowers[i].id + '.positions.latitude', {val: listMowers[i].attributes.positions[0].latitude, ack: true});
+			this.setStateAsync(listMowers[i].id + '.positions.longitude', {val: listMowers[i].attributes.positions[0].longitude, ack: true});
+			this.setStateAsync(listMowers[i].id + '.positions.latlong', {val: listMowers[i].attributes.positions[0].latitude + ';' + listMowers[i].attributes.positions[0].longitude, ack: true});
+
+			this.setStateAsync(listMowers[i].id + '.settings.cuttingHeight', {val: listMowers[i].attributes.settings.cuttingHeight, ack: true});
+			this.setStateAsync(listMowers[i].id + '.settings.headlight', {val: listMowers[i].attributes.settings.headlight.mode, ack: true});
 		}
 		this.log.info('System information saved...');
 	}
@@ -1144,6 +1182,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.friday', {val: jsonMessage.attributes.calendar.tasks[i].friday, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.saturday', {val: jsonMessage.attributes.calendar.tasks[i].saturday, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.sunday', {val: jsonMessage.attributes.calendar.tasks[i].sunday, ack: true});
+								if (i === 3) {
+									break;
+								}
 							}
 
 							//reset all values in "calendar" which are not in use

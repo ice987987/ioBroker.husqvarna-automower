@@ -82,6 +82,8 @@ You get the following values from your Husqvarna lawn mower:
 ### **WORK IN PROGRESS**
 * (ice987987) update dependencies
 * (ice978987) add section "Available values" in readme
+* (ice987987) fix calendar (max 4)
+* (ice987987) preload values after first install
 
 ### 0.0.3 (14.03.2022)
 * (ice987987) initial npm release
