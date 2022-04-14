@@ -74,7 +74,7 @@ You get the following values from your Husqvarna lawn mower:
 ## Limitation
 
 * maximum 4 schedules are available[^1]
-[^1]: if more schedules are needed, please open an [issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues)
+[^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues).
 
 ## ioBroker.vis bindings
 the following bindings can be used for the html-bindings for adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the codes into text for visualization:
@@ -101,7 +101,7 @@ the following bindings can be used for the html-bindings for adapter [ioBroker.v
 Please use [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues) and fill in the form.
 
 For issues:
-Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level). Get the logfile from disk (subdirectory "log" in ioBroker installation directory and not from Admin because Admin cuts the lines).
+Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level). Get the logfile from disk (subdirectory "log" in ioBroker installation directory and not from Admin because Admin cuts the lines). Check that there are no personal information before you publish your log.
 
 ## Changelog
 
@@ -111,6 +111,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 * (ice987987) update dependencies
 * (ice978987) add section "Available values" in readme
 * (ice987987) add section "ioBroker.vis bindings" in readme
+* (ice987987) add section "How to report issues and feature requests" in readme
 * (ice987987) fix calendar (max 4)
 * (ice987987) preload values after first install
 
