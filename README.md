@@ -16,7 +16,7 @@
 
 ## husqvarna-automower adapter for ioBroker
 
-This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via a WebSocket connection.
+This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection.
 
 ## Installation requirements
 
@@ -73,7 +73,8 @@ You get the following values from your Husqvarna lawn mower:
 
 ## Limitation
 
-* maximum 4 schedules are available
+* maximum 4 schedules are available[^1]
+[^1]: if more schedules are needed, please open an [issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues)
 
 ## ioBroker.vis bindings
 the following bindings can be used for the html-bindings for adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the codes into text for visualization:
