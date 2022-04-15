@@ -77,7 +77,7 @@ You get the following values from your Husqvarna lawn mower:
 [^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues).
 
 ## ioBroker.vis bindings
-the following bindings can be used for the html-bindings for adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the codes into text for visualization:
+the following code can be used for html-bindings in adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the [status description and error codes](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/status%20description%20and%20error%20codes) into text for better visualization:
 
 * Datapoint `husqvarna-automower.0.[mowerID from .system.id].mower.errorCode`:
 ```
