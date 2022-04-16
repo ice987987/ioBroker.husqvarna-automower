@@ -11,6 +11,7 @@ const utils = require('@iobroker/adapter-core');
 // Load your modules here, e.g.:
 const axios = require('axios').default;
 const WebSocket = require('ws');
+const numberOfSchedules = 4;
 
 class HusqvarnaAutomower extends utils.Adapter {
 
@@ -391,7 +392,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					for (let j = 0; j < 4; j++) {
+					for (let j = 0; j < numberOfSchedules; j++) {
 						await this.setObjectNotExistsAsync(listMowers[i].id + '.calendar.' + j, {
 							type: 'channel',
 							common: {
@@ -915,7 +916,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {}
 					});
 
-					for (let j = 0; j < 4; j++) {
+					for (let j = 0; j < numberOfSchedules; j++) {
 						await this.setObjectNotExistsAsync(listMowers[i].id + '.ACTIONS.schedule.' + j, {
 							type: 'channel',
 							common: {
@@ -1087,7 +1088,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.setStateAsync(listMowers[i].id + '.mower.errorCodeTimestamp', {val: listMowers[i].attributes.mower.errorCodeTimestamp, ack: true});
 
 			//set all values in "calendar"
-			for (let j = 0; j < Object.keys(listMowers[i].attributes.calendar.tasks).length; j++) {
+			for (let j = 0; j < Math.min(Object.keys(listMowers[i].attributes.calendar.tasks).length, numberOfSchedules); j++) {
 				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.start', {val: listMowers[i].attributes.calendar.tasks[j].start, ack: true});
 				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.duration', {val: listMowers[i].attributes.calendar.tasks[j].duration, ack: true});
 				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.monday', {val: listMowers[i].attributes.calendar.tasks[j].monday, ack: true});
@@ -1097,9 +1098,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.friday', {val: listMowers[i].attributes.calendar.tasks[j].friday, ack: true});
 				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.saturday', {val: listMowers[i].attributes.calendar.tasks[j].saturday, ack: true});
 				this.setStateAsync(listMowers[i].id + '.calendar.' + [j] + '.sunday', {val: listMowers[i].attributes.calendar.tasks[j].sunday, ack: true});
-				if (j === 3) {
-					break;
-				}
 			}
 
 			if (listMowers[i].attributes.planner.nextStartTimestamp) {
@@ -1174,7 +1172,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						if (Object.keys(jsonMessage.attributes.calendar.tasks).length > 0) {
 
 							//set all values in "calendar"
-							for (let i = 0; i < Object.keys(jsonMessage.attributes.calendar.tasks).length; i++) {
+							for (let i = 0; i < Math.min(Object.keys(jsonMessage.attributes.calendar.tasks).length, numberOfSchedules); i++) {
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.start', {val: jsonMessage.attributes.calendar.tasks[i].start, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.duration', {val: jsonMessage.attributes.calendar.tasks[i].duration, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.monday', {val: jsonMessage.attributes.calendar.tasks[i].monday, ack: true});
@@ -1184,13 +1182,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.friday', {val: jsonMessage.attributes.calendar.tasks[i].friday, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.saturday', {val: jsonMessage.attributes.calendar.tasks[i].saturday, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.sunday', {val: jsonMessage.attributes.calendar.tasks[i].sunday, ack: true});
-								if (i === 3) {
-									break;
-								}
 							}
 
 							//reset all values in "calendar" which are not in use
-							for (let i = Object.keys(jsonMessage.attributes.calendar.tasks).length; i < 4; i++) {
+							for (let i = Object.keys(jsonMessage.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.start', {val: 0, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.duration', {val: 0, ack: true});
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.monday', {val: false, ack: true});
@@ -1469,7 +1464,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				} else if (command === 'SET') { //Update mower schedule
 
 					const tasks = [];
-					for (let i = 0; i < 4; i++) {
+					for (let i = 0; i < numberOfSchedules; i++) {
 						//create variables and get additional values
 						const scheduleStart = await this.getStateAsync(parentPath + '.schedule.' + i + '.start');
 						const scheduleDuration = await this.getStateAsync(parentPath + '.schedule.' + i + '.duration');
