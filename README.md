@@ -109,7 +109,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### **WORK IN PROGRESS**
+### 0.0.4 (16.04.2022)
 * (ice987987) update dependencies
 * (ice978987) add section "Available values" in readme
 * (ice987987) add section "ioBroker.vis bindings" in readme

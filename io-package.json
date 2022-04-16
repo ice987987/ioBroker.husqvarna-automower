@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "husqvarna-automower",
-		"version": "0.0.3",
+		"version": "0.0.4",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -38,7 +38,19 @@
 				"es": "versión inicial de npm",
 				"pl": "pierwsze wydanie npm",
 				"zh-cn": "初始 npm 版本"
-			}
+			},
+			"0.0.4": {
+				"en": "update dependencies\nadd section \"Available values\" in readme\nadd section \"ioBroker.vis bindings\" in readme\nadd section \"How to report issues and feature requests\" in readme\nfix calendar (max 4)\npreload values after first install\nfix issue #9\nupdate `common.states` of `.mower.errorCode`",
+				"de": "Abhängigkeiten aktualisieren\nAbschnitt \"Verfügbare Werte\" in Readme hinzufügen\nAbschnitt „ioBroker.vis-Bindungen“ in Readme hinzufügen\nAbschnitt „So melden Sie Probleme und Funktionsanfragen“ in Readme hinzufügen\nKalender fixieren (max. 4)\nvorab geladene Werte nach der Erstinstallation\nProblem Nr. 9 beheben\naktualisiere `common.states` von `.mower.errorCode`",
+				"ru": "обновить зависимости\nдобавить раздел \"Доступные значения\" в readme\nдобавить раздел \"Привязки ioBroker.vis\" в readme\nдобавить раздел «Как сообщать о проблемах и запросах функций» в файле readme\nисправить календарь (максимум 4)\nзначения предварительной загрузки после первой установки\nисправить ошибку №9\nобновить `common.states` `.mower.errorCode`",
+				"pt": "atualizar dependências\nadicione a seção \"Valores disponíveis\" no leia-me\nadicione a seção \"ligações ioBroker.vis\" no readme\nadicione a seção \"Como relatar problemas e solicitações de recursos\" no leia-me\ncorrigir calendário (máximo 4)\nvalores de pré-carregamento após a primeira instalação\ncorrigir o problema nº 9\natualizar `common.states` de `.mower.errorCode`",
+				"nl": "update afhankelijkheden\nvoeg sectie \"Beschikbare waarden\" toe in readme\nvoeg sectie \"ioBroker.vis bindingen\" toe in readme\nvoeg sectie \"Hoe problemen en functieverzoeken te melden\" toe aan readme\nvaste kalender (max 4)\npreload-waarden na eerste installatie\nprobleem #9 oplossen\nupdate `common.states` van `.mower.errorCode`",
+				"fr": "mettre à jour les dépendances\najouter la section \"Valeurs disponibles\" dans le fichier readme\najouter la section \"liaisons ioBroker.vis\" dans le fichier readme\najouter la section \"Comment signaler des problèmes et des demandes de fonctionnalités\" dans le fichier readme\ncalendrier fixe (max 4)\nvaleurs de préchargement après la première installation\nrésoudre le problème n° 9\nmettre à jour `common.states` de `.mower.errorCode`",
+				"it": "aggiornare le dipendenze\naggiungi la sezione \"Valori disponibili\" in readme\naggiungi la sezione \"legami ioBroker.vis\" in readme\naggiungi la sezione \"Come segnalare problemi e richieste di funzionalità\" in readme\ncalendario fisso (max 4)\nprecaricare i valori dopo la prima installazione\nrisolvere il problema n. 9\naggiorna `common.states` di `.mower.errorCode`",
+				"es": "actualizar dependencias\nagregue la sección \"Valores disponibles\" en el archivo Léame\nagregue la sección \"enlaces ioBroker.vis\" en el archivo Léame\nagregue la sección \"Cómo informar problemas y solicitudes de funciones\" en el archivo Léame\ncalendario fijo (máximo 4)\nvalores de precarga después de la primera instalación\narreglar el problema #9\nactualizar `common.states` de `.mower.errorCode`",
+				"pl": "zaktualizuj zależności\ndodaj sekcję \"Dostępne wartości\" w readme\ndodaj sekcję \"Powiązania ioBroker.vis\" w readme\ndodaj sekcję \"Jak zgłaszać problemy i prośby o nowe funkcje\" w readme\nnapraw kalendarz (max 4)\nwstępne ładowanie wartości po pierwszej instalacji\nnapraw problem nr 9\nzaktualizuj `common.states` `.mower.errorCode`",
+				"zh-cn": "更新依赖\n在自述文件中添加“可用值”部分\n在自述文件中添加“ioBroker.vis 绑定”部分\n在自述文件中添加“如何报告问题和功能请求”部分\n修复日历（最多 4 个）\n首次安装后预加载值\n修复问题 #9\n更新`.mower.errorCode`的`common.states`"
+			  }
 		},
 		"title": "Husqvarna-Automower",
 		"titleLang": {
