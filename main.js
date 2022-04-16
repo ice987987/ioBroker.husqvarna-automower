@@ -1102,7 +1102,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 				}
 			}
 
-			this.setStateAsync(listMowers[i].id + '.planner.nextStartTimestamp', {val: listMowers[i].attributes.planner.nextStartTimestamp, ack: true});
+			if (listMowers[i].attributes.planner.nextStartTimestamp) {
+				this.setStateAsync(listMowers[i].id + '.planner.nextStartTimestamp', {val: listMowers[i].attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+			}
 			this.setStateAsync(listMowers[i].id + '.planner.action', {val: listMowers[i].attributes.planner.override.action, ack: true});
 			this.setStateAsync(listMowers[i].id + '.planner.restrictedReason', {val: listMowers[i].attributes.planner.restrictedReason, ack: true});
 
@@ -1223,7 +1225,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						//this.log.debug('jsonMessage.attributes.mower: ' + JSON.stringify(jsonMessage.attributes.mower));
 					}
 					if ('planner' in jsonMessage.attributes) {
-						this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp, ack: true});
+						//this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp, ack: true});
+						if (jsonMessage.attributes.planner.nextStartTimestamp) {
+							this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+						}
 						this.setStateAsync(jsonMessage.id + '.planner.action', {val: jsonMessage.attributes.planner.override.action, ack: true});
 						this.setStateAsync(jsonMessage.id + '.planner.restrictedReason', {val: jsonMessage.attributes.planner.restrictedReason, ack: true});
 						//this.log.debug('jsonMessage.attributes.planner: ' + JSON.stringify(jsonMessage.attributes.planner));

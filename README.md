@@ -26,7 +26,6 @@ This adapter fetches data from your Husqvarna lawn mower from [https://developer
 
 **Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/getting-started). "Old" logins will not work.**
 
-
 ## Control
 
 You can send the following values to your Husqvarna lawn mower:
@@ -117,6 +116,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 * (ice987987) add section "How to report issues and feature requests" in readme
 * (ice987987) fix calendar (max 4)
 * (ice987987) preload values after first install
+* (ice987987) fix issue [#9](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/9)
 
 ### 0.0.3 (14.03.2022)
 * (ice987987) initial npm release
