@@ -36,6 +36,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.autoRestartTimeout = null;
 		this.ping = null;
 		this.pingTimeout = null;
+
+		this.fillTimeout = null;
 	}
 
 	/**
@@ -1101,7 +1103,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 			}
 
 			if (listMowers[i].attributes.planner.nextStartTimestamp) {
-				this.setStateAsync(listMowers[i].id + '.planner.nextStartTimestamp', {val: listMowers[i].attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+				if (listMowers[i].attributes.planner.nextStartTimestamp !== 0) {
+					this.setStateAsync(listMowers[i].id + '.planner.nextStartTimestamp', {val: listMowers[i].attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+				} else {
+					this.setStateAsync(listMowers[i].id + '.planner.nextStartTimestamp', {val: listMowers[i].attributes.planner.nextStartTimestamp, ack: true});
+				}
 			}
 			this.setStateAsync(listMowers[i].id + '.planner.action', {val: listMowers[i].attributes.planner.override.action, ack: true});
 			this.setStateAsync(listMowers[i].id + '.planner.restrictedReason', {val: listMowers[i].attributes.planner.restrictedReason, ack: true});
@@ -1201,9 +1207,16 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 					if ('positions' in jsonMessage.attributes) {
 						if (Object.keys(jsonMessage.attributes.positions).length > 0) {
-							this.setStateAsync(jsonMessage.id + '.positions.latitude', {val: jsonMessage.attributes.positions[0].latitude, ack: true});
-							this.setStateAsync(jsonMessage.id + '.positions.longitude', {val: jsonMessage.attributes.positions[0].longitude, ack: true});
-							this.setStateAsync(jsonMessage.id + '.positions.latlong', {val: jsonMessage.attributes.positions[0].latitude + ';' + jsonMessage.attributes.positions[0].longitude, ack: true});
+							//this.setStateAsync(jsonMessage.id + '.positions.latitude', {val: jsonMessage.attributes.positions[0].latitude, ack: true});
+							//this.setStateAsync(jsonMessage.id + '.positions.longitude', {val: jsonMessage.attributes.positions[0].longitude, ack: true});
+							//this.setStateAsync(jsonMessage.id + '.positions.latlong', {val: jsonMessage.attributes.positions[0].latitude + ';' + jsonMessage.attributes.positions[0].longitude, ack: true});
+							//this.log.debug('jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
+							for (let i = 0; i < Object.keys(jsonMessage.attributes.positions).length; i++) {
+								this.setStateAsync(jsonMessage.id + '.positions.latitude', {val: jsonMessage.attributes.positions[i].latitude, ack: true});
+								this.setStateAsync(jsonMessage.id + '.positions.longitude', {val: jsonMessage.attributes.positions[i].longitude, ack: true});
+								this.setStateAsync(jsonMessage.id + '.positions.latlong', {val: jsonMessage.attributes.positions[i].latitude + ';' + jsonMessage.attributes.positions[i].longitude, ack: true});
+								await this.delay(500);
+							}
 							//this.log.debug('jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
 						}
 					}
@@ -1221,8 +1234,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 					if ('planner' in jsonMessage.attributes) {
 						//this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp, ack: true});
-						if (jsonMessage.attributes.planner.nextStartTimestamp) {
+						if (jsonMessage.attributes.planner.nextStartTimestamp !== 0) {
 							this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+						} else {
+							this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp, ack: true});
 						}
 						this.setStateAsync(jsonMessage.id + '.planner.action', {val: jsonMessage.attributes.planner.override.action, ack: true});
 						this.setStateAsync(jsonMessage.id + '.planner.restrictedReason', {val: jsonMessage.attributes.planner.restrictedReason, ack: true});
@@ -1248,16 +1263,19 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.log.debug('[wss.on - close]: data: ' + data); // value: 1001
 			//this.log.debug('this.wss close data.code: ' + data.code); -> undefined
 			//this.log.debug('this.wss close data.reason: ' + data.reason); -> undefined
-
-			if (data === 1001 && this.wss.readyState === 3) {
-				this.autoRestart();
-			} else if (data === 1006 && this.wss.readyState === 3) {
-				this.getRefreshToken();
-				this.autoRestart();
-			} else if (data.wasClean) {
-				this.log.debug('[wss.on - close]: Connection closed cleanly');
-			} else {
-				throw new Error ('[wss.on - close]: Unknown WebSocket error. (ERR_#009)');
+			try {
+				if (data === 1001 && this.wss.readyState === 3) {
+					this.autoRestart();
+				} else if (data === 1006 && this.wss.readyState === 3) {
+					this.getRefreshToken();
+					this.autoRestart();
+				} else if (data.wasClean) {
+					this.log.debug('[wss.on - close]: Connection closed cleanly');
+				} else {
+					this.log.error('[wss.on - close]: Unknown WebSocket error. (ERR_#009)');
+				}
+			} catch (error) {
+				// do nothing
 			}
 		});
 
@@ -1533,7 +1551,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 							this.log.debug('error data: ' + JSON.stringify(error.response.data));
 							this.log.debug('error status: ' + error.response.status);
 							this.log.debug('error headers: ' + JSON.stringify(error.response.headers));
-							if (error.response.status === 404) {
+							if (error.response.status === 400) { //Invalid schedule format in request body. Parsing message: No tasks.
+								this.log.info(error.response.data.errors[0].detail + ' Nothing set.');
+							} else if (error.response.status === 404) { //No connection between the cloud service and the mower product.
 								this.log.info(error.response.data.errors[0].detail + ' Nothing set.');
 							}
 						} else if (error.request) {

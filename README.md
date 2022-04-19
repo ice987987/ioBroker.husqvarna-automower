@@ -109,6 +109,11 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 <!-- ### **WORK IN PROGRESS** -->
 
+### **WORK IN PROGRESS**
+* (ice987987) fix issue [#10](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/10)
+* (ice987987) store all GPS-values (delay of 500ms if more than one was received)
+* (ice987987) improve error handling
+
 ### 0.0.4 (16.04.2022)
 * (ice987987) update dependencies
 * (ice978987) add section "Available values" in readme
