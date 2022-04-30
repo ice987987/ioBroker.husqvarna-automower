@@ -16,7 +16,7 @@
 
 ## husqvarna-automower adapter for ioBroker
 
-This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection ().
+This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection.
 
 ## Installation requirements
 
