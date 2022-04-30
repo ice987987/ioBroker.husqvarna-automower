@@ -65,11 +65,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 				//get Husqvarna access_token
 				await this.getAccessToken();
 
-				this.setStateAsync('info.connection', true, true);
-				this.log.info('"Husqvarna Authentication API Access token" received.');
-
 				//get all data from husqvarna API
 				await this.getListMowers();
+
+				this.setStateAsync('info.connection', true, true);
 
 				//create objects
 				await this.createObjects(this.listMowers);
@@ -96,29 +95,31 @@ class HusqvarnaAutomower extends utils.Adapter {
 			data: 'grant_type=password&client_id=' + this.config.apikey + '&username=' + this.config.username + '&password=' + this.config.password +''
 		})
 			.then((response) => {
-				this.log.debug('response.data: ' + JSON.stringify(response.data)); //{"access_token":"xx","scope":"iam:read amc:api","expires_in":86399,"refresh_token":"yyy","provider":"husqvarna","user_id":"zzz","token_type":"Bearer"}
-				//this.log.debug('response.status: ' + response.status);
-				//this.log.debug('response.statusText: ' + response.statusText);
-				//this.log.debug('response.headers: ' + JSON.stringify(response.headers));
-				//this.log.debug('response.config: ' + JSON.stringify(response.config));
+				this.log.debug('[getAccessToken]: response.data: ' + JSON.stringify(response.data)); //{"access_token":"xx","scope":"iam:read amc:api","expires_in":86399,"refresh_token":"yyy","provider":"husqvarna","user_id":"zzz","token_type":"Bearer"}
+				//this.log.debug('[getAccessToken]: response.status: ' + response.status);
+				//this.log.debug('[getAccessToken]: response.statusText: ' + response.statusText);
+				//this.log.debug('[getAccessToken]: response.headers: ' + JSON.stringify(response.headers));
+				//this.log.debug('[getAccessToken]: response.config: ' + JSON.stringify(response.config));
 
 				this.access_token = response.data.access_token;
 				this.refresh_token = response.data.refresh_token;
+
+				this.log.info('"Husqvarna Authentication API Access token" received.');
 			})
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug('error data: ' + JSON.stringify(error.response.data));
-					this.log.debug('error status: ' + error.response.status);
-					this.log.debug('error headers: ' + JSON.stringify(error.response.headers));
+					this.log.debug('[getAccessToken]: error data: ' + JSON.stringify(error.response.data));
+					this.log.debug('[getAccessToken]: error status: ' + error.response.status);
+					this.log.debug('[getAccessToken]: error headers: ' + JSON.stringify(error.response.headers));
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug('error request: ' + error);
+					this.log.debug('[getAccessToken]: error request: ' + error);
 				} else {
 					// Something happened in setting up the request that triggered an Error
-					this.log.debug('error message: ' + error.message);
+					this.log.debug('[getAccessToken]: error message: ' + error.message);
 				}
-				this.log.debug('error.config: ' + JSON.stringify(error.config));
+				this.log.debug('[getAccessToken]: error.config: ' + JSON.stringify(error.config));
 				throw new Error ('"Automower Connect API" not reachable. Please check "Username, "Password and/or "API Key". (ERR_#002)');
 			});
 	}
@@ -130,30 +131,32 @@ class HusqvarnaAutomower extends utils.Adapter {
 			data: 'grant_type=refresh_token&client_id=' + this.config.apikey + '&refresh_token=' + this.refresh_token +''
 		})
 			.then((response) => {
-				this.log.debug('response.data: ' + JSON.stringify(response.data)); //{"access_token":"yy","scope":"iam:read amc:api","expires_in":86399,"refresh_token":"yyy","provider":"husqvarna","user_id":"zzz","token_type":"Bearer"}
-				//this.log.debug('response.status: ' + response.status);
-				//this.log.debug('response.statusText: ' + response.statusText);
-				//this.log.debug('response.headers: ' + JSON.stringify(response.headers));
-				//this.log.debug('response.config: ' + JSON.stringify(response.config));
+				this.log.debug('[getRefreshToken]: response.data: ' + JSON.stringify(response.data)); //{"access_token":"yy","scope":"iam:read amc:api","expires_in":86399,"refresh_token":"yyy","provider":"husqvarna","user_id":"zzz","token_type":"Bearer"}
+				//this.log.debug('[getRefreshToken]: response.status: ' + response.status);
+				//this.log.debug('[getRefreshToken]: response.statusText: ' + response.statusText);
+				//this.log.debug('[getRefreshToken]: response.headers: ' + JSON.stringify(response.headers));
+				//this.log.debug('[getRefreshToken]: response.config: ' + JSON.stringify(response.config));
 
 				this.access_token = response.data.access_token;
 				this.refresh_token = response.data.refresh_token;
+
+				this.log.debug('"Husqvarna Refresh API Access token" received.');
 			})
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug('error data: ' + JSON.stringify(error.response.data));
-					this.log.debug('error status: ' + error.response.status);
-					this.log.debug('error headers: ' + JSON.stringify(error.response.headers));
+					this.log.debug('[getRefreshToken]: error data: ' + JSON.stringify(error.response.data));
+					this.log.debug('[getRefreshToken]: error status: ' + error.response.status);
+					this.log.debug('[getRefreshToken]: error headers: ' + JSON.stringify(error.response.headers));
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug('error request: ' + error);
+					this.log.debug('[getRefreshToken]: error request: ' + error);
 				} else {
 					// Something happened in setting up the request that triggered an Error
-					this.log.debug('error message: ' + error.message);
+					this.log.debug('[getRefreshToken]: error message: ' + error.message);
 				}
-				this.log.debug('error.config: ' + JSON.stringify(error.config));
-				throw new Error ('"Automower Connect API" not reachable. Please check "Username, "Password and/or "API Key". (ERR_#008)');
+				this.log.debug('[getRefreshToken]: error.config: ' + JSON.stringify(error.config));
+				this.log.info('"Automower Connect API" not reachable. Please check "Username, "Password and/or "API Key". (ERR_#008)');
 			});
 	}
 
@@ -169,28 +172,28 @@ class HusqvarnaAutomower extends utils.Adapter {
 			}
 		})
 			.then((response) => {
-				this.log.debug('response.data: ' + JSON.stringify(response.data)); //{"data":[{"type":"mower","id":"xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx","attributes":{"system":{"name":"Automower","model":"HUSQVARNA AUTOMOWER® 330X","serialNumber":xxx},"battery":{"batteryPercent":0},"mower":{"mode":"MAIN_AREA","activity":"NOT_APPLICABLE","state":"FATAL_ERROR","errorCode":70,"errorCodeTimestamp":xxx},"calendar":{"tasks":[{"start":990,"duration":150,"monday":true,"tuesday":false,"wednesday":true,"thursday":false,"friday":true,"saturday":true,"sunday":false}]},"planner":{"nextStartTimestamp":0,"override":{"action":"NO_SOURCE"},"restrictedReason":"NOT_APPLICABLE"},"metadata":{"connected":false,"statusTimestamp":xx},"positions":[{"latitude":xx.xxxxxxx,"longitude":x.xxxxx}],"settings":{"cuttingHeight":7,"headlight":{"mode":"ALWAYS_ON"}}}}]}
-				//this.log.debug('response.status: ' + response.status);
-				//this.log.debug('response.statusText: ' + response.statusText);
-				//this.log.debug('response.headers: ' + JSON.stringify(response.headers));
-				//this.log.debug('response.config: ' + JSON.stringify(response.config));
+				this.log.debug('[getListMowers]: response.data: ' + JSON.stringify(response.data)); //{"data":[{"type":"mower","id":"xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx","attributes":{"system":{"name":"Automower","model":"HUSQVARNA AUTOMOWER® 330X","serialNumber":xxx},"battery":{"batteryPercent":0},"mower":{"mode":"MAIN_AREA","activity":"NOT_APPLICABLE","state":"FATAL_ERROR","errorCode":70,"errorCodeTimestamp":xxx},"calendar":{"tasks":[{"start":990,"duration":150,"monday":true,"tuesday":false,"wednesday":true,"thursday":false,"friday":true,"saturday":true,"sunday":false}]},"planner":{"nextStartTimestamp":0,"override":{"action":"NO_SOURCE"},"restrictedReason":"NOT_APPLICABLE"},"metadata":{"connected":false,"statusTimestamp":xx},"positions":[{"latitude":xx.xxxxxxx,"longitude":x.xxxxx}],"settings":{"cuttingHeight":7,"headlight":{"mode":"ALWAYS_ON"}}}}]}
+				//this.log.debug('[getListMowers]: response.status: ' + response.status);
+				//this.log.debug('[getListMowers]: response.statusText: ' + response.statusText);
+				//this.log.debug('[getListMowers]: response.headers: ' + JSON.stringify(response.headers));
+				//this.log.debug('[getListMowers]: response.config: ' + JSON.stringify(response.config));
 
 				this.listMowers = response.data.data;
 			})
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug('error data: ' + JSON.stringify(error.response.data));
-					this.log.debug('error status: ' + error.response.status);
-					this.log.debug('error headers: ' + JSON.stringify(error.response.headers));
+					this.log.debug('[getListMowers]: error data: ' + JSON.stringify(error.response.data));
+					this.log.debug('[getListMowers]: error status: ' + error.response.status);
+					this.log.debug('[getListMowers]: error headers: ' + JSON.stringify(error.response.headers));
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug('error request: ' + error);
+					this.log.debug('[getListMowers]: error request: ' + error);
 				} else {
 					// Something happened in setting up the request that triggered an Error
-					this.log.debug('error message: ' + error.message);
+					this.log.debug('[getListMowers]: error message: ' + error.message);
 				}
-				this.log.debug('error.config: ' + JSON.stringify(error.config));
+				this.log.debug('[getListMowers]: error.config: ' + JSON.stringify(error.config));
 				throw new Error ('"Automower Connect API" not reachable. (ERR_#003)');
 			});
 	}
@@ -198,9 +201,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 	//https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/objectsschema.md
 	//https://github.com/ioBroker/ioBroker/blob/master/doc/STATE_ROLES.md#state-roles
 	async createObjects(listMowers) {
-		//this.log.debug('createObjects(): listMowers: ' + JSON.stringify(listMowers));
+		//this.log.debug('[createObjects]: listMowers: ' + JSON.stringify(listMowers));
 
-		this.log.debug('start objects creation for ' + listMowers.length + ' device' + (listMowers.length > 1 ? 's' : '') + '...');
+		this.log.debug('[createObjects]: start objects creation for ' + listMowers.length + ' device' + (listMowers.length > 1 ? 's' : '') + '...');
 		if (listMowers.length !== 0) {
 			for (let i = 0; i < listMowers.length; i++) {
 				if (listMowers[i].type === 'mower') {
@@ -1066,7 +1069,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					throw new Error ('No mower found, no Objects created. Check API (ERR_#005).');
 				}
 			}
-			this.log.debug('Objects created...');
+			this.log.debug('[createObjects]: Objects created...');
 		} else {
 			throw new Error ('No Objects found, no Objects created. Check API (ERR_#004).');
 		}
@@ -1122,7 +1125,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.setStateAsync(listMowers[i].id + '.settings.cuttingHeight', {val: listMowers[i].attributes.settings.cuttingHeight, ack: true});
 			this.setStateAsync(listMowers[i].id + '.settings.headlight', {val: listMowers[i].attributes.settings.headlight.mode, ack: true});
 		}
-		this.log.info('System information saved...');
+		this.log.info('Mower information saved...');
 	}
 
 	//https://javascript.info/websocket
@@ -1147,7 +1150,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				this.log.info('Connection to "Husqvarna WebSocket" established. Ready to get status events...');
 				this.firstStart = false;
 			} else {
-				this.log.debug('Connection to "Husqvarna WebSocket" re-established. Ready to get status events...');
+				this.log.debug('[wss.on - open]: Connection to "Husqvarna WebSocket" re-established. Ready to get status events...');
 			}
 
 			// Send ping to server
@@ -1163,16 +1166,16 @@ class HusqvarnaAutomower extends utils.Adapter {
 			try {
 
 				const jsonMessage = JSON.parse(message);
-				//this.log.debug('jsonMessage: ' + JSON.stringify(jsonMessage));
+				//this.log.debug('[wss.on - message]: jsonMessage: ' + JSON.stringify(jsonMessage));
 
 				if ('attributes' in jsonMessage) {
 					if ('cuttingHeight' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.settings.cuttingHeight', {val: jsonMessage.attributes.cuttingHeight, ack: true});
-						//this.log.debug('jsonMessage.attributes.cuttingHeight: ' + jsonMessage.attributes.cuttingHeight);
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.cuttingHeight: ' + jsonMessage.attributes.cuttingHeight);
 					}
 					if ('headlight' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.settings.headlight', {val: jsonMessage.attributes.headlight.mode, ack: true});
-						//this.log.debug('jsonMessage.attributes.headlight.mode: ' + jsonMessage.attributes.headlight.mode);
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.headlight.mode: ' + jsonMessage.attributes.headlight.mode);
 					}
 					if ('calendar' in jsonMessage.attributes) {
 						if (Object.keys(jsonMessage.attributes.calendar.tasks).length > 0) {
@@ -1203,26 +1206,26 @@ class HusqvarnaAutomower extends utils.Adapter {
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.sunday', {val: false, ack: true});
 							}
 						}
-						//this.log.debug('jsonMessage.attributes.calendar: ' + JSON.stringify(jsonMessage.attributes.calendar));
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.calendar: ' + JSON.stringify(jsonMessage.attributes.calendar));
 					}
 					if ('positions' in jsonMessage.attributes) {
 						if (Object.keys(jsonMessage.attributes.positions).length > 0) {
 							//this.setStateAsync(jsonMessage.id + '.positions.latitude', {val: jsonMessage.attributes.positions[0].latitude, ack: true});
 							//this.setStateAsync(jsonMessage.id + '.positions.longitude', {val: jsonMessage.attributes.positions[0].longitude, ack: true});
 							//this.setStateAsync(jsonMessage.id + '.positions.latlong', {val: jsonMessage.attributes.positions[0].latitude + ';' + jsonMessage.attributes.positions[0].longitude, ack: true});
-							//this.log.debug('jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
+							//this.log.debug('[wss.on - message]: jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
 							for (let i = 0; i < Object.keys(jsonMessage.attributes.positions).length; i++) {
 								this.setStateAsync(jsonMessage.id + '.positions.latitude', {val: jsonMessage.attributes.positions[i].latitude, ack: true});
 								this.setStateAsync(jsonMessage.id + '.positions.longitude', {val: jsonMessage.attributes.positions[i].longitude, ack: true});
 								this.setStateAsync(jsonMessage.id + '.positions.latlong', {val: jsonMessage.attributes.positions[i].latitude + ';' + jsonMessage.attributes.positions[i].longitude, ack: true});
 								await this.delay(500);
 							}
-							//this.log.debug('jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
+							//this.log.debug('[wss.on - message]: jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
 						}
 					}
 					if ('battery' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.battery.batteryPercent', {val: jsonMessage.attributes.battery.batteryPercent, ack: true});
-						//this.log.debug('jsonMessage.attributes.battery: ' + JSON.stringify(jsonMessage.attributes.battery));
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.battery: ' + JSON.stringify(jsonMessage.attributes.battery));
 					}
 					if ('mower' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.mower.mode', {val: jsonMessage.attributes.mower.mode, ack: true});
@@ -1230,7 +1233,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						this.setStateAsync(jsonMessage.id + '.mower.state', {val: jsonMessage.attributes.mower.state, ack: true});
 						this.setStateAsync(jsonMessage.id + '.mower.errorCode', {val: jsonMessage.attributes.mower.errorCode, ack: true});
 						this.setStateAsync(jsonMessage.id + '.mower.errorCodeTimestamp', {val: jsonMessage.attributes.mower.errorCodeTimestamp, ack: true});
-						//this.log.debug('jsonMessage.attributes.mower: ' + JSON.stringify(jsonMessage.attributes.mower));
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.mower: ' + JSON.stringify(jsonMessage.attributes.mower));
 					}
 					if ('planner' in jsonMessage.attributes) {
 						//this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp, ack: true});
@@ -1241,12 +1244,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						}
 						this.setStateAsync(jsonMessage.id + '.planner.action', {val: jsonMessage.attributes.planner.override.action, ack: true});
 						this.setStateAsync(jsonMessage.id + '.planner.restrictedReason', {val: jsonMessage.attributes.planner.restrictedReason, ack: true});
-						//this.log.debug('jsonMessage.attributes.planner: ' + JSON.stringify(jsonMessage.attributes.planner));
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.planner: ' + JSON.stringify(jsonMessage.attributes.planner));
 					}
 					if ('metadata' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.metadata.connected', {val: jsonMessage.attributes.metadata.connected, ack: true});
 						this.setStateAsync(jsonMessage.id + '.metadata.statusTimestamp', {val: jsonMessage.attributes.metadata.statusTimestamp, ack: true});
-						//this.log.debug('jsonMessage.attributes.metadata: ' + JSON.stringify(jsonMessage.attributes.metadata));
+						//this.log.debug('[wss.on - message]: jsonMessage.attributes.metadata: ' + JSON.stringify(jsonMessage.attributes.metadata));
 					}
 				}
 			} catch (error) {
@@ -1254,25 +1257,25 @@ class HusqvarnaAutomower extends utils.Adapter {
 			}
 		});
 
-		this.wss.on('close', (data) => {
+		this.wss.on('close', async (data) => {
 
 			this.ping && clearTimeout(this.ping);
 			this.pingTimeout && clearTimeout(this.pingTimeout);
 
 			this.log.debug('[wss.on - close]: this.wss.readyState: ' + this.wss.readyState); //value: 3
 			this.log.debug('[wss.on - close]: data: ' + data); // value: 1001
-			//this.log.debug('this.wss close data.code: ' + data.code); -> undefined
-			//this.log.debug('this.wss close data.reason: ' + data.reason); -> undefined
+			//this.log.debug('[wss.on - close]: this.wss close data.code: ' + data.code); -> undefined
+			//this.log.debug('[wss.on - close]: this.wss close data.reason: ' + data.reason); -> undefined
 			try {
 				if (data === 1001 && this.wss.readyState === 3) {
-					this.autoRestart();
+					await this.autoRestart();
 				} else if (data === 1006 && this.wss.readyState === 3) {
-					this.getRefreshToken();
-					this.autoRestart();
+					await this.getRefreshToken();
+					await this.autoRestart();
 				} else if (data.wasClean) {
-					this.log.debug('[wss.on - close]: Connection closed cleanly');
+					this.log.info('Connection closed cleanly');
 				} else {
-					this.log.error('[wss.on - close]: Unknown WebSocket error. (ERR_#009)');
+					this.log.error('Unknown WebSocket error. (ERR_#009)');
 				}
 			} catch (error) {
 				// do nothing
@@ -1290,9 +1293,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 		});
 	}
 
-	//https://github.com/o0shojo0o/ioBroker.traccar/blob/master/main.js
 	async sendPingToServer() {
-		this.log.debug('[sendPingToServer()]: WebSocket sends ping to server...');
+		this.log.debug('[sendPingToServer]: WebSocket sends ping to server...');
 		this.wss.ping('ping');
 		this.ping = setTimeout(() => {
 			this.sendPingToServer();
@@ -1302,13 +1304,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 	async wsHeartbeat() {
 		this.pingTimeout && clearTimeout(this.pingTimeout);
 		this.pingTimeout = setTimeout(() => {
-			this.log.debug('[wsHeartbeat()]: WebSocket connection timed out.');
+			this.log.debug('[wsHeartbeat]: WebSocket connection timed out.');
 			this.wss.terminate();
 		}, 570000 + 1000);
 	}
 
 	async autoRestart() {
-		this.log.debug('[autoRestart()]: WebSocket connection terminated by Husvqvarna-Server. Reconnect again in 5 seconds...');
+		this.log.debug('[autoRestart]: WebSocket connection terminated by Husvqvarna-Server. Reconnect again in 5 seconds...');
 		this.autoRestartTimeout = setTimeout(() => {
 			this.connectToWS();
 		}, 5000); //min. 5s = 5000ms
@@ -1324,34 +1326,37 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			//Invalidating Token
 			await axios({
-				method: 'DELETE',
 				url: 'https://api.authentication.husqvarnagroup.dev/v1/token/' + this.access_token,
+				method: 'DELETE',
 				headers: {
 					'X-Api-Key': this.config.apikey,
-					'Authorization-Provider': 'husqvarna',
+					'Authorization-Provider': 'husqvarna'
 				}
 			})
 				.then((response) => {
-					this.log.debug('response.data: ' + JSON.stringify(response.data));
-					this.log.debug('response.status: ' + response.status);
-					this.log.debug('response.statusText: ' + response.statusText);
-					this.log.debug('response.headers: ' + JSON.stringify(response.headers));
-					this.log.debug('response.config: ' + JSON.stringify(response.config));
+					this.log.debug('[onUnload]: response.data: ' + JSON.stringify(response.data));
+					this.log.debug('[onUnload]: response.status: ' + response.status);
+					this.log.debug('[onUnload]: response.statusText: ' + response.statusText);
+					this.log.debug('[onUnload]: response.headers: ' + JSON.stringify(response.headers));
+					this.log.debug('[onUnload]: response.config: ' + JSON.stringify(response.config));
 				})
 				.catch((error) => {
 					if (error.response) {
 						// The request was made and the server responded with a status code that falls out of the range of 2xx
-						this.log.debug('error data: ' + JSON.stringify(error.response.data));
-						this.log.debug('error status: ' + error.response.status);
-						this.log.debug('error headers: ' + JSON.stringify(error.response.headers));
+						this.log.debug('[onUnload]: error data: ' + JSON.stringify(error.response.data));
+						this.log.debug('[onUnload]: error status: ' + error.response.status);
+						this.log.debug('[onUnload]: error headers: ' + JSON.stringify(error.response.headers));
+						if (error.response.status === 403) {
+							this.log.info('"Husqvarna Authentication API Access token" successful invalidated.');
+						}
 					} else if (error.request) {
 						// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-						this.log.debug('error request: ' + error);
+						this.log.debug('[onUnload]: error request: ' + error);
 					} else {
 						// Something happened in setting up the request that triggered an Error
-						this.log.debug('error message: ' + error.message);
+						this.log.debug('[onUnload]: error message: ' + error.message);
 					}
-					this.log.debug('error.config: ' + JSON.stringify(error.config));
+					this.log.debug('[onUnload]: error.config: ' + JSON.stringify(error.config));
 				});
 
 			this.autoRestartTimeout && clearTimeout(this.autoRestartTimeout);
@@ -1378,11 +1383,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 			if (state.ack === false) {
 
 				//https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme
-				this.log.debug('id: ' + id + '; state: ' + JSON.stringify(state));
+				this.log.debug('[onStateChange]: id: ' + id + '; state: ' + JSON.stringify(state));
 				const idSplit = id.split('.');
-				this.log.debug('idSplit.length: ' + idSplit.length);
+				this.log.debug('[onStateChange]: idSplit.length: ' + idSplit.length);
 				const mowerId = idSplit[2];
-				this.log.debug('mowerId: ' + mowerId);
+				this.log.debug('[onStateChange]: mowerId: ' + mowerId);
 
 				let command = null;
 				let parentPath = null;
@@ -1393,8 +1398,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 					command = idSplit[5];
 					parentPath = idSplit.slice(0, idSplit.length - 2).join('.');
 				}
-				this.log.debug('command: ' + command);
-				this.log.debug('parentPath : ' + parentPath);
+				this.log.debug('[onStateChange]: command: ' + command);
+				this.log.debug('[onStateChange]: parentPath : ' + parentPath);
 
 				let data = {};
 				let url = '';
@@ -1519,7 +1524,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							}
 						}
 					};
-					//this.log.debug('data: ' + JSON.stringify(data));
+					//this.log.debug('[onStateChange]: data: ' + JSON.stringify(data));
 
 					url = 'calendar';
 				}
@@ -1536,11 +1541,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 					data: data
 				})
 					.then((response) => {
-						this.log.debug('response.data: ' + JSON.stringify(response.data));
-						this.log.debug('response.status: ' + response.status);
-						this.log.debug('response.statusText: ' + response.statusText);
-						this.log.debug('response.headers: ' + JSON.stringify(response.headers));
-						this.log.debug('response.config: ' + JSON.stringify(response.config));
+						this.log.debug('[onStateChange]: response.data: ' + JSON.stringify(response.data));
+						this.log.debug('[onStateChange]: response.status: ' + response.status);
+						this.log.debug('[onStateChange]: response.statusText: ' + response.statusText);
+						this.log.debug('[onStateChange]: response.headers: ' + JSON.stringify(response.headers));
+						this.log.debug('[onStateChange]: response.config: ' + JSON.stringify(response.config));
 						if (response.status === 202) {
 							this.log.info(response.statusText + '. Command "' + command + '" Set.');
 						}
@@ -1548,9 +1553,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 					.catch((error) => {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
-							this.log.debug('error data: ' + JSON.stringify(error.response.data));
-							this.log.debug('error status: ' + error.response.status);
-							this.log.debug('error headers: ' + JSON.stringify(error.response.headers));
+							this.log.debug('[onStateChange]: error data: ' + JSON.stringify(error.response.data));
+							this.log.debug('[onStateChange]: error status: ' + error.response.status);
+							this.log.debug('[onStateChange]: error headers: ' + JSON.stringify(error.response.headers));
 							if (error.response.status === 400) { //Invalid schedule format in request body. Parsing message: No tasks.
 								this.log.info(error.response.data.errors[0].detail + ' Nothing set.');
 							} else if (error.response.status === 404) { //No connection between the cloud service and the mower product.
@@ -1558,21 +1563,21 @@ class HusqvarnaAutomower extends utils.Adapter {
 							}
 						} else if (error.request) {
 							// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-							this.log.debug('error request: ' + error);
+							this.log.debug('[onStateChange]: error request: ' + error);
 						} else {
 							// Something happened in setting up the request that triggered an Error
-							this.log.debug('error message: ' + error.message);
+							this.log.debug('[onStateChange]: error message: ' + error.message);
 						}
-						this.log.debug('error.config: ' + JSON.stringify(error.config));
+						this.log.debug('[onStateChange]: error.config: ' + JSON.stringify(error.config));
 					});
 
 			} else {
 				// The state was changed by system
-				this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack}). NO ACTION PERFORMED.`);
+				this.log.debug(`[onStateChange]: state ${id} changed: ${state.val} (ack = ${state.ack}). NO ACTION PERFORMED.`);
 			}
 		} else {
 			// The state was deleted
-			this.log.debug(`state ${id} was changed. NO ACTION PERFORMED.`);
+			this.log.debug(`[onStateChange]: state ${id} was changed. NO ACTION PERFORMED.`);
 		}
 	}
 }
