@@ -16,13 +16,14 @@
 
 ## husqvarna-automower adapter for ioBroker
 
-This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection.
+This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection ().
 
 ## Installation requirements
 
 * node.js >=12.0 is required
 * js-controller >=3.0 is required
 * This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
+* works with [https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API](Automower Connect API) Version 1.0.0.
 
 **Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/getting-started). "Old" logins will not work.**
 
@@ -113,6 +114,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 * (ice987987) fix issue [#10](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/10)
 * (ice987987) store all GPS-values (delay of 500ms if more than one was received)
 * (ice987987) improve error handling
+* (ice987987) improve debug output messages
 
 ### 0.0.4 (16.04.2022)
 * (ice987987) update dependencies
