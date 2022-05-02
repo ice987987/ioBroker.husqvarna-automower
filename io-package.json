@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "husqvarna-automower",
-		"version": "0.0.4",
+		"version": "0.0.5",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -50,6 +50,18 @@
 				"es": "actualizar dependencias\nagregue la sección \"Valores disponibles\" en el archivo Léame\nagregue la sección \"enlaces ioBroker.vis\" en el archivo Léame\nagregue la sección \"Cómo informar problemas y solicitudes de funciones\" en el archivo Léame\ncalendario fijo (máximo 4)\nvalores de precarga después de la primera instalación\narreglar el problema #9\nactualizar `common.states` de `.mower.errorCode`",
 				"pl": "zaktualizuj zależności\ndodaj sekcję \"Dostępne wartości\" w readme\ndodaj sekcję \"Powiązania ioBroker.vis\" w readme\ndodaj sekcję \"Jak zgłaszać problemy i prośby o nowe funkcje\" w readme\nnapraw kalendarz (max 4)\nwstępne ładowanie wartości po pierwszej instalacji\nnapraw problem nr 9\nzaktualizuj `common.states` `.mower.errorCode`",
 				"zh-cn": "更新依赖\n在自述文件中添加“可用值”部分\n在自述文件中添加“ioBroker.vis 绑定”部分\n在自述文件中添加“如何报告问题和功能请求”部分\n修复日历（最多 4 个）\n首次安装后预加载值\n修复问题 #9\n更新`.mower.errorCode`的`common.states`"
+			  },
+			  "0.0.5": {
+				"en": "fix issue #10\nstore all GPS-values (delay of 500ms if more than one was received)\nimprove error handling\nimprove debug output messages",
+				"de": "Beheben Sie Problem Nr. 10\nalle GPS-Werte speichern (Verzögerung von 500ms wenn mehr als einer empfangen wurde)\nFehlerbehandlung verbessern\nVerbesserung der Debug-Ausgabemeldungen",
+				"ru": "исправить ошибку №10\nсохранить все значения GPS (задержка 500 мс, если было получено более одного)\nулучшить обработку ошибок\nулучшить выходные сообщения отладки",
+				"pt": "corrigir o problema nº 10\narmazenar todos os valores GPS (atraso de 500ms se mais de um foi recebido)\nmelhorar o tratamento de erros\nmelhorar as mensagens de saída de depuração",
+				"nl": "probleem #10 oplossen\nalle GPS-waarden opslaan (vertraging van 500ms als er meer dan één werd ontvangen)\nfoutafhandeling verbeteren\ndebug-uitvoerberichten verbeteren",
+				"fr": "résoudre le problème n° 10\nstocker toutes les valeurs GPS (délai de 500 ms si plusieurs valeurs ont été reçues)\naméliorer la gestion des erreurs\naméliorer les messages de sortie de débogage",
+				"it": "risolvere il problema n. 10\nmemorizzare tutti i valori GPS (ritardo di 500 ms se ne è stato ricevuto più di uno)\nmigliorare la gestione degli errori\nmigliorare i messaggi di output di debug",
+				"es": "arreglar el problema #10\nalmacenar todos los valores GPS (retraso de 500 ms si se recibió más de uno)\nmejorar el manejo de errores\nmejorar los mensajes de salida de depuración",
+				"pl": "napraw problem nr 10\nprzechowywać wszystkie wartości GPS (opóźnienie 500ms, jeśli otrzymano więcej niż jedną)\npoprawić obsługę błędów\npopraw komunikaty wyjściowe debugowania",
+				"zh-cn": "修复问题 #10\n存储所有 GPS 值（如果接收到多个 GPS 值，则延迟 500 毫秒）\n改进错误处理\n改进调试输出消息"
 			  }
 		},
 		"title": "Husqvarna-Automower",
