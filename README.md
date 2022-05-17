@@ -36,9 +36,10 @@ You can send the following values to your Husqvarna lawn mower:
 * `.ACTIONS.park.PARK`: park mower for a duration of time `.ACTIONS.park.parkTime` (in minutes), overriding schedule
 * `.ACTIONS.RESUMESCHEDULE`: resume mower according to schedule
 * `.ACTIONS.start.START`: start mower and cut for a duration of time `.ACTIONS.start.startTime` (in minutes), overriding schedule
-* `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight
+* `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight [^2]
 * `.ACTIONS.HEADLIGHT`: Update headlight
-* `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday`. 
+* `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday` [^2]
+[^2]: Do not use for 550 EPOS and Ceora due to [Husqvarna's API-limitation](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme)
 
 ## Available values (readonly)
 
@@ -77,7 +78,7 @@ You get the following values from your Husqvarna lawn mower:
 ## Limitation
 
 * maximum 4 schedules are available[^1]
-[^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues).
+[^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose).
 
 ## ioBroker.vis bindings
 the following code can be used for html-bindings in adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the [status description and error codes](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/status%20description%20and%20error%20codes) into text for better visualization:
@@ -101,7 +102,7 @@ the following code can be used for html-bindings in adapter [ioBroker.vis](https
 
 ## How to report issues and feature requests
 
-Please use [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose) and fill in the form.
+Please use [GitHub issues](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose) and fill in the form.
 
 For issues:
 Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level). Get the logfile from disk (subdirectory "log" in ioBroker installation directory and not from Admin because Admin cuts the lines). Check that there are no personal information before you publish your log.
@@ -112,6 +113,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 ### **WORK IN PROGRESS**
 * (ice987987) update dependencies
+* (ice987987) add some more limitations in readme
 
 ### 0.0.5 (02.05.2022)
 * (ice987987) fix issue [#10](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/10)
