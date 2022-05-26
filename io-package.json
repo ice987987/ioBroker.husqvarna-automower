@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "husqvarna-automower",
-		"version": "0.0.5",
+		"version": "0.0.6",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -62,6 +62,18 @@
 				"es": "arreglar el problema #10\nalmacenar todos los valores GPS (retraso de 500 ms si se recibió más de uno)\nmejorar el manejo de errores\nmejorar los mensajes de salida de depuración",
 				"pl": "napraw problem nr 10\nprzechowywać wszystkie wartości GPS (opóźnienie 500ms, jeśli otrzymano więcej niż jedną)\npoprawić obsługę błędów\npopraw komunikaty wyjściowe debugowania",
 				"zh-cn": "修复问题 #10\n存储所有 GPS 值（如果接收到多个 GPS 值，则延迟 500 毫秒）\n改进错误处理\n改进调试输出消息"
+			  },
+			  "0.0.6": {
+				"en": "update dependencies\nadd some more limitations in readme",
+				"de": "Abhängigkeiten aktualisieren\nFügen Sie weitere Einschränkungen in der Readme-Datei hinzu",
+				"ru": "обновить зависимости\nдобавить еще несколько ограничений в readme",
+				"pt": "atualizar dependências\nadicione mais algumas limitações no readme",
+				"nl": "update afhankelijkheden\nvoeg wat meer beperkingen toe in readme",
+				"fr": "mettre à jour les dépendances\najouter quelques limitations supplémentaires dans le fichier readme",
+				"it": "aggiornare le dipendenze\naggiungi alcune altre limitazioni nel readme",
+				"es": "actualizar dependencias\nagregue algunas limitaciones más en el archivo Léame",
+				"pl": "zaktualizuj zależności\ndodaj więcej ograniczeń w readme",
+				"zh-cn": "更新依赖\n在自述文件中添加更多限制"
 			  }
 		},
 		"title": "Husqvarna-Automower",
