@@ -1091,6 +1091,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				this.firstStart = false;
 			} else {
 				this.log.debug('[wss.on - open]: Connection to "Husqvarna WebSocket" re-established. Ready to get data...');
+				this.setStateAsync('info.connection', true, true);
 			}
 
 			// Send ping to server
@@ -1199,6 +1200,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			this.log.debug('[wss.on - close]: this.wss.readyState: ' + this.wss.readyState); // value: 3
 			this.log.debug('[wss.on - close]: data: ' + data); // value: 1001
+
+			this.setStateAsync('info.connection', false, true);
+
 			try {
 				if (data === 1001 && this.wss.readyState === 3) {
 					await this.autoRestart();
