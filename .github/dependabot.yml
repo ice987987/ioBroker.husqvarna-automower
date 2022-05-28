@@ -5,7 +5,7 @@ updates:
   schedule:
     interval: monthly
     time: "04:00"
-    timezone: Europe/Berlin
+    timezone: Europe/Zurich
   open-pull-requests-limit: 20
   assignees:
   - ice987987
