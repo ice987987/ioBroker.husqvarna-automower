@@ -20,7 +20,7 @@ This adapter fetches data from your Husqvarna lawn mower from [https://developer
 
 ## Installation requirements
 
-* node.js >= v12.0 is required
+* node.js >= v14.0 is required
 * js-controller >= v3.3.19 is required
 * admin >= v5.1.28 is required
 * This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
