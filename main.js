@@ -88,7 +88,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			// fill in objects
 			await this.fillObjects(this.mowerData);
 
-			// establich WebSocket connection
+			// establish WebSocket connection
 			await this.connectToWS();
 
 		} catch (error) {
