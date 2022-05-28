@@ -114,6 +114,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 ### **WORK IN PROGRESS**
 * (ice987987) password encryption added (user need to reenter the password once after update, this change requires admin >=v4.0.9)
+* (ice987987) clean up code
 
 ### 0.0.6 (26.05.2022)
 * (ice987987) update dependencies
