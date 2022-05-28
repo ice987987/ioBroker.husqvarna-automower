@@ -105,9 +105,11 @@
 			"ice987987 <mathias.frei1@gmail.com>"
 		],
 		"keywords": [
-			"smarthome",
-			"iobroker",
-			"husqvarna-automower"
+			"husqvarna-automower",
+			"husqvarna",
+			"automower",
+			"lawnmower",
+			"mower"
 		],
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
@@ -125,12 +127,12 @@
 		"materialize": true,
 		"dependencies": [
 			{
-				"js-controller": ">=3.0.0"
+				"js-controller": ">=3.3.19"
 			}
 		],
         "globalDependencies": [
             {
-                "admin": ">=4.0.9"
+                "admin": ">=5.1.28"
             }
         ]
 	},
