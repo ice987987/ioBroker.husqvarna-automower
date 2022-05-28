@@ -1,0 +1,9 @@
+{
+    "username": "gebruikersnaam",
+    "usernameHint": "bijv. email@example.com",
+    "password": "wachtwoord",
+    "passwordHint": "uw 'Husqvarna Automower Connect'-wachtwoord (minimaal 5 tekens)",
+    "apiKey": "API sleutel",
+    "apiKeyHint": "Download uw 'Husqvarna Automower Connect API-KEY' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>hier</a>. ",
+    "note": "on save-adapter herstart onmiddellijk met nieuwe configuratie."
+}

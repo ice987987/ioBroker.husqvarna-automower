@@ -76,7 +76,6 @@
 				"zh-cn": "更新依赖\n在自述文件中添加更多限制"
 			  }
 		},
-		"title": "Husqvarna-Automower",
 		"titleLang": {
 			"en": "Husqvarna-Automower",
 			"de": "Husqvarna-Automower",
@@ -125,6 +124,9 @@
 		"connectionType": "cloud",
 		"dataSource": "poll",
 		"materialize": true,
+        "adminUI": {
+            "config": "json"
+        },
 		"dependencies": [
 			{
 				"js-controller": ">=3.3.19"
@@ -145,7 +147,7 @@
 	"native": {
 		"username": "",
 		"password": "",
-		"apikey": ""
+		"apiKey": ""
 	},
 	"objects": [],
 	"instanceObjects": [

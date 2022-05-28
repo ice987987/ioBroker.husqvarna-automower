@@ -53,7 +53,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via this.config:
 		this.log.debug('config.username: ' + this.config.username);
 		this.log.debug('config.password: ' + this.config.password);
-		this.log.debug('config.apikey: ' + this.config.apikey);
+		this.log.debug('config.apiKey: ' + this.config.apiKey);
 
 		// check username: must be email-address
 		if (!isValidEmail.test(this.config.username)) {
@@ -66,7 +66,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			return;
 		}
 		// check API-Key: allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-		if (!isValidApiKey.test(this.config.apikey)) {
+		if (!isValidApiKey.test(this.config.apiKey)) {
 			this.log.error('"API-Key" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#003)');
 			return;
 		}
@@ -101,7 +101,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		await axios({
 			method: 'POST',
 			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
-			data: 'grant_type=password&client_id=' + this.config.apikey + '&username=' + this.config.username + '&password=' + this.config.password +''
+			data: 'grant_type=password&client_id=' + this.config.apiKey + '&username=' + this.config.username + '&password=' + this.config.password +''
 		})
 			.then((response) => {
 				this.log.debug('[getAccessToken]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
@@ -131,7 +131,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		await axios({
 			method: 'POST',
 			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
-			data: 'grant_type=refresh_token&client_id=' + this.config.apikey + '&refresh_token=' + this.refresh_token +''
+			data: 'grant_type=refresh_token&client_id=' + this.config.apiKey + '&refresh_token=' + this.refresh_token +''
 		})
 			.then((response) => {
 				this.log.debug('[getRefreshToken]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
@@ -164,7 +164,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			url: 'https://api.amc.husqvarna.dev/v1/mowers',
 			headers: {
 				'Authorization': 'Bearer ' + this.access_token,
-				'X-Api-Key': this.config.apikey,
+				'X-Api-Key': this.config.apiKey,
 				'Authorization-Provider': 'husqvarna'
 			}
 		})
@@ -1262,7 +1262,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				url: 'https://api.authentication.husqvarnagroup.dev/v1/token/' + this.access_token,
 				method: 'DELETE',
 				headers: {
-					'X-Api-Key': this.config.apikey,
+					'X-Api-Key': this.config.apiKey,
 					'Authorization-Provider': 'husqvarna'
 				}
 			})
@@ -1461,7 +1461,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					url: 'https://api.amc.husqvarna.dev/v1/mowers/' + mowerId + '/' + url,
 					headers: {
 						'Authorization': 'Bearer ' + this.access_token,
-						'X-Api-Key': this.config.apikey,
+						'X-Api-Key': this.config.apiKey,
 						'Authorization-Provider': 'husqvarna',
 						'Content-Type': 'application/vnd.api+json'
 					},

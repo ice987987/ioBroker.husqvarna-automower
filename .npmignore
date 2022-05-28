@@ -1,17 +1,8 @@
-.git
-.idea
+.github
 node_modules/
-nbproject/
-.vs*/
-*.code-workspace
 Thumbs.db
-gulpfile.js
 
 test/
-travis/
-.travis.yml
-appveyor.yml
-tsconfig.json
 
 .eslintrc.json
 .eslintrc.js
