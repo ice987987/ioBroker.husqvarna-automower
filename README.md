@@ -116,6 +116,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 * (ice987987) password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)
 * (ice987987) clean up code
 * (ice987987) implementation of JSON config (this change requires js-controller >= v3.3.19 and admin >= v5.1.28)
+* (ice987987) node.js >= v14.0 is required
 
 ### 0.0.6 (26.05.2022)
 * (ice987987) update dependencies
