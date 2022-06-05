@@ -112,7 +112,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### **WORK IN PROGRESS**
+### 0.1.0 (05.06.2022)
 * (ice987987) password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)
 * (ice987987) clean up code
 * (ice987987) implementation of JSON config (this change requires js-controller >= v3.3.19 and admin >= v5.1.28)

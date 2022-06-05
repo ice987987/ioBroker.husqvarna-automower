@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "husqvarna-automower",
-		"version": "0.0.6",
+		"version": "0.1.0",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -74,6 +74,18 @@
 				"es": "actualizar dependencias\nagregue algunas limitaciones más en el archivo Léame",
 				"pl": "zaktualizuj zależności\ndodaj więcej ograniczeń w readme",
 				"zh-cn": "更新依赖\n在自述文件中添加更多限制"
+			  },
+			  "0.1.0": {
+			    "en": "password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)\nclean up code\nimplementation of JSON config (this change requires js-controller >= v3.3.19 and admin >= v5.1.28)\nnode.js >= v14.0 is required\nupdate dependencies",
+				"de": "Passwortverschlüsselung hinzugefügt (Benutzer müssen das Passwort nach dem Update einmal neu eingeben, diese Änderung erfordert Admin >= v4.0.9)\nCode bereinigen\nImplementierung der JSON-Konfiguration (diese Änderung erfordert js-controller >= v3.3.19 und admin >= v5.1.28)\nnode.js >= v14.0 ist erforderlich\nAbhängigkeiten aktualisieren",
+				"ru": "добавлено шифрование пароля (пользователю необходимо повторно ввести пароль один раз после обновления, для этого изменения требуется admin >= v4.0.9)\nочистить код\nреализация конфигурации JSON (для этого изменения требуется js-controller >= v3.3.19 и admin >= v5.1.28)\nnode.js >= требуется версия 14.0\nобновить зависимости",
+				"pt": "criptografia de senha adicionada (o usuário precisa reinserir a senha uma vez após a atualização, esta alteração requer admin >= v4.0.9)\nlimpar código\nimplementação da configuração JSON (esta mudança requer js-controller >= v3.3.19 e admin >= v5.1.28)\nnode.js >= v14.0 é obrigatório\natualizar dependências",
+				"nl": "wachtwoordversleuteling toegevoegd (gebruiker moet het wachtwoord eenmaal opnieuw invoeren na update, deze wijziging vereist admin >= v4.0.9)\nopschonen code\nimplementatie van JSON-configuratie (voor deze wijziging is js-controller >= v3.3.19 en admin >= v5.1.28 vereist)\nnode.js >= v14.0 is vereist\nupdate afhankelijkheden",
+				"fr": "cryptage du mot de passe ajouté (l'utilisateur doit ressaisir le mot de passe une fois après la mise à jour, ce changement nécessite admin>= v4.0.9)\nnettoyer le code\nimplémentation de la configuration JSON (ce changement nécessite js-controller >= v3.3.19 et admin >= v5.1.28)\nnode.js >= v14.0 est requis\nmettre à jour les dépendances",
+				"it": "crittografia della password aggiunta (l'utente deve reinserire la password una volta dopo l'aggiornamento, questa modifica richiede admin >= v4.0.9)\ncodice di pulizia\nimplementazione della configurazione JSON (questa modifica richiede js-controller >= v3.3.19 e admin >= v5.1.28)\nnode.js >= è richiesto v14.0\naggiornare le dipendenze",
+				"es": "cifrado de contraseña agregado (el usuario debe volver a ingresar la contraseña una vez después de la actualización, este cambio requiere administrador> = v4.0.9)\ncódigo de limpieza\nimplementación de la configuración JSON (este cambio requiere js-controller >= v3.3.19 y admin >= v5.1.28)\nse requiere node.js >= v14.0\nactualizar dependencias",
+				"pl": "dodano szyfrowanie hasła (użytkownik musi ponownie wprowadzić hasło raz po aktualizacji, ta zmiana wymaga administratora >= v4.0.9)\nwyczyść kod\nimplementacja konfiguracji JSON (ta zmiana wymaga js-controller >= v3.3.19 i admin >= v5.1.28)\nnode.js >= v14.0 jest wymagany\nzaktualizuj zależności",
+				"zh-cn": "添加密码加密（用户需要在更新后重新输入一次密码，此更改需要管理员> = v4.0.9）\n清理代码\nJSON 配置的实现（此更改需要 js-controller >= v3.3.19 和 admin >= v5.1.28）\n需要 node.js >= v14.0\n更新依赖"
 			  }
 		},
 		"titleLang": {
