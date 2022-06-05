@@ -53,9 +53,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.setState('info.connection', false, true);
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via this.config:
-		this.log.debug('config.username: ' + this.config.username);
-		this.log.debug('config.password: ' + this.config.password);
-		this.log.debug('config.apiKey: ' + this.config.apiKey);
+		this.log.debug(`config.username: ${this.config.username}`);
+		this.log.debug(`config.password: ${this.config.password}`);
+		this.log.debug(`config.apiKey: ${this.config.apiKey}`);
 
 		// check username: must be email-address
 		if (!isValidEmail.test(this.config.username)) {
@@ -103,10 +103,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 		await axios({
 			method: 'POST',
 			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
-			data: 'grant_type=password&client_id=' + this.config.apiKey + '&username=' + this.config.username + '&password=' + this.config.password +''
+			data: `grant_type=password&client_id=${this.config.apiKey}&username=${this.config.username}&password=${this.config.password}`
 		})
 			.then((response) => {
-				this.log.debug('[getAccessToken]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
+				this.log.debug(`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)} ; data: ${JSON.stringify(response.data)}`);
 
 				this.access_token = response.data.access_token;
 				this.refresh_token = response.data.refresh_token;
@@ -116,15 +116,15 @@ class HusqvarnaAutomower extends utils.Adapter {
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug('[getAccessToken]: HTTP status response: ' +  error.response.status + '; headers: ' + JSON.stringify(error.response.headers) + '; data: ' + JSON.stringify(error.response.data));
+					this.log.debug(`[getAccessToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug('[getAccessToken]: error request: ' + error);
+					this.log.debug(`[getAccessToken]: error request: ${error}`);
 				} else {
 					// Something happened in setting up the request that triggered an Error
-					this.log.debug('[getAccessToken]: error message: ' + error.message);
+					this.log.debug(`[getAccessToken]: error message: ${error.message}`);
 				}
-				this.log.debug('[getAccessToken]: error.config: ' + JSON.stringify(error.config));
+				this.log.debug(`[getAccessToken]: error.config: ${JSON.stringify(error.config)}`);
 				throw new Error ('"Automower Connect API" not reachable. (ERR_#004)');
 			});
 	}
@@ -133,10 +133,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 		await axios({
 			method: 'POST',
 			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
-			data: 'grant_type=refresh_token&client_id=' + this.config.apiKey + '&refresh_token=' + this.refresh_token +''
+			data: `grant_type=refresh_token&client_id=${this.config.apiKey}&refresh_token=${this.refresh_token}`
 		})
 			.then((response) => {
-				this.log.debug('[getRefreshToken]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
+				this.log.debug(`[getRefreshToken]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)} ; data: ${JSON.stringify(response.data)}`);
 
 				this.access_token = response.data.access_token;
 				this.refresh_token = response.data.refresh_token;
@@ -146,47 +146,47 @@ class HusqvarnaAutomower extends utils.Adapter {
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug('[getRefreshToken]: HTTP status response: ' +  error.response.status + '; headers: ' + JSON.stringify(error.response.headers) + '; data: ' + JSON.stringify(error.response.data));
+					this.log.debug(`[getRefreshToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug('[getRefreshToken]: error request: ' + error);
+					this.log.debug(`[getRefreshToken]: error request: ${error}`);
 				} else {
 					// Something happened in setting up the request that triggered an Error
-					this.log.debug('[getRefreshToken]: error message: ' + error.message);
+					this.log.debug(`[getRefreshToken]: error message: ${error.message}`);
 				}
-				this.log.debug('[getRefreshToken]: error.config: ' + JSON.stringify(error.config));
+				this.log.debug(`[getRefreshToken]: error.config: ${JSON.stringify(error.config)}`);
 				throw new Error ('"Automower Connect API" not reachable. (ERR_#005)');
 			});
 	}
 
-	//https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme
+	// https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme
 	async getMowerData() {
 		await axios({
 			method: 'GET',
 			url: 'https://api.amc.husqvarna.dev/v1/mowers',
 			headers: {
-				'Authorization': 'Bearer ' + this.access_token,
+				'Authorization': `Bearer ${this.access_token}`,
 				'X-Api-Key': this.config.apiKey,
 				'Authorization-Provider': 'husqvarna'
 			}
 		})
 			.then((response) => {
-				this.log.debug('[getMowerData]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
+				this.log.debug(`[getMowerData]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)} ; data: ${JSON.stringify(response.data)}`);
 
 				this.mowerData = response.data.data;
 			})
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug('[getMowerData]: HTTP status response: ' +  error.response.status + '; headers: ' + JSON.stringify(error.response.headers) + '; data: ' + JSON.stringify(error.response.data));
+					this.log.debug(`[getMowerData]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug('[getMowerData]: error request: ' + error);
+					this.log.debug(`[getMowerData]: error request: ${error}`);
 				} else {
 					// Something happened in setting up the request that triggered an Error
-					this.log.debug('[getMowerData]: error message: ' + error.message);
+					this.log.debug(`[getMowerData]: error message: ${error.message}`);
 				}
-				this.log.debug('[getMowerData]: error.config: ' + JSON.stringify(error.config));
+				this.log.debug(`[getMowerData]: error.config: ${JSON.stringify(error.config)}`);
 				throw new Error ('"Automower Connect API" not reachable. (ERR_#006)');
 			});
 	}
@@ -194,9 +194,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 	// https://github.com/ioBroker/ioBroker.docs/blob/master/docs/en/dev/objectsschema.md
 	// https://github.com/ioBroker/ioBroker/blob/master/doc/STATE_ROLES.md#state-roles
 	async createObjects(mowerData) {
-		// this.log.debug('[createObjects]: listMowers: ' + JSON.stringify(listMowers));
+		// this.log.debug(`[createObjects]: listMowers: ${JSON.stringify(listMowers)}`);
 
-		this.log.debug('[createObjects]: start objects creation for ' + mowerData.length + ' device' + (mowerData.length > 1 ? 's' : '') + '...');
+		this.log.debug(`[createObjects]: start objects creation for ${mowerData.length} device${(mowerData.length > 1 ? 's' : '')}...`);
 		if (mowerData.length !== 0) {
 			for (let i = 0; i < mowerData.length; i++) {
 				if (mowerData[i].type === 'mower') {
@@ -1036,7 +1036,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.setStateAsync(mowerData[i].id + '.mower.errorCode', {val: mowerData[i].attributes.mower.errorCode, ack: true});
 			this.setStateAsync(mowerData[i].id + '.mower.errorCodeTimestamp', {val: mowerData[i].attributes.mower.errorCodeTimestamp, ack: true});
 
-			//set all values in "calendar"
+			// set all values in "calendar"
 			for (let j = 0; j < Math.min(Object.keys(mowerData[i].attributes.calendar.tasks).length, numberOfSchedules); j++) {
 				this.setStateAsync(mowerData[i].id + '.calendar.' + [j] + '.start', {val: mowerData[i].attributes.calendar.tasks[j].start, ack: true});
 				this.setStateAsync(mowerData[i].id + '.calendar.' + [j] + '.duration', {val: mowerData[i].attributes.calendar.tasks[j].duration, ack: true});
@@ -1082,7 +1082,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 		this.wss = new WebSocket('wss://ws.openapi.husqvarna.dev/v1', {
 			headers: {
-				'Authorization': 'Bearer ' + this.access_token,
+				'Authorization': `Bearer ${this.access_token}`,
 			}
 		});
 
@@ -1104,20 +1104,20 @@ class HusqvarnaAutomower extends utils.Adapter {
 		});
 
 		this.wss.on('message', async (message) => {
-			this.log.debug('[wss.on - message]: ' + message);
+			this.log.debug(`[wss.on - message]: ${message}`);
 			// https://stackoverflow.com/questions/30621802/why-does-json-parse-fail-with-the-empty-string
 			try {
 				const jsonMessage = JSON.parse(message);
-				// this.log.debug('[wss.on - message]: jsonMessage: ' + JSON.stringify(jsonMessage));
+				// this.log.debug(`[wss.on - message]: jsonMessage: ${JSON.stringify(jsonMessage)}`);
 
 				if ('attributes' in jsonMessage) {
 					if ('cuttingHeight' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.settings.cuttingHeight', {val: jsonMessage.attributes.cuttingHeight, ack: true});
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.cuttingHeight: ' + jsonMessage.attributes.cuttingHeight);
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.cuttingHeight: ${jsonMessage.attributes.cuttingHeight}`);
 					}
 					if ('headlight' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.settings.headlight', {val: jsonMessage.attributes.headlight.mode, ack: true});
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.headlight.mode: ' + jsonMessage.attributes.headlight.mode);
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.headlight.mode: ${jsonMessage.attributes.headlight.mode}`);
 					}
 					if ('calendar' in jsonMessage.attributes) {
 						if (Object.keys(jsonMessage.attributes.calendar.tasks).length > 0) {
@@ -1148,7 +1148,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 								this.setStateAsync(jsonMessage.id + '.calendar.' + [i] + '.sunday', {val: false, ack: true});
 							}
 						}
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.calendar: ' + JSON.stringify(jsonMessage.attributes.calendar));
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.calendar: ${JSON.stringify(jsonMessage.attributes.calendar)}`);
 					}
 					if ('positions' in jsonMessage.attributes) {
 						if (Object.keys(jsonMessage.attributes.positions).length > 0) {
@@ -1158,12 +1158,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 								this.setStateAsync(jsonMessage.id + '.positions.latlong', {val: jsonMessage.attributes.positions[i].latitude + ';' + jsonMessage.attributes.positions[i].longitude, ack: true});
 								await this.delay(500);
 							}
-							// this.log.debug('[wss.on - message]: jsonMessage.attributes.positions: ' + JSON.stringify(jsonMessage.attributes.positions));
+							// this.log.debug(`[wss.on - message]: jsonMessage.attributes.positions: ${JSON.stringify(jsonMessage.attributes.positions)}`);
 						}
 					}
 					if ('battery' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.battery.batteryPercent', {val: jsonMessage.attributes.battery.batteryPercent, ack: true});
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.battery: ' + JSON.stringify(jsonMessage.attributes.battery));
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.battery: ${JSON.stringify(jsonMessage.attributes.battery)}`);
 					}
 					if ('mower' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.mower.mode', {val: jsonMessage.attributes.mower.mode, ack: true});
@@ -1171,10 +1171,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 						this.setStateAsync(jsonMessage.id + '.mower.state', {val: jsonMessage.attributes.mower.state, ack: true});
 						this.setStateAsync(jsonMessage.id + '.mower.errorCode', {val: jsonMessage.attributes.mower.errorCode, ack: true});
 						this.setStateAsync(jsonMessage.id + '.mower.errorCodeTimestamp', {val: jsonMessage.attributes.mower.errorCodeTimestamp, ack: true});
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.mower: ' + JSON.stringify(jsonMessage.attributes.mower));
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.mower: ${JSON.stringify(jsonMessage.attributes.mower)}`);
 					}
 					if ('planner' in jsonMessage.attributes) {
-						// this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp, ack: true});
 						if (jsonMessage.attributes.planner.nextStartTimestamp !== 0) {
 							this.setStateAsync(jsonMessage.id + '.planner.nextStartTimestamp', {val: jsonMessage.attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
 						} else {
@@ -1182,12 +1181,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						}
 						this.setStateAsync(jsonMessage.id + '.planner.action', {val: jsonMessage.attributes.planner.override.action, ack: true});
 						this.setStateAsync(jsonMessage.id + '.planner.restrictedReason', {val: jsonMessage.attributes.planner.restrictedReason, ack: true});
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.planner: ' + JSON.stringify(jsonMessage.attributes.planner));
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.planner: ${JSON.stringify(jsonMessage.attributes.planner)}`);
 					}
 					if ('metadata' in jsonMessage.attributes) {
 						this.setStateAsync(jsonMessage.id + '.metadata.connected', {val: jsonMessage.attributes.metadata.connected, ack: true});
 						this.setStateAsync(jsonMessage.id + '.metadata.statusTimestamp', {val: jsonMessage.attributes.metadata.statusTimestamp, ack: true});
-						// this.log.debug('[wss.on - message]: jsonMessage.attributes.metadata: ' + JSON.stringify(jsonMessage.attributes.metadata));
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.metadata: ${JSON.stringify(jsonMessage.attributes.metadata)}`);
 					}
 				}
 			} catch (error) {
@@ -1200,8 +1199,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.ping && clearTimeout(this.ping);
 			this.pingTimeout && clearTimeout(this.pingTimeout);
 
-			this.log.debug('[wss.on - close]: this.wss.readyState: ' + this.wss.readyState); // value: 3
-			this.log.debug('[wss.on - close]: data: ' + data); // value: 1001
+			this.log.debug(`[wss.on - close]: this.wss.readyState: ${this.wss.readyState}`); // value: 3
+			this.log.debug(`[wss.on - close]: data: ${data}`); // value: 1001
 
 			this.setStateAsync('info.connection', false, true);
 
@@ -1228,7 +1227,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		});
 
 		this.wss.on('error', (error) => {
-			this.log.debug('[wss.on - error]: ' + error);
+			this.log.debug(`[wss.on - error]: ${error}`);
 		});
 	}
 
@@ -1265,7 +1264,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			// invalidating Token
 			await axios({
-				url: 'https://api.authentication.husqvarnagroup.dev/v1/token/' + this.access_token,
+				url: `https://api.authentication.husqvarnagroup.dev/v1/token/${this.access_token}`,
 				method: 'DELETE',
 				headers: {
 					'X-Api-Key': this.config.apiKey,
@@ -1273,23 +1272,23 @@ class HusqvarnaAutomower extends utils.Adapter {
 				}
 			})
 				.then((response) => {
-					this.log.debug('[onUnload]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
+					this.log.debug(`[onUnload]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)} ; data: ${JSON.stringify(response.data)}`);
 				})
 				.catch((error) => {
 					if (error.response) {
 						// The request was made and the server responded with a status code that falls out of the range of 2xx
-						this.log.debug('[onUnload]: HTTP status response: ' +  error.response.status + '; headers: ' + JSON.stringify(error.response.headers) + '; data: ' + JSON.stringify(error.response.data));
+						this.log.debug(`[onUnload]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 						if (error.response.status === 403) {
 							this.log.info('"Husqvarna Authentication API Access token" successful invalidated.');
 						}
 					} else if (error.request) {
 						// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-						this.log.debug('[onUnload]: error request: ' + error);
+						this.log.debug(`[getMowerData]: error request: ${error}`);
 					} else {
 						// Something happened in setting up the request that triggered an Error
-						this.log.debug('[onUnload]: error message: ' + error.message);
+						this.log.debug(`[getMowerData]: error message: ${error.message}`);
 					}
-					this.log.debug('[onUnload]: error.config: ' + JSON.stringify(error.config));
+					this.log.debug(`[getMowerData]: error.config: ${JSON.stringify(error.config)}`);
 				});
 
 			this.autoRestartTimeout && clearTimeout(this.autoRestartTimeout);
@@ -1316,11 +1315,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 			if (state.ack === false) {
 
 				// https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme
-				this.log.debug('[onStateChange]: id: ' + id + '; state: ' + JSON.stringify(state));
+				this.log.debug(`[onStateChange]: id: ${id}; state: ${JSON.stringify(state)}`);
 				const idSplit = id.split('.');
-				this.log.debug('[onStateChange]: idSplit.length: ' + idSplit.length);
+				this.log.debug(`[onStateChange]: idSplit.length: ${idSplit.length}`);
 				const mowerId = idSplit[2];
-				this.log.debug('[onStateChange]: mowerId: ' + mowerId);
+				this.log.debug(`[onStateChange]: mowerId: ${mowerId}`);
 
 				let command = null;
 				let parentPath = null;
@@ -1331,8 +1330,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 					command = idSplit[5];
 					parentPath = idSplit.slice(0, idSplit.length - 2).join('.');
 				}
-				this.log.debug('[onStateChange]: command: ' + command);
-				this.log.debug('[onStateChange]: parentPath : ' + parentPath);
+				this.log.debug(`[onStateChange]: command: ${command}`);
+				this.log.debug(`[onStateChange]: parentPath : ${parentPath}`);
 
 				let data = {};
 				let url = '';
@@ -1457,16 +1456,16 @@ class HusqvarnaAutomower extends utils.Adapter {
 							}
 						}
 					};
-					// this.log.debug('[onStateChange]: data: ' + JSON.stringify(data));
+					// this.log.debug(`[onStateChange]: data: ${JSON.stringify(data)}`);
 
 					url = 'calendar';
 				}
 
 				await axios({
 					method: 'POST',
-					url: 'https://api.amc.husqvarna.dev/v1/mowers/' + mowerId + '/' + url,
+					url: `https://api.amc.husqvarna.dev/v1/mowers/${mowerId}/${url}`,
 					headers: {
-						'Authorization': 'Bearer ' + this.access_token,
+						'Authorization': `Bearer ${this.access_token}`,
 						'X-Api-Key': this.config.apiKey,
 						'Authorization-Provider': 'husqvarna',
 						'Content-Type': 'application/vnd.api+json'
@@ -1474,28 +1473,28 @@ class HusqvarnaAutomower extends utils.Adapter {
 					data: data
 				})
 					.then((response) => {
-						this.log.debug('[onStateChange]: HTTP status response: ' + response.status + ' ' + response.statusText +  '; config: ' + JSON.stringify(response.config) + '; headers: ' + JSON.stringify(response.headers) + '; data: ' + JSON.stringify(response.data));
+						this.log.debug(`[onStateChange]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)} ; data: ${JSON.stringify(response.data)}`);
 						if (response.status === 202) {
-							this.log.info(response.statusText + '. Command "' + command + '" Set.');
+							this.log.info(`${response.statusText}. Command ${command} Set.`);
 						}
 					})
 					.catch((error) => {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
-							this.log.debug('[onUnload]: HTTP status response: ' +  error.response.status + '; headers: ' + JSON.stringify(error.response.headers) + '; data: ' + JSON.stringify(error.response.data));
+							this.log.debug(`[onStateChange]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 							if (error.response.status === 400) { // Invalid schedule format in request body. Parsing message: No tasks.
-								this.log.info(error.response.data.errors[0].detail + ' Nothing set.');
+								this.log.info(`${error.response.data.errors[0].detail} Nothing set`);
 							} else if (error.response.status === 404) { // No connection between the cloud service and the mower.
-								this.log.info(error.response.data.errors[0].detail + ' Nothing set.');
+								this.log.info(`${error.response.data.errors[0].detail} Nothing set.`);
 							}
 						} else if (error.request) {
 							// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-							this.log.debug('[onUnload]: error request: ' + error);
+							this.log.debug(`[onStateChange]: error request: ${error}`);
 						} else {
 							// Something happened in setting up the request that triggered an Error
-							this.log.debug('[onUnload]: error message: ' + error.message);
+							this.log.debug(`[onStateChange]: error message: ${error.message}`);
 						}
-						this.log.debug('[onUnload]: error.config: ' + JSON.stringify(error.config));
+						this.log.debug(`[onStateChange]: error.config: ${JSON.stringify(error.config)}`);
 					});
 
 			} else {
