@@ -11,6 +11,8 @@ const utils = require('@iobroker/adapter-core');
 // Load your modules here, e.g.:
 const axios = require('axios').default;
 const WebSocket = require('ws');
+
+// variables
 const numberOfSchedules = 4;
 const isValidEmail = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // https://emailregex.com/
 const isValidApiKey = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/; // format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
