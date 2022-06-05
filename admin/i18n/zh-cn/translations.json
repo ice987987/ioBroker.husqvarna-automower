@@ -1,0 +1,9 @@
+{
+    "username": "用户名",
+    "usernameHint": "例如 email@example.com",
+    "password": "密码",
+    "passwordHint": "您的“Husqvarna Automower Connect”密码（至少 5 个字符）",
+    "apiKey": "API 密钥",
+    "apiKeyHint": "在<a href='https://developer.husqvarnagroup.cloud' target='_blank'>此处</a>获取您的“Husqvarna Automower Connect API-KEY”。 ",
+    "note": "在保存适配器立即使用新配置重新启动。"
+}

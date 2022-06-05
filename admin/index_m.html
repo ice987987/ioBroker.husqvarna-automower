@@ -1,131 +1,43 @@
 <html>
-
 <head>
+    <!-- Load ioBroker scripts and styles-->
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
-	<!-- Load ioBroker scripts and styles-->
-	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
-	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-
-	<script type="text/javascript" src="../../js/translate.js"></script>
-	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
-
-	<!-- Load our own files -->
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="words.js"></script>
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
 	<script type="text/javascript">
 		// This will be called by the admin adapter when the settings page loads
 		function load(settings, onChange) {
-			// example: select elements with id=key and class=value and insert value
-			if (!settings) return;
-
-			// handle value changes
-			$(".value").on("input change", function() {
-				// if something changed, enable save buttons when all fields are filled
-				if ($("#username").val() && $("#password").val() && $("#apikey").val())
-				{
-					onChange(true);
-				} else {
-					onChange(false);
-				};
-
-			});
-
-			$("#username").val(settings["username"]);
-			$("#password").val(settings["password"]);
-			$("#apikey").val(settings["apikey"]);
-
-			onChange(false);
-
-			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-			if (M) M.updateTextFields();
+			
 		}
-
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
-			// example: select elements with class=value and build settings object
-			var obj = {};
-			$('.value').each(function () {
-				var $this = $(this);
-				if ($this.attr('type') === 'checkbox') {
-					obj[$this.attr('id')] = $this.prop('checked');
-				} else if ($this.attr('type') === 'number') {
-					obj[$this.attr('id')] = parseFloat($this.val());
-				} else {
-					obj[$this.attr('id')] = $this.val();
-				}
-			});
-			callback(obj);
+			
 		}
 	</script>
-
 </head>
-<!-- Learn more http://materializecss.com/forms.html -->
 <body>
-
-	<div class="m adapter-container">
-
-		<div class="row">
-			<div class="col s12 m4 l2">
-				<img src="husqvarna-automower.png" class="logo">
-			</div>
-		</div>
-
-		<!-- Put your content here -->
-		<div class="row">
-			<div class="col s12">
-				<h6 class="translate">APIConnectionSettings</h6>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="input-field col s12 l12">
-				<input
-					id="username"
-					type="email"
-					class="value validate"
-					required
-				>
-				<label for="username" class="translate">username</label>
-				<span class="translate">usernameHint</span>
-			</div>
-
-			<div class="input-field col s12 l12">
-				<input
-					id="password"
-					type="password"
-					minlength="5"
-					class="value validate"
-				>
-				<label for="password" class="translate">password</label>
-				<span class="translate">passwordHint</span>
-			</div>
-
-			<div class="input-field col s12 l12">
-				<input
-					id="apikey"
-					type="password"
-					pattern="[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}"
-					class="value validate"
-				>
-				<label for="apikey" class="translate">apikey</label>
-				<span class="translate">apikeyHint</span>
-			</div>
-
-		</div>
-
-		<div class="row">
-			<div class="col s12 l12">
-				<p class="translate">on save adapter restarts with new config immediately</p>
-			</div>
-		</div>
-
-	</div>
-
+    <div class="m adapter-container">
+        <div class="col s12 page">
+            <div class="row">
+                <div class="col s6">
+                    <img src="husqvarna-automower.png" class="logo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p style="font-weight: bold; font-size: 1.2em; color: red;">
+                        This adapter version has no support for "Admin 4" UI configuration. Please switch to "Admin 5" UI or downgrade to an older version (see changelog for details).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>

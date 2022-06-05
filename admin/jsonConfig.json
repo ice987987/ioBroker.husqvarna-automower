@@ -1,0 +1,58 @@
+{
+    "type": "panel",
+    "i18n": true,
+    "items": {
+        "username": {
+            "newLine": true,
+            "type": "text",
+            "label": "username",
+            "help": "usernameHint",
+            "placeholder": "email@example.com",
+            "validator": "data.username.match(/^(([^<>()\\[\\]\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/)",
+            "validatorNoSaveOnError": true,
+            "sm": 6,
+            "md": 4,
+            "lg": 4
+        },
+        "password": {
+            "newLine": false,
+            "type": "password",
+            "label": "password",
+            "help": "passwordHint",
+            "repeat": false,
+            "visible": false,
+            "validator": "data.password.length >= 5",
+            "validatorNoSaveOnError": true,
+            "sm": 6,
+            "md": 4,
+            "lg": 4
+        },
+        "apiKey": {
+            "newLine": true,
+            "type": "text",
+            "label": "apiKey",
+            "help": "apiKeyHint",
+            "placeholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "validator": "data.apiKey.match(/[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/)",
+            "validatorNoSaveOnError": true,
+            "sm": 12,
+            "md": 8,
+            "lg": 8
+        },
+        "_note": {
+            "newLine": true,
+            "type": "staticText",
+            "label": "note"
+        },
+        "_helpLink": {
+            "newLine": true,
+            "type": "staticLink",
+            "label": "Readme",
+            "noTranslation": true,
+            "variant": "contained",
+            "color": "primary",
+            "button": true,
+            "href": "https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md"
+        }
+    }
+}

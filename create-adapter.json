@@ -1,0 +1,42 @@
+{
+	"cli": true,
+	"target": "directory",
+	"adapterName": "husqvarna-automower",
+	"title": "husqvarna-automower",
+	"description": "husqvarna-automower short desc",
+	"keywords": [
+		"smarthome",
+		"iobroker",
+		"husqvarna-automower"
+	],
+	"expert": "yes",
+	"features": [
+		"adapter"
+	],
+	"adminFeatures": [],
+	"type": "garden",
+	"startMode": "daemon",
+	"connectionType": "cloud",
+	"dataSource": "poll",
+	"connectionIndicator": "yes",
+	"language": "JavaScript",
+	"adminReact": "no",
+	"tools": [
+		"ESLint",
+		"type checking"
+	],
+	"releaseScript": "no",
+	"devServer": "no",
+	"indentation": "Tab",
+	"quotes": "single",
+	"es6class": "yes",
+	"authorName": "ice987987",
+	"authorGithub": "ice987987",
+	"authorEmail": "mathias.frei1@gmail.com",
+	"gitRemoteProtocol": "HTTPS",
+	"gitCommit": "yes",
+	"defaultBranch": "main",
+	"license": "MIT License",
+	"dependabot": "yes",
+	"creatorVersion": "2.0.2"
+}

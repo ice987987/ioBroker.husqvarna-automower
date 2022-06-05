@@ -1,0 +1,9 @@
+{
+    "username": "Nom d'utilisateur",
+    "usernameHint": "par exemple. email@example.com",
+    "password": "le mot de passe",
+    "passwordHint": "votre mot de passe 'Husqvarna Automower Connect' (au moins 5 caractères)",
+    "apiKey": "clé API",
+    "apiKeyHint": "Obtenez votre 'Husqvarna Automower Connect API-KEY' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>ici</a>. ",
+    "note": "lors de l'enregistrement, l'adaptateur redémarre immédiatement avec la nouvelle configuration."
+}
