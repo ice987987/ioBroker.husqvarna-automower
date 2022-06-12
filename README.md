@@ -25,7 +25,7 @@ This adapter fetches data from your Husqvarna lawn mower from [https://developer
 * admin >= v5.1.28 is required
 * This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
 
-**Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/getting-started). "Old" logins will not work.**
+**Please make sure that you have created an account, password and API-Key according to [these instructions]([https://developer.husqvarnagroup.cloud/docs/getting-started](https://developer.husqvarnagroup.cloud/docs/get-started)). "Old" logins will not work.**
 
 ## Control
 
@@ -82,7 +82,7 @@ You get the following values from your Husqvarna lawn mower:
 [^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose).
 
 ## ioBroker.vis bindings
-the following code can be used for html-bindings in adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the [status description and error codes](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/status%20description%20and%20error%20codes) into text for better visualization:
+the following code can be used for html-bindings in adapter [ioBroker.vis](https://github.com/ioBroker/ioBroker.vis#bindings-of-objects) to translate the [status description and error codes](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#status%20description%20and%20error%20codes) into text for better visualization:
 
 * Datapoint `husqvarna-automower.0.[mowerID from .system.id].mower.errorCode`:
 ```
