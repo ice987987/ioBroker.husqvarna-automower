@@ -1,7 +1,7 @@
 name: Bug report
 title: "Bug report"
 description: "Create a report to help improve this ioBroker adapter"
-labels: bug
+labels: needs-triage
 body:
   - type: markdown
     attributes:
@@ -40,7 +40,7 @@ body:
         ## Environment
   - type: input
     attributes:
-      label: Version of nodejs
+      label: Version of Node.js
       description: Can be found in the host section of ioBroker admin
     validations:
       required: true
@@ -52,7 +52,13 @@ body:
       required: true
   - type: input
     attributes:
-      label: Version of Adapter
+      label: Version of "husqvarna-automower"-adapter
+      description: Can be found in the adapters tab of ioBroker admin
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Version of "admin"-adapter
       description: Can be found in the adapters tab of ioBroker admin
     validations:
       required: true
