@@ -25,7 +25,7 @@ This adapter fetches data from your Husqvarna lawn mower from [https://developer
 * admin >= v5.1.28 is required
 * This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
 
-**Please make sure that you have created an account, password and API-Key according to [these instructions]([https://developer.husqvarnagroup.cloud/docs/getting-started](https://developer.husqvarnagroup.cloud/docs/get-started)). "Old" logins will not work.**
+**Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started). "Old" logins will not work.**
 
 ## Control
 
