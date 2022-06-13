@@ -1,9 +1,7 @@
 {
-    "username": "Nazwa Użytkownika",
-    "usernameHint": "np. email@example.com",
-    "password": "hasło",
-    "passwordHint": "hasło „Husqvarna Automower Connect” (co najmniej 5 znaków)",
-    "apiKey": "Klucz API",
-    "apiKeyHint": "Pobierz klucz „Husqvarna Automower Connect API-KEY” <a href='https://developer.husqvarnagroup.cloud' target='_blank'>tutaj</a>. ",
+    "applicationKey": "Application key",
+    "applicationKeyHint": "Pobierz „Klucz aplikacji Husqvarna Automower” <a href='https://developer.husqvarnagroup.cloud' target='_blank'>tutaj</a>. ",
+    "applicationSecret": "Application secret",
+    "applicationSecretHint": "Pobierz „tajemnicę aplikacji Husqvarna Automower” <a href='https://developer.husqvarnagroup.cloud' target='_blank'>tutaj</a>. ",
     "note": "po zapisaniu adapter natychmiast uruchamia się ponownie z nową konfiguracją."
 }
