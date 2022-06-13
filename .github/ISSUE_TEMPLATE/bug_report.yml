@@ -15,10 +15,6 @@ body:
         occurs with ioBroker itself, any third party adapters, unofficial or outdated
         adapter versions.
 
-        Do also not seek support here ("I need help with ...", "I have a
-        question ...", "Can someone walk me through ..."), that belongs into the
-        [ioBroker forum at forum.iobroker.net](https://forum.iobroker.net/).
-
         And finally, make sure any bug you want to report is still present with the **current**
         adapter (beta) version.
 
