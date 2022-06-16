@@ -1,9 +1,7 @@
 {
-	"username": "username",
-	"usernameHint": "e.g. email@example.com",
-	"password": "password",
-	"passwordHint": "your 'Husqvarna Automower Connect' password (at least 5 characters)",
-	"apiKey": "API Key",
-	"apiKeyHint": "Get your 'Husqvarna Automower Connect API-KEY' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>here</a>. (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
+	"applicationKey": "Application key",
+	"applicationKeyHint": "Get your 'Husqvarna Automower Application key' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>here</a>. (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
+	"applicationSecret": "Application secret",
+	"applicationSecretHint": "Get your 'Husqvarna Automower Application secret' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>here</a>. (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
 	"note": "on save adapter restarts with new config immediately."
 }
