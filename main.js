@@ -31,7 +31,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.on('unload', this.onUnload.bind(this));
 
 		this.access_token = null;
-		this.refresh_token = null;
 		this.mowerData = null;
 
 		this.firstStart = true;
@@ -62,7 +61,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		}
 		// check applicationSecret
 		if (!isValidApplicationCredential.test(this.config.applicationSecret)) {
-			this.log.error('"Application Secret" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#003)');
+			this.log.error('"Application Secret" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#002)');
 			return;
 		}
 
@@ -117,37 +116,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.log.debug(`[getAccessToken]: error message: ${error.message}`);
 				}
 				this.log.debug(`[getAccessToken]: error.config: ${JSON.stringify(error.config)}`);
-				throw new Error ('"Automower Connect API" not reachable. (ERR_#004)');
-			});
-	}
-
-	async getRefreshToken() {
-		await axios({
-			method: 'POST',
-			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
-			data: `grant_type=refresh_token&client_id=${this.config.applicationKey}&refresh_token=${this.refresh_token}`
-		})
-			.then((response) => {
-				this.log.debug(`[getRefreshToken]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
-
-				this.access_token = response.data.access_token;
-				this.refresh_token = response.data.refresh_token;
-
-				this.log.debug('"Husqvarna Refresh API Access token" received.');
-			})
-			.catch((error) => {
-				if (error.response) {
-					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug(`[getRefreshToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
-				} else if (error.request) {
-					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
-					this.log.debug(`[getRefreshToken]: error request: ${error}`);
-				} else {
-					// Something happened in setting up the request that triggered an Error
-					this.log.debug(`[getRefreshToken]: error message: ${error.message}`);
-				}
-				this.log.debug(`[getRefreshToken]: error.config: ${JSON.stringify(error.config)}`);
-				throw new Error ('"Automower Connect API" not reachable. (ERR_#005)');
+				throw new Error ('"Automower Connect API" not reachable. (ERR_#003)');
 			});
 	}
 
@@ -179,7 +148,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.log.debug(`[getMowerData]: error message: ${error.message}`);
 				}
 				this.log.debug(`[getMowerData]: error.config: ${JSON.stringify(error.config)}`);
-				throw new Error ('"Automower Connect API" not reachable. (ERR_#006)');
+				throw new Error ('"Automower Connect API" not reachable. (ERR_#004)');
 			});
 	}
 
@@ -1002,12 +971,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.subscribeStates(mowerData[i].id + '.ACTIONS.schedule.SET');
 
 				} else {
-					throw new Error ('No mower found, no Objects created. Check API (ERR_#007).');
+					throw new Error ('No mower found, no Objects created. Check API (ERR_#005).');
 				}
 			}
 			this.log.debug('[createObjects]: Objects created...');
 		} else {
-			throw new Error ('No Objects found, no Objects created. Check API (ERR_#008).');
+			throw new Error ('No Objects found, no Objects created. Check API (ERR_#006).');
 		}
 	}
 
@@ -1200,12 +1169,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 				if (data === 1001 && this.wss.readyState === 3) {
 					await this.autoRestart();
 				} else if (data === 1006 && this.wss.readyState === 3) {
-					await this.getRefreshToken();
+					await this.getAccessToken();
 					await this.autoRestart();
 				} else if (data.wasClean) {
 					this.log.info('Connection closed cleanly');
 				} else {
-					throw new Error ('Unknown WebSocket error. (ERR_#009)');
+					throw new Error ('Unknown WebSocket error. (ERR_#007)');
 				}
 			} catch (error) {
 				this.log.error(error);
@@ -1352,7 +1321,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				} else if (command === 'PARK') { // Park mower for a duration of time, overriding schedule
 					const parkTime = await this.getStateAsync(parentPath + '.park.parkTime');
 					if (!parkTime) {
-						this.log.error('Missing "parkTime". Nothing Set. (ERR_#010');
+						this.log.error('Missing "parkTime". Nothing Set. (ERR_#008');
 						return;
 					}
 					data = {
@@ -1374,7 +1343,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				} else if (command === 'START') { // Park mower for a duration of time, overriding schedule
 					const startTime = await this.getStateAsync(parentPath + '.start.startTime');
 					if (!startTime) {
-						this.log.error('Missing "startTime". Nothing Set. (ERR_#011');
+						this.log.error('Missing "startTime". Nothing Set. (ERR_#009');
 						return;
 					}
 					data = {
