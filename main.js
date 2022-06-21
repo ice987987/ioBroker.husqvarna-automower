@@ -102,7 +102,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 				this.access_token = response.data.access_token;
 
-				this.log.info('"Husqvarna Authentication API Access token" received.');
+				if (this.firstStart === true) {
+					this.log.info('"Husqvarna Authentication API Access token" received.');
+				} else {
+					this.log.debug('"Husqvarna Authentication API Access token" received.');
+				}
 			})
 			.catch((error) => {
 				if (error.response) {

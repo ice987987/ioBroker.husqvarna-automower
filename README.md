@@ -25,7 +25,7 @@ This adapter fetches data from your Husqvarna lawn mower from [https://developer
 * admin >= v5.1.28 is required
 * This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
 
-**Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started). "Old" logins will not work.**
+**Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started). "OLD" logins will not work.**
 
 ## Control
 
@@ -112,10 +112,13 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 <!-- ### **WORK IN PROGRESS** -->
 
+### **WORK IN PROGRESS**
+* (ice987987) improved logging
+
 ### 0.2.0 (14.06.2022)
 * (ice987987) support new login procedure to husqvarna's webservice using "Application key" and "Application secret" instead of "username (emailadress)" and "password" (issue [#33](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/33))
 * (ice987987) update links to husqvarna homepage due to their updated homepage
-* (ice987987) improve bug-report form
+* (ice987987) improved bug-report form
 
 ### 0.1.0 (05.06.2022)
 * (ice987987) password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)
@@ -131,8 +134,8 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 ### 0.0.5 (02.05.2022)
 * (ice987987) fix issue [#10](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/10)
 * (ice987987) store all GPS-values (delay of 500ms if more than one was received)
-* (ice987987) improve error handling
-* (ice987987) improve debug output messages
+* (ice987987) improved error handling
+* (ice987987) improved debug output messages
 
 ### 0.0.4 (16.04.2022)
 * (ice987987) update dependencies
