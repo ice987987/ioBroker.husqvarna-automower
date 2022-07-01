@@ -114,6 +114,7 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 
 ### **WORK IN PROGRESS**
 * (ice987987) improved logging
+* (ice987987) update dependencies
 
 ### 0.2.0 (14.06.2022)
 * (ice987987) support new login procedure to husqvarna's webservice using "Application key" and "Application secret" instead of "username (emailadress)" and "password" (issue [#33](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/33))
