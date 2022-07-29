@@ -106,7 +106,6 @@ the following code can be used for html-bindings in adapter [ioBroker.vis](https
     (DE)
     ```
     {value1:husqvarna-automower.0.[mowerID vom DP .system.id].mower.activity;value1 === "UNKNOWN" ? "unbekannte Aktivität" :: (value1 === "NOT_APPLICABLE" ? "Manueller Start des Mähers erforderlich." :: (value1 === "MOWING" ? "Der Mäher mäht den Rasen. Im Demomodus sind die Messer nicht in Betrieb." :: (value1 === "GOING_HOME" ? "Der Mäher geht nach Hause in die Ladestation." :: (value1 === "CHARGING" ? "Der Mäher wird in der Station aufgeladen, da die Batterie leer ist." :: (value1 === "LEAVING" ? "Der Mäher verlässt die Ladestation." :: (value1 === "PARKED_IN_CS" ? "Der Mäher ist in der Ladestation geparkt." :: (value1 === "STOPPED_IN_GARDEN" ? "Der Mäher ist stehen geblieben. Erfordert einen manuellen Eingriff, um fortzufahren." :: "Aktivität #" + value1 + " unbekannt")))))))}
-
     ```
 
 * Datapoint `husqvarna-automower.0.[mowerID from DP .system.id].mower.mode`:
@@ -179,10 +178,10 @@ schedule('0 0 * * *', function () {
     setState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeToday', mowingTimeToday, true);
 });
 
+// get drivenDistanceToday and drivenDistanceTotal
 let drivenDistanceToday = getState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceToday').val;
 let drivenDistanceTotal = getState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceTotal').val;
 let drivenDistance = 0;
-// get drivenDistanceToday and drivenDistanceTotal
 on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}, function (obj) {
     if (getState('husqvarna-automower.0.' + MOWERID + '.mower.activity').val === 'MOWING') {
         drivenDistance = 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(obj.oldState.val.split(';')[0] * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[1] * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
