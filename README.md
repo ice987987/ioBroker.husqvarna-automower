@@ -188,10 +188,13 @@ on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}
 
 ## How to report issues and feature requests
 
-Please use [GitHub issues](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose) and fill in the form.
+* For issues
+    Please use [GitHub issues](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose) -> "Bug report" and fill in the form.
 
-For issues:
-Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level). Get the logfile from disk (subdirectory "log" in ioBroker installation directory and not from Admin because Admin cuts the lines). Check that there are no personal information before you publish your log.
+    Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level). Get the logfile from disk (subdirectory "log" in ioBroker installation directory and not from Admin because Admin cuts the lines). Check that there are no personal information before you publish your log.
+
+* For feature requests
+    Please use [GitHub issues](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose) -> "Feature request" and fill in the form.
 
 ## Changelog
 
@@ -204,7 +207,8 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 * (ice978987) update of `common.states` of `.mower.errorCode`
 * (ice987987) adding German translations of vis-Bindings
 * (ice987987) adding Javascript-Script for statistics (`Distance between mower and charging station`)
-* (ice987987) adding statistics value from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`.
+* (ice987987) adding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`.
+* (ice987987) adding feature request form
 
 ### 0.2.0 (14.06.2022)
 * (ice987987) support new login procedure to husqvarna's webservice using "Application key" and "Application secret" instead of "username (emailadress)" and "password" (issue [#33](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/33))
