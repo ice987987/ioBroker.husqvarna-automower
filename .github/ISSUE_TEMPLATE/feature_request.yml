@@ -1,0 +1,30 @@
+name: Feature request
+title: "Feature request"
+description: "Suggest a feature or an idea for this adapter"
+labels: enhancement
+body:
+  - type: markdown
+    attributes:
+      value: >
+        **Thank you for suggesting a feature or an idea for this adapter!**
+  - type: textarea
+    attributes:
+      label: Feature or idea description
+      description: >-
+        Provide a clear and concise description for your feature or idea here. Include as many
+        details as possible.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+  - type: input
+    attributes:
+      label: Version of "husqvarna-automower"-adapter
+      description: Can be found in the adapters tab of ioBroker admin
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional information & file uploads
