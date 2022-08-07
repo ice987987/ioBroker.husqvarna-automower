@@ -2,6 +2,5 @@
     "applicationKey": "Application key",
     "applicationKeyHint": "Haal uw 'Husqvarna Automower-toepassingssleutel' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>hier</a> op. ",
     "applicationSecret": "Application secret",
-    "applicationSecretHint": "Haal uw 'Husqvarna Automower-toepassingsgeheim' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>hier</a> op. ",
-    "note": "on save-adapter herstart onmiddellijk met nieuwe configuratie."
+    "applicationSecretHint": "Haal uw 'Husqvarna Automower-toepassingsgeheim' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>hier</a> op. "
 }

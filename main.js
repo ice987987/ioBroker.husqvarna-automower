@@ -646,6 +646,105 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {}
 					});
 
+					// create channel "statistics"
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics', {
+						type: 'channel',
+						common: {
+							name: 'Statistics',
+							desc: 'Statistics'
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.cuttingBladeUsageTime', {
+						type: 'state',
+						common: {
+							name: 'Cutting blade usage time',
+							desc: 'Cutting blade usage time',
+							type: 'number',
+							role: 'state',
+							unit: 's',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.numberOfChargingCycles', {
+						type: 'state',
+						common: {
+							name: 'Numbers of charging cycles',
+							desc: 'Numbers of charging cycles',
+							type: 'number',
+							role: 'state',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.numberOfCollisions', {
+						type: 'state',
+						common: {
+							name: 'Numbers of collisions',
+							desc: 'Numbers of collisions',
+							type: 'number',
+							role: 'state',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.totalChargingTime', {
+						type: 'state',
+						common: {
+							name: 'Total charging time',
+							desc: 'Total charging time',
+							type: 'number',
+							role: 'state',
+							unit: 's',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.totalCuttingTime', {
+						type: 'state',
+						common: {
+							name: 'Total cutting time',
+							desc: 'Total cutting time',
+							type: 'number',
+							role: 'state',
+							unit: 's',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.totalRunningTime', {
+						type: 'state',
+						common: {
+							name: 'Total running time',
+							desc: 'Total running time',
+							type: 'number',
+							role: 'state',
+							unit: 's',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+					await this.setObjectNotExistsAsync(mowerData[i].id + '.statistics.totalSearchingTime', {
+						type: 'state',
+						common: {
+							name: 'Total searching time',
+							desc: 'Total searching time',
+							type: 'number',
+							role: 'state',
+							unit: 's',
+							read: true,
+							write: false
+						},
+						native: {}
+					});
+
 					// create channel "ACTIONS"
 					await this.setObjectNotExistsAsync(mowerData[i].id + '.ACTIONS', {
 						type: 'channel',
@@ -1033,6 +1132,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			this.setStateAsync(mowerData[i].id + '.settings.cuttingHeight', {val: mowerData[i].attributes.settings.cuttingHeight, ack: true});
 			this.setStateAsync(mowerData[i].id + '.settings.headlight', {val: mowerData[i].attributes.settings.headlight.mode, ack: true});
+
+			this.setStateAsync(mowerData[i].id + '.statistics.cuttingBladeUsageTime', {val: mowerData[i].attributes.statistics.cuttingBladeUsageTime, ack: true});
+			this.setStateAsync(mowerData[i].id + '.statistics.numberOfChargingCycles', {val: mowerData[i].attributes.statistics.numberOfChargingCycles, ack: true});
+			this.setStateAsync(mowerData[i].id + '.statistics.numberOfCollisions', {val: mowerData[i].attributes.statistics.numberOfCollisions, ack: true});
+			this.setStateAsync(mowerData[i].id + '.statistics.totalChargingTime', {val: mowerData[i].attributes.statistics.totalChargingTime, ack: true});
+			this.setStateAsync(mowerData[i].id + '.statistics.totalCuttingTime', {val: mowerData[i].attributes.statistics.totalCuttingTime, ack: true});
+			this.setStateAsync(mowerData[i].id + '.statistics.totalRunningTime', {val: mowerData[i].attributes.statistics.totalRunningTime, ack: true});
+			this.setStateAsync(mowerData[i].id + '.statistics.totalSearchingTime', {val: mowerData[i].attributes.statistics.totalSearchingTime, ack: true});
 		}
 		this.log.info('Mowerdata initially saved...');
 	}
@@ -1152,6 +1259,16 @@ class HusqvarnaAutomower extends utils.Adapter {
 						this.setStateAsync(jsonMessage.id + '.metadata.connected', {val: jsonMessage.attributes.metadata.connected, ack: true});
 						this.setStateAsync(jsonMessage.id + '.metadata.statusTimestamp', {val: jsonMessage.attributes.metadata.statusTimestamp, ack: true});
 						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.metadata: ${JSON.stringify(jsonMessage.attributes.metadata)}`);
+					}
+					if ('statistics' in jsonMessage.attributes) {
+						this.setStateAsync(jsonMessage.id + '.statistics.cuttingBladeUsageTime', {val: jsonMessage.attributes.statistics.cuttingBladeUsageTime, ack: true});
+						this.setStateAsync(jsonMessage.id + '.statistics.numberOfChargingCycles', {val: jsonMessage.attributes.statistics.numberOfChargingCycles, ack: true});
+						this.setStateAsync(jsonMessage.id + '.statistics.numberOfCollisions', {val: jsonMessage.attributes.statistics.numberOfCollisions, ack: true});
+						this.setStateAsync(jsonMessage.id + '.statistics.totalChargingTime', {val: jsonMessage.attributes.statistics.totalChargingTime, ack: true});
+						this.setStateAsync(jsonMessage.id + '.statistics.totalCuttingTime', {val: jsonMessage.attributes.statistics.totalCuttingTime, ack: true});
+						this.setStateAsync(jsonMessage.id + '.statistics.totalRunningTime', {val: jsonMessage.attributes.statistics.totalRunningTime, ack: true});
+						this.setStateAsync(jsonMessage.id + '.statistics.totalSearchingTime', {val: jsonMessage.attributes.statistics.totalSearchingTime, ack: true});
+						// this.log.debug(`[wss.on - message]: jsonMessage.attributes.statistics: ${JSON.stringify(jsonMessage.attributes.statistics)}`);
 					}
 				}
 			} catch (error) {

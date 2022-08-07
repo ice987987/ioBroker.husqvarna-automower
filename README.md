@@ -70,11 +70,19 @@ You get the following values from your Husqvarna lawn mower:
 * `.positions.latlong`: Position "latitude;longitude"
 * `.settings.cuttingHeight`: Prescaled cutting height, Range: 1...9
 * `.settings.headlight`: Headlight status
+* `.statistics.cuttingBladeUsageTime`: Cutting blade usage time, time in s[^4]
+* `.statistics.numberOfChargingCycles`: Numbers of charging cycles, time in s[^4]
+* `.statistics.numberOfCollisions`: Numbers of collisions, time in s[^4]
+* `.statistics.totalChargingTime`: Total charging time, time in s[^4]
+* `.statistics.totalCuttingTime`: Total cutting time, time in s[^4]
+* `.statistics.totalRunningTime`: Total running time, time in s[^4]
+* `.statistics.totalSearchingTime`: Total searching time, time in s[^4]
 * `.system.id`: Device ID
 * `.system.model`: Device model
 * `.system.name`: Device name
 * `.system.serialNumber`: Device serialnumber
 * `.system.type`: Device type
+[^4]: If a value is missing or zero (0) the mower does not support the value
 
 ## Limitation
 
@@ -133,13 +141,8 @@ the following code can be used for html-bindings in adapter [ioBroker.vis](https
     ```
 
 ## Script for statistics
-The following values will be calculated:
-* Distance Driven Today
-* Distance Driven Total
-* Charging Time Today
-* Charging Time Total
-* Mowing Time Today
-* Mowing Time Total
+The following value will be calculated:
+
 * Distance between mower and charging station
 
 For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `PRAEFIX`, `FOLDER` and `MOWERID` in section `Configuration`.
@@ -160,66 +163,10 @@ setObject(PRAEFIX + FOLDER + MOWERID, {
     common: {name: 'Statistics for mower with ID ' + MOWERID},
     native: {}
 });
-createState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceToday', 0, false, {name: 'Driven Distance Today', desc: 'Driven Distance Today', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'km'});
-createState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceTotal', 0, false, {name: 'Driven Distance Total', desc: 'Driven Distance Total', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'km'});
-createState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeToday', 0, false, {name: 'Charging Time Today', desc: 'Charging Time Today', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'ms'});
-createState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeTotal', 0, false, {name: 'Charging Time Total', desc: 'Charging Time Total', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'ms'});
-createState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeTotal', 0, false, {name: 'Mowing Time Today', desc: 'Mowing Time Today', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'ms'});
-createState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeToday', 0, false, {name: 'Mowing Time Total', desc: 'Mowing Time Total', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'ms'});
+
 createState(PRAEFIX + FOLDER + MOWERID + '.distanceFromChargingStation', 0, false, {name: 'Distance from charging station', desc: 'Distance from charging station', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'm'});
 
-// reset variables "[...]Today" every midnight
-schedule('0 0 * * *', function () {
-    drivenDistanceToday = 0;
-    setState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceToday', drivenDistanceToday, true);
-    chargingTimeToday = 0;
-    setState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeToday', chargingTimeToday, true);
-    mowingTimeToday = 0;
-    setState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeToday', mowingTimeToday, true);
-});
-
-// get drivenDistanceToday and drivenDistanceTotal
-let drivenDistanceToday = getState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceToday').val;
-let drivenDistanceTotal = getState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceTotal').val;
-let drivenDistance = 0;
-on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}, function (obj) {
-    if (getState('husqvarna-automower.0.' + MOWERID + '.mower.activity').val === 'MOWING') {
-        drivenDistance = 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(obj.oldState.val.split(';')[0] * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[1] * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
-        log('distanceDriven: ' + drivenDistance + 'km', 'debug');
-        drivenDistanceToday = drivenDistanceToday + drivenDistance;
-        drivenDistanceTotal = drivenDistanceTotal + drivenDistance;
-        setState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceToday', drivenDistanceToday, true);
-        setState(PRAEFIX + FOLDER + MOWERID + '.drivenDistanceTotal', drivenDistanceTotal, true);
-    }
-});
-
-// get chargingTimeToday and chargingTimeTotal
-let chargingTimeToday = getState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeToday').val;
-let chargingTimeTotal = getState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeTotal').val;
-let chargingTime = 0;
-on({id: 'husqvarna-automower.0.' + MOWERID + '.mower.activity', oldVal: 'CHARGING'}, function (obj) {
-    chargingTime = obj.state.ts - obj.oldState.ts;
-    log('chargingTime: ' + chargingTime/1000 + 's', 'debug');
-    chargingTimeToday = chargingTime + chargingTimeToday;
-    chargingTimeTotal = chargingTime + chargingTimeTotal;
-    setState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeToday', chargingTimeToday, true);
-    setState(PRAEFIX + FOLDER + MOWERID + '.chargingTimeTotal', chargingTimeTotal, true);
-});
-
-// get mowingTimeToday and mowingTimeTotal
-let mowingTimeToday = getState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeToday').val;
-let mowingTimeTotal = getState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeTotal').val;
-let mowingTime = 0;
-on({id: 'husqvarna-automower.0.' + MOWERID + '.mower.activity', oldVal: 'MOWING'}, function (obj) {
-    mowingTime = obj.state.ts - obj.oldState.ts;
-    log('mowingTime: ' + mowingTime/1000 + 's', 'debug');
-    mowingTimeToday = mowingTime + mowingTimeToday;
-    mowingTimeTotal = mowingTime + mowingTimeTotal;
-    setState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeToday', mowingTimeToday, true);
-    setState(PRAEFIX + FOLDER + MOWERID + '.mowingTimeTotal', mowingTimeTotal, true);
-});
-
-// get distance from automower to charging station
+// get distance between automower and charging station
 let chargingStationLatitude = 0;
 let chargingStationLongitude = 0;
 let distanceFromChargingStation = 0;
@@ -239,7 +186,6 @@ on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}
 });
 ```
 
-
 ## How to report issues and feature requests
 
 Please use [GitHub issues](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose) and fill in the form.
@@ -257,7 +203,8 @@ Set the adapter to debug log mode (Instances -> Expert mode -> Column Log level)
 * (ice987987) update of vis binding `husqvarna-automower.0.[mowerID from DP .system.id].mower.errorCode`
 * (ice978987) update of `common.states` of `.mower.errorCode`
 * (ice987987) adding German translations of vis-Bindings
-* (ice987987) adding Javascript-Script for statistics (`Distance Driven Today`, `Distance Driven Total`, `Charging Time Today`, `Charging Time Total`, `Mowing Time Today`, `Mowing Time Total` and `Distance between mower and charging station`)
+* (ice987987) adding Javascript-Script for statistics (`Distance between mower and charging station`)
+* (ice987987) adding statistics value from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`.
 
 ### 0.2.0 (14.06.2022)
 * (ice987987) support new login procedure to husqvarna's webservice using "Application key" and "Application secret" instead of "username (emailadress)" and "password" (issue [#33](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/33))

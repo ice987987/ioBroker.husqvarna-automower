@@ -2,6 +2,5 @@
     "applicationKey": "应用程序密钥",
     "applicationKeyHint": "在<a href='https://developer.husqvarnagroup.cloud' target='_blank'>此处</a>获取您的“Husqvarna Automower Application key”。 ",
     "applicationSecret": "应用秘密",
-    "applicationSecretHint": "在<a href='https://developer.husqvarnagroup.cloud' target='_blank'>此处</a>获取您的“Husqvarna Automower Application Secret”。 ",
-    "note": "在保存适配器立即使用新配置重新启动。"
+    "applicationSecretHint": "在<a href='https://developer.husqvarnagroup.cloud' target='_blank'>此处</a>获取您的“Husqvarna Automower Application Secret”。 "
 }
