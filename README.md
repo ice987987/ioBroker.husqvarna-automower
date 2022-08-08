@@ -200,14 +200,14 @@ on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### **WORK IN PROGRESS**
+### 0.3.0 (08.08.2022)
 * (ice987987) improved logging
 * (ice987987) update dependencies
 * (ice987987) update of vis binding `husqvarna-automower.0.[mowerID from DP .system.id].mower.errorCode`
 * (ice978987) update of `common.states` of `.mower.errorCode`
 * (ice987987) adding German translations of vis-Bindings
 * (ice987987) adding Javascript-Script for statistics (`Distance between mower and charging station`)
-* (ice987987) adding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`.
+* (ice987987) adding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`
 * (ice987987) adding feature request form
 
 ### 0.2.0 (14.06.2022)

@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -98,6 +98,18 @@
                 "es": "soporte nuevo procedimiento de inicio de sesión para el servicio web de Husqvarna utilizando \"clave de aplicación\" y \"Aplicación secreta\" en lugar de \"nombre de usuario (mailadress)\" y contraseña (issue #33)\nenlaces a la página principal de husqvarna debido a su página web actualizada\nmejorar el formulario de registro de errores",
                 "pl": "popiera nowe procedury logowania do serwisu internetowego husqvarny zamiast \"username (emailadress)\" i hasło (rekompilacja #33)\nzaktualizowanie linków do serwisu husqvarna ze względu na ich aktualizowaną stronę\npoprawiona forma błędów",
                 "zh-cn": "支持使用“应用关键”和“应用秘密”来保护克瓦纳网站的新逻辑程序,而不是“用户名称(马伊拉语)”和密码(第33号)。\n由于更新的主页,与wqvarna主页的更新联系\nb 改进报告格式"
+              },
+              "0.3.0": {
+                "en": "improved logging\nupdate dependencies\nupdate of `common.states` of `.mower.errorCode`\nadding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`",
+                "de": "verbesserte protokollierung\naktualisierung der abhängigkeiten\naktualisierung von Common. Mower.errorCode\nhinzufügen von Statistikwerten aus der Automower Connect API Statistik.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime und statistics.totalSearchingTime",
+                "ru": "улучшенный вход\nобновление зависимостей\nобновление общего. состояния mower.errorCode\nдобавить значения статистики от Automower Connect API Statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
+                "pt": "registro melhorado\ndependências\natualização de comum. estados de cortador.errorCode\nadicionando valores de estatísticas do Automower Connect API statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime e statistics.totalSearchingTime",
+                "nl": "verbeterde logging\nvertaling:\nupdate van gemeenschappelijk. Staat van macht\nstatistieken toevoegen van de automatische connectie API statistieken, de BladeusageTime, statistieken en statistieken",
+                "fr": "amélioration de l ' exploitation forestière\nmettre à jour les dépendances\nmise à jour du commun. états de mower.errorCode\najout de statistiques de l'API Automower Connect. cuttingBladeUsageTime, statistiques.nombreOfChargingCycles, statistiques.nombreOfCollisions, statistiques.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
+                "it": "migliore registrazione\naggiornamento dipendenze\naggiornamento di comune. stati di tosaerba.errorCode\naggiungendo i valori statistici dalle statistiche dell'API di Automower Connect.cuttingBladeUsageTime, statistiche.numberOfChargingCycles, statistica.numberOfCollisions, statistica.totalChargingTime, statistica.totalCuttingTime, statistica.totalRunningTime e statistiche.totalSearchingTime",
+                "es": "mejora de la logística\ndependencias de actualización\nactualización de común. estados de cortacéspedes.errorCode\nañadiendo valores estadísticos de las estadísticas de Automower Connect API.cortaBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
+                "pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
+                "zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
               }
         },
         "titleLang": {
