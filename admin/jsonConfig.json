@@ -30,6 +30,21 @@
             "md": 8,
             "lg": 8
         },
+        "statisticsInterval": {
+            "newLine": true,
+            "type": "number",
+            "label": "statisticsInterval",
+            "help": "statisticsIntervalHint",
+            "min": 5,
+            "max": 10080,
+            "step": 1,
+            "validator": "data.statisticsInterval >= 5 && data.statisticsInterval <= 10080",
+            "validatorNoSaveOnError": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 8,
+            "lg": 8
+        },
         "_helpLink": {
             "newLine": true,
             "type": "staticLink",

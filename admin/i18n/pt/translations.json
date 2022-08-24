@@ -1,6 +1,8 @@
 {
     "applicationKey": "Application key",
-    "applicationKeyHint": "Obtenha sua 'Chave do aplicativo Husqvarna Automower' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>aqui</a>. ",
+    "applicationKeyHint": "Obtenha sua 'Chave do aplicativo Husqvarna Automower' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>aqui</a>. (formato: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
     "applicationSecret": "Application secret",
-    "applicationSecretHint": "Obtenha seu 'Segredo do aplicativo Husqvarna Automower' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>aqui</a>. "
+    "applicationSecretHint": "Obtenha seu 'Segredo do aplicativo Husqvarna Automower' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>aqui</a>. (formato: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
+    "statisticsInterval": "Intervalo de tempo para recuperar valores estatísticos",
+	"statisticsIntervalHint": "em minutos (máx. 10000 pedido por mês e chave de aplicação)"
 }

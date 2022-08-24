@@ -184,7 +184,8 @@
     ],
     "native": {
         "applicationKey": "",
-        "applicationSecret": ""
+        "applicationSecret": "",
+        "statisticsInterval": 720
     },
     "objects": [],
     "instanceObjects": [
