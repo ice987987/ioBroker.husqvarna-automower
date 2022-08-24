@@ -30,6 +30,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.on('stateChange', this.onStateChange.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 
+		this.wss = null;
+
 		this.access_token = null;
 		this.mowerData = null;
 
@@ -1148,6 +1150,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 	// https://developer.husqvarnagroup.cloud/apis/automower-connect-api#websocket
 	async connectToWS() {
 
+		this.log.debug(`[connectToWS]: this.wss ${this.wss}`);
+		
 		if (this.wss) {
 			this.wss.close();
 		}
@@ -1273,6 +1277,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				}
 			} catch (error) {
 				// do nothing
+				this.log.debug(`[wss.on - error]: ${error}`);
 			}
 		});
 
@@ -1298,7 +1303,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 					throw new Error ('Unknown WebSocket error. (ERR_#007)');
 				}
 			} catch (error) {
-				this.log.error(error);
+				// do nothing
+				this.log.debug(`[wss.close - error]: ${error}`);
 			}
 		});
 

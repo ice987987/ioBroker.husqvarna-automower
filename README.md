@@ -200,6 +200,10 @@ on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}
 
 <!-- ### **WORK IN PROGRESS** -->
 
+### **WORK IN PROGRESS**
+* (ice987987) improved initializing of variables
+* (ice987987) update dependencies
+
 ### 0.3.0 (08.08.2022)
 * (ice987987) improved logging
 * (ice987987) update dependencies
