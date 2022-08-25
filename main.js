@@ -187,7 +187,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "system"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.system', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system`, {
 						type: 'channel',
 						common: {
 							name: 'system',
@@ -195,7 +195,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.system.type', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.type`, {
 						type: 'state',
 						common: {
 							name: 'Device type',
@@ -207,7 +207,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.system.id', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.id`, {
 						type: 'state',
 						common: {
 							name: 'Device ID',
@@ -220,7 +220,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {}
 					});
 					
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.system.name', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.name`, {
 						type: 'state',
 						common: {
 							name: 'Device name',
@@ -232,7 +232,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.system.model', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.model`, {
 						type: 'state',
 						common: {
 							name: 'Device model',
@@ -244,7 +244,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.system.serialNumber', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.serialNumber`, {
 						type: 'state',
 						common: {
 							name: 'Device serialnumber',
@@ -258,7 +258,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "battery"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.battery', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.battery`, {
 						type: 'channel',
 						common: {
 							name: 'Battery information',
@@ -266,7 +266,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.battery.batteryPercent', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.battery.batteryPercent`, {
 						type: 'state',
 						common: {
 							name: 'The current battery level percentage',
@@ -283,7 +283,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "mower", see https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/status%20description%20and%20error%20codes for descriptions of status and error codes
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.mower', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower`, {
 						type: 'channel',
 						common: {
 							name: 'General information about the mower',
@@ -291,7 +291,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.mower.mode', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.mode`, {
 						type: 'state',
 						common: {
 							desc: 'Information about the mowers current mode',
@@ -304,7 +304,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.mower.activity', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.activity`, {
 						type: 'state',
 						common: {
 							name: 'Information about the mowers current activity',
@@ -317,7 +317,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.mower.state', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.state`, {
 						type: 'state',
 						common: {
 							name: 'Information about the mowers current status',
@@ -330,7 +330,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.mower.errorCode', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.errorCode`, {
 						type: 'state',
 						common: {
 							name: 'Information about the mowers current error status',
@@ -345,7 +345,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.mower.errorCodeTimestamp', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.errorCodeTimestamp`, {
 						type: 'state',
 						common: {
 							name: 'Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
@@ -359,7 +359,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "calendar"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar`, {
 						type: 'channel',
 						common: {
 							name: 'Calendar Tasks',
@@ -368,14 +368,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {}
 					});
 					for (let j = 0; j < numberOfSchedules; j++) {
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j, {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}`, {
 							type: 'channel',
 							common: {
 								name: 'Calendar Task ' + j
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.start', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.start`, {
 							type: 'state',
 							common: {
 								name: 'Start time expressed in minutes after midnight',
@@ -390,7 +390,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.duration', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.duration`, {
 							type: 'state',
 							common: {
 								name: 'Duration time expressed in minutes',
@@ -405,7 +405,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.monday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.monday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Mondays',
@@ -417,7 +417,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.tuesday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.tuesday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Tuesdays',
@@ -429,7 +429,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.wednesday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.wednesday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Wednesdays',
@@ -441,7 +441,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.thursday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.thursday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Thursdays',
@@ -453,7 +453,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.friday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.friday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Fridays',
@@ -465,7 +465,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.saturday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.saturday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Saturdays',
@@ -477,7 +477,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.calendar.' + j + '.sunday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.sunday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Sundays',
@@ -492,7 +492,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 
 					// create channel "planner"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.planner', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner`, {
 						type: 'channel',
 						common: {
 							name: 'Actions which are available for this device',
@@ -500,7 +500,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.planner.nextStartTimestamp', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
 						type: 'state',
 						common: {
 							name: 'Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
@@ -512,7 +512,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.planner.action', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.action`, {
 						type: 'state',
 						common: {
 							name: 'TODO',
@@ -525,7 +525,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.planner.restrictedReason', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.restrictedReason`, {
 						type: 'state',
 						common: {
 							name: 'restrictedReason',
@@ -540,7 +540,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "metadata"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.metadata', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.metadata`, {
 						type: 'channel',
 						common: {
 							name: 'Metadata',
@@ -548,7 +548,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.metadata.connected', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.metadata.connected`, {
 						type: 'state',
 						common: {
 							name: 'Is the mower currently connected',
@@ -560,7 +560,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.metadata.statusTimestamp', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.metadata.statusTimestamp`, {
 						type: 'state',
 						common: {
 							name: 'Is the mower currently connected',
@@ -574,7 +574,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel GPS-"positions"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.positions', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions`, {
 						type: 'channel',
 						common: {
 							name: 'Positions',
@@ -582,7 +582,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.positions.latitude', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions.latitude`, {
 						type: 'state',
 						common: {
 							name: 'Position latitude',
@@ -595,7 +595,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.positions.longitude', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions.longitude`, {
 						type: 'state',
 						common: {
 							name: 'Position longitude',
@@ -608,7 +608,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.positions.latlong', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions.latlong`, {
 						type: 'state',
 						common: {
 							name: 'Position "latitude;longitude"',
@@ -622,7 +622,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "settings"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.settings', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings`, {
 						type: 'channel',
 						common: {
 							name: 'Settings',
@@ -630,7 +630,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.settings.cuttingHeight', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {
 						type: 'state',
 						common: {
 							name: 'Prescaled cutting height, Range: 1...9',
@@ -644,7 +644,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.settings.headlight', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings.headlight`, {
 						type: 'state',
 						common: {
 							name: 'Headlight status',
@@ -659,7 +659,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "statistics"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics`, {
 						type: 'channel',
 						common: {
 							name: 'Statistics',
@@ -667,7 +667,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.cuttingBladeUsageTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.cuttingBladeUsageTime`, {
 						type: 'state',
 						common: {
 							name: 'Cutting blade usage time',
@@ -680,7 +680,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.numberOfChargingCycles', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.numberOfChargingCycles`, {
 						type: 'state',
 						common: {
 							name: 'Numbers of charging cycles',
@@ -692,7 +692,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.numberOfCollisions', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.numberOfCollisions`, {
 						type: 'state',
 						common: {
 							name: 'Numbers of collisions',
@@ -704,7 +704,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.totalChargingTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalChargingTime`, {
 						type: 'state',
 						common: {
 							name: 'Total charging time',
@@ -717,7 +717,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.totalCuttingTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalCuttingTime`, {
 						type: 'state',
 						common: {
 							name: 'Total cutting time',
@@ -730,7 +730,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.totalRunningTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalRunningTime`, {
 						type: 'state',
 						common: {
 							name: 'Total running time',
@@ -743,7 +743,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.statistics.totalSearchingTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalSearchingTime`, {
 						type: 'state',
 						common: {
 							name: 'Total searching time',
@@ -758,14 +758,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "ACTIONS"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS`, {
 						type: 'channel',
 						common: {
 							name: 'Action Commands'
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.PAUSE', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.PAUSE`, {
 						type: 'state',
 						common: {
 							name: 'Pause mower',
@@ -778,7 +778,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.PARKUNTILNEXTSCHEDULE', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.PARKUNTILNEXTSCHEDULE`, {
 						type: 'state',
 						common: {
 							name: 'Park mower until next scheduled run',
@@ -791,7 +791,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.PARKUNTILFURTHERNOTICE', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.PARKUNTILFURTHERNOTICE`, {
 						type: 'state',
 						common: {
 							name: 'Park mower until further notice, overriding schedule',
@@ -806,14 +806,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "ACTIONS.park"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.park', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.park`, {
 						type: 'channel',
 						common: {
 							name: 'Action Command for park'
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.park.PARK', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.park.PARK`, {
 						type: 'state',
 						common: {
 							name: 'Park mower for a duration of time, overriding schedule',
@@ -826,7 +826,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.park.parkTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.park.parkTime`, {
 						type: 'state',
 						common: {
 							name: 'Park mower for a duration of time, overriding schedule: Time',
@@ -841,7 +841,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.RESUMESCHEDULE', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.RESUMESCHEDULE`, {
 						type: 'state',
 						common: {
 							name: 'Resume mower according to schedule',
@@ -856,14 +856,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "ACTIONS.start"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.start', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.start`, {
 						type: 'channel',
 						common: {
 							name: 'Action Command for start'
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.start.START', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.start.START`, {
 						type: 'state',
 						common: {
 							name: 'Start mower and cut for a duration of time, overriding schedule',
@@ -876,7 +876,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.start.startTime', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.start.startTime`, {
 						type: 'state',
 						common: {
 							name: 'Start mower and cut for a duration of time, overriding schedule: Time',
@@ -891,7 +891,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.CUTTINGHEIGHT', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`, {
 						type: 'state',
 						common: {
 							name: 'Adjust cutting height, Range: 1...9',
@@ -905,7 +905,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.HEADLIGHT', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`, {
 						type: 'state',
 						common: {
 							name: 'Set headlight status',
@@ -920,14 +920,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// create channel "ACTIONS.schedule"
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule`, {
 						type: 'channel',
 						common: {
 							name: 'Update mower schedule'
 						},
 						native: {}
 					});
-					await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.SET', {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.SET`, {
 						type: 'state',
 						common: {
 							name: 'Save all schedules',
@@ -942,14 +942,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					for (let j = 0; j < numberOfSchedules; j++) {
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j, {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}`, {
 							type: 'channel',
 							common: {
 								name: 'Scheduled Task ' + j
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.start', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.start`, {
 							type: 'state',
 							common: {
 								name: 'Start time expressed in minutes after midnight',
@@ -965,7 +965,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.duration', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.duration`, {
 							type: 'state',
 							common: {
 								name: 'Duration time expressed in minutes',
@@ -981,7 +981,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.monday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.monday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Mondays',
@@ -994,7 +994,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.tuesday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.tuesday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Tuesdays',
@@ -1007,7 +1007,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.wednesday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.wednesday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Wednesdays',
@@ -1020,7 +1020,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.thursday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.thursday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Thursdays',
@@ -1033,7 +1033,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.friday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.friday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Fridays',
@@ -1046,7 +1046,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.saturday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.saturday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Saturdays',
@@ -1059,7 +1059,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {}
 						});
-						await this.setObjectNotExistsAsync(mowerData.data[i].id + '.ACTIONS.schedule.' + j + '.sunday', {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.sunday`, {
 							type: 'state',
 							common: {
 								name: 'Enabled on Sundays',
@@ -1075,15 +1075,15 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 
 					// subscribeStates
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.PAUSE');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.PARKUNTILNEXTSCHEDULE');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.PARKUNTILFURTHERNOTICE');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.park.PARK');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.RESUMESCHEDULE');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.start.START');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.CUTTINGHEIGHT');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.HEADLIGHT');
-					this.subscribeStates(mowerData.data[i].id + '.ACTIONS.schedule.SET');
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.PAUSE`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.PARKUNTILNEXTSCHEDULE`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.PARKUNTILFURTHERNOTICE`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.park.PARK`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.RESUMESCHEDULE`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.start.START`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.schedule.SET`);
 
 				} else {
 					throw new Error ('No mower found, no Objects created. Check API (ERR_#006).');
@@ -1099,63 +1099,63 @@ class HusqvarnaAutomower extends utils.Adapter {
 		for (let i in mowerData.data) {
 			if ('attributes' in mowerData.data[i]) {
 				if (this.firstStart) {
-					this.setStateAsync(mowerData.data[i].id + '.system.type', {val: mowerData.data[i].type, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.system.id', {val: mowerData.data[i].id, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.system.type`, {val: mowerData.data[i].type, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.system.id`, {val: mowerData.data[i].id, ack: true});
 
-					this.setStateAsync(mowerData.data[i].id + '.system.name', {val: mowerData.data[i].attributes.system.name, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.system.model', {val: mowerData.data[i].attributes.system.model, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.system.serialNumber', {val: mowerData.data[i].attributes.system.serialNumber, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.system.name`, {val: mowerData.data[i].attributes.system.name, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.system.model`, {val: mowerData.data[i].attributes.system.model, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.system.serialNumber`, {val: mowerData.data[i].attributes.system.serialNumber, ack: true});
 
-					this.setStateAsync(mowerData.data[i].id + '.battery.batteryPercent', {val: mowerData.data[i].attributes.battery.batteryPercent, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.battery.batteryPercent`, {val: mowerData.data[i].attributes.battery.batteryPercent, ack: true});
 
-					this.setStateAsync(mowerData.data[i].id + '.mower.mode', {val: mowerData.data[i].attributes.mower.mode, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.mower.activity', {val: mowerData.data[i].attributes.mower.activity, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.mower.state', {val: mowerData.data[i].attributes.mower.state, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.mower.errorCode', {val: mowerData.data[i].attributes.mower.errorCode, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.mower.errorCodeTimestamp', {val: mowerData.data[i].attributes.mower.errorCodeTimestamp, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.mower.mode`, {val: mowerData.data[i].attributes.mower.mode, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.mower.activity`, {val: mowerData.data[i].attributes.mower.activity, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.mower.state`, {val: mowerData.data[i].attributes.mower.state, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.mower.errorCode`, {val: mowerData.data[i].attributes.mower.errorCode, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.mower.errorCodeTimestamp`, {val: mowerData.data[i].attributes.mower.errorCodeTimestamp, ack: true});
 
 					// set all values in "calendar"
 					for (let j = 0; j < Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules); j++) {
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.start', {val: mowerData.data[i].attributes.calendar.tasks[j].start, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.duration', {val: mowerData.data[i].attributes.calendar.tasks[j].duration, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.monday', {val: mowerData.data[i].attributes.calendar.tasks[j].monday, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.tuesday', {val: mowerData.data[i].attributes.calendar.tasks[j].tuesday, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.wednesday', {val: mowerData.data[i].attributes.calendar.tasks[j].wednesday, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.thursday', {val: mowerData.data[i].attributes.calendar.tasks[j].thursday, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.friday', {val: mowerData.data[i].attributes.calendar.tasks[j].friday, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.saturday', {val: mowerData.data[i].attributes.calendar.tasks[j].saturday, ack: true});
-						this.setStateAsync(mowerData.data[i].id + '.calendar.' + [j] + '.sunday', {val: mowerData.data[i].attributes.calendar.tasks[j].sunday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.start`, {val: mowerData.data[i].attributes.calendar.tasks[j].start, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.duration`, {val: mowerData.data[i].attributes.calendar.tasks[j].duration, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.monday`, {val: mowerData.data[i].attributes.calendar.tasks[j].monday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.tuesday`, {val: mowerData.data[i].attributes.calendar.tasks[j].tuesday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.wednesday`, {val: mowerData.data[i].attributes.calendar.tasks[j].wednesday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.thursday`, {val: mowerData.data[i].attributes.calendar.tasks[j].thursday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.friday`, {val: mowerData.data[i].attributes.calendar.tasks[j].friday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.saturday`, {val: mowerData.data[i].attributes.calendar.tasks[j].saturday, ack: true});
+						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.sunday`, {val: mowerData.data[i].attributes.calendar.tasks[j].sunday, ack: true});
 					}
 
 					if (mowerData.data[i].attributes.planner.nextStartTimestamp) {
 						if (mowerData.data[i].attributes.planner.nextStartTimestamp !== 0) {
-							this.setStateAsync(mowerData.data[i].id + '.planner.nextStartTimestamp', {val: mowerData.data[i].attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+							this.setStateAsync(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {val: mowerData.data[i].attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
 						} else {
-							this.setStateAsync(mowerData.data[i].id + '.planner.nextStartTimestamp', {val: mowerData.data[i].attributes.planner.nextStartTimestamp, ack: true});
+							this.setStateAsync(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {val: mowerData.data[i].attributes.planner.nextStartTimestamp, ack: true});
 						}
 					}
 
-					this.setStateAsync(mowerData.data[i].id + '.planner.action', {val: mowerData.data[i].attributes.planner.override.action, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.planner.restrictedReason', {val: mowerData.data[i].attributes.planner.restrictedReason, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.planner.action`, {val: mowerData.data[i].attributes.planner.override.action, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.planner.restrictedReason`, {val: mowerData.data[i].attributes.planner.restrictedReason, ack: true});
 
-					this.setStateAsync(mowerData.data[i].id + '.metadata.connected', {val: mowerData.data[i].attributes.metadata.connected, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.metadata.statusTimestamp', {val: mowerData.data[i].attributes.metadata.statusTimestamp, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.metadata.connected`, {val: mowerData.data[i].attributes.metadata.connected, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.metadata.statusTimestamp`, {val: mowerData.data[i].attributes.metadata.statusTimestamp, ack: true});
 
-					this.setStateAsync(mowerData.data[i].id + '.positions.latitude', {val: mowerData.data[i].attributes.positions[0].latitude, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.positions.longitude', {val: mowerData.data[i].attributes.positions[0].longitude, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.positions.latlong', {val: mowerData.data[i].attributes.positions[0].latitude + ';' + mowerData.data[i].attributes.positions[0].longitude, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.positions.latitude`, {val: mowerData.data[i].attributes.positions[0].latitude, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.positions.longitude`, {val: mowerData.data[i].attributes.positions[0].longitude, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.positions.latlong`, {val: `${mowerData.data[i].attributes.positions[0].latitude};${mowerData.data[i].attributes.positions[0].longitude}`, ack: true});
 
-					this.setStateAsync(mowerData.data[i].id + '.settings.cuttingHeight', {val: mowerData.data[i].attributes.settings.cuttingHeight, ack: true});
-					this.setStateAsync(mowerData.data[i].id + '.settings.headlight', {val: mowerData.data[i].attributes.settings.headlight.mode, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {val: mowerData.data[i].attributes.settings.cuttingHeight, ack: true});
+					this.setStateAsync(`${mowerData.data[i].id}.settings.headlight`, {val: mowerData.data[i].attributes.settings.headlight.mode, ack: true});
 				}
 
-				this.setStateAsync(mowerData.data[i].id + '.statistics.cuttingBladeUsageTime', {val: mowerData.data[i].attributes.statistics.cuttingBladeUsageTime, ack: true});
-				this.setStateAsync(mowerData.data[i].id + '.statistics.numberOfChargingCycles', {val: mowerData.data[i].attributes.statistics.numberOfChargingCycles, ack: true});
-				this.setStateAsync(mowerData.data[i].id + '.statistics.numberOfCollisions', {val: mowerData.data[i].attributes.statistics.numberOfCollisions, ack: true});
-				this.setStateAsync(mowerData.data[i].id + '.statistics.totalChargingTime', {val: mowerData.data[i].attributes.statistics.totalChargingTime, ack: true});
-				this.setStateAsync(mowerData.data[i].id + '.statistics.totalCuttingTime', {val: mowerData.data[i].attributes.statistics.totalCuttingTime, ack: true});
-				this.setStateAsync(mowerData.data[i].id + '.statistics.totalRunningTime', {val: mowerData.data[i].attributes.statistics.totalRunningTime, ack: true});
-				this.setStateAsync(mowerData.data[i].id + '.statistics.totalSearchingTime', {val: mowerData.data[i].attributes.statistics.totalSearchingTime, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.cuttingBladeUsageTime`, {val: mowerData.data[i].attributes.statistics.cuttingBladeUsageTime, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.numberOfChargingCycles`, {val: mowerData.data[i].attributes.statistics.numberOfChargingCycles, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.numberOfCollisions`, {val: mowerData.data[i].attributes.statistics.numberOfCollisions, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalChargingTime`, {val: mowerData.data[i].attributes.statistics.totalChargingTime, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalCuttingTime`, {val: mowerData.data[i].attributes.statistics.totalCuttingTime, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalRunningTime`, {val: mowerData.data[i].attributes.statistics.totalRunningTime, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalSearchingTime`, {val: mowerData.data[i].attributes.statistics.totalSearchingTime, ack: true});
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#008)');
 			}
@@ -1206,87 +1206,87 @@ class HusqvarnaAutomower extends utils.Adapter {
 			try {
 				if ('attributes' in message) {
 					if ('cuttingHeight' in message.attributes) {
-						this.setStateAsync(message.id + '.settings.cuttingHeight', {val: message.attributes.cuttingHeight, ack: true});
+						this.setStateAsync(`${message.id}.settings.cuttingHeight`, {val: message.attributes.cuttingHeight, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.cuttingHeight: ${message.attributes.cuttingHeight}`);
 					}
 					if ('headlight' in message.attributes) {
-						this.setStateAsync(message.id + '.settings.headlight', {val: message.attributes.headlight.mode, ack: true});
+						this.setStateAsync(`${message.id}.settings.headlight`, {val: message.attributes.headlight.mode, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
 					if ('calendar' in message.attributes) {
 							// set values in "calendar"
 							for (let i = 0; i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules); i++) {
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.start', {val: message.attributes.calendar.tasks[i].start, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.duration', {val: message.attributes.calendar.tasks[i].duration, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.monday', {val: message.attributes.calendar.tasks[i].monday, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.tuesday', {val: message.attributes.calendar.tasks[i].tuesday, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.wednesday', {val: message.attributes.calendar.tasks[i].wednesday, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.thursday', {val: message.attributes.calendar.tasks[i].thursday, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.friday', {val: message.attributes.calendar.tasks[i].friday, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.saturday', {val: message.attributes.calendar.tasks[i].saturday, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.sunday', {val: message.attributes.calendar.tasks[i].sunday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {val: message.attributes.calendar.tasks[i].start, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {val: message.attributes.calendar.tasks[i].duration, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {val: message.attributes.calendar.tasks[i].monday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {val: message.attributes.calendar.tasks[i].tuesday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {val: message.attributes.calendar.tasks[i].wednesday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {val: message.attributes.calendar.tasks[i].thursday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {val: message.attributes.calendar.tasks[i].friday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {val: message.attributes.calendar.tasks[i].saturday, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {val: message.attributes.calendar.tasks[i].sunday, ack: true});
 							}
 
 							// reset values in "calendar" which are not in use
 							for (let i = Object.keys(message.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.start', {val: 0, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.duration', {val: 0, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.monday', {val: false, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.tuesday', {val: false, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.wednesday', {val: false, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.thursday', {val: false, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.friday', {val: false, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.saturday', {val: false, ack: true});
-								this.setStateAsync(message.id + '.calendar.' + [i] + '.sunday', {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {val: 0, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {val: 0, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {val: false, ack: true});
+								this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {val: false, ack: true});
 							}
 							// this.log.debug(`[wss.on - message]: message.attributes.calendar: ${JSON.stringify(message.attributes.calendar)}`);
 					}
 					if ('positions' in message.attributes) {
 						if (Object.keys(message.attributes.positions).length > 0) {
 							for (let i = 0; i < Object.keys(message.attributes.positions).length; i++) {
-								this.setStateAsync(message.id + '.positions.latitude', {val: message.attributes.positions[i].latitude, ack: true});
-								this.setStateAsync(message.id + '.positions.longitude', {val: message.attributes.positions[i].longitude, ack: true});
-								this.setStateAsync(message.id + '.positions.latlong', {val: message.attributes.positions[i].latitude + ';' + message.attributes.positions[i].longitude, ack: true});
+								this.setStateAsync(`${message.id}.positions.latitude`, {val: message.attributes.positions[i].latitude, ack: true});
+								this.setStateAsync(`${message.id}.positions.longitude`, {val: message.attributes.positions[i].longitude, ack: true});
+								this.setStateAsync(`${message.id}.positions.latlong`, {val: `${message.attributes.positions[i].latitude};${message.attributes.positions[i].longitude}`, ack: true});
 								await this.delay(500);
 							}
 							// this.log.debug(`[wss.on - message]: message.attributes.positions: ${JSON.stringify(message.attributes.positions)}`);
 						}
 					}
 					if ('battery' in message.attributes) {
-						this.setStateAsync(message.id + '.battery.batteryPercent', {val: message.attributes.battery.batteryPercent, ack: true});
+						this.setStateAsync(`${message.id}.battery.batteryPercent`, {val: message.attributes.battery.batteryPercent, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.battery: ${JSON.stringify(message.attributes.battery)}`);
 					}
 					if ('mower' in message.attributes) {
-						this.setStateAsync(message.id + '.mower.mode', {val: message.attributes.mower.mode, ack: true});
-						this.setStateAsync(message.id + '.mower.activity', {val: message.attributes.mower.activity, ack: true});
-						this.setStateAsync(message.id + '.mower.state', {val: message.attributes.mower.state, ack: true});
-						this.setStateAsync(message.id + '.mower.errorCode', {val: message.attributes.mower.errorCode, ack: true});
-						this.setStateAsync(message.id + '.mower.errorCodeTimestamp', {val: message.attributes.mower.errorCodeTimestamp, ack: true});
+						this.setStateAsync(`${message.id}.mower.mode`, {val: message.attributes.mower.mode, ack: true});
+						this.setStateAsync(`${message.id}.mower.activity`, {val: message.attributes.mower.activity, ack: true});
+						this.setStateAsync(`${message.id}.mower.state`, {val: message.attributes.mower.state, ack: true});
+						this.setStateAsync(`${message.id}.mower.errorCode`, {val: message.attributes.mower.errorCode, ack: true});
+						this.setStateAsync(`${message.id}.mower.errorCodeTimestamp`, {val: message.attributes.mower.errorCodeTimestamp, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.mower: ${JSON.stringify(message.attributes.mower)}`);
 					}
 					if ('planner' in message.attributes) {
 						if (message.attributes.planner.nextStartTimestamp !== 0) {
-							this.setStateAsync(message.id + '.planner.nextStartTimestamp', {val: message.attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
+							this.setStateAsync(`${message.id}.planner.nextStartTimestamp`, {val: message.attributes.planner.nextStartTimestamp + (new Date().getTimezoneOffset() * 60000), ack: true});
 						} else {
-							this.setStateAsync(message.id + '.planner.nextStartTimestamp', {val: null, ack: true});
+							this.setStateAsync(`${message.id}.planner.nextStartTimestamp`, {val: null, ack: true});
 						}
-						this.setStateAsync(message.id + '.planner.action', {val: message.attributes.planner.override.action, ack: true});
-						this.setStateAsync(message.id + '.planner.restrictedReason', {val: message.attributes.planner.restrictedReason, ack: true});
+						this.setStateAsync(`${message.id}.planner.action`, {val: message.attributes.planner.override.action, ack: true});
+						this.setStateAsync(`${message.id}.planner.restrictedReason`, {val: message.attributes.planner.restrictedReason, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.planner: ${JSON.stringify(message.attributes.planner)}`);
 					}
 					if ('metadata' in message.attributes) {
-						this.setStateAsync(message.id + '.metadata.connected', {val: message.attributes.metadata.connected, ack: true});
-						this.setStateAsync(message.id + '.metadata.statusTimestamp', {val: message.attributes.metadata.statusTimestamp, ack: true});
+						this.setStateAsync(`${message.id}.metadata.connected`, {val: message.attributes.metadata.connected, ack: true});
+						this.setStateAsync(`${message.id}.metadata.statusTimestamp`, {val: message.attributes.metadata.statusTimestamp, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.metadata: ${JSON.stringify(message.attributes.metadata)}`);
 					}
 					if ('statistics' in message.attributes) {
-						this.setStateAsync(message.id + '.statistics.cuttingBladeUsageTime', {val: message.attributes.statistics.cuttingBladeUsageTime, ack: true});
-						this.setStateAsync(message.id + '.statistics.numberOfChargingCycles', {val: message.attributes.statistics.numberOfChargingCycles, ack: true});
-						this.setStateAsync(message.id + '.statistics.numberOfCollisions', {val: message.attributes.statistics.numberOfCollisions, ack: true});
-						this.setStateAsync(message.id + '.statistics.totalChargingTime', {val: message.attributes.statistics.totalChargingTime, ack: true});
-						this.setStateAsync(message.id + '.statistics.totalCuttingTime', {val: message.attributes.statistics.totalCuttingTime, ack: true});
-						this.setStateAsync(message.id + '.statistics.totalRunningTime', {val: message.attributes.statistics.totalRunningTime, ack: true});
-						this.setStateAsync(message.id + '.statistics.totalSearchingTime', {val: message.attributes.statistics.totalSearchingTime, ack: true});
+						this.setStateAsync(`${message.id}.statistics.cuttingBladeUsageTime`, {val: message.attributes.statistics.cuttingBladeUsageTime, ack: true});
+						this.setStateAsync(`${message.id}.statistics.numberOfChargingCycles`, {val: message.attributes.statistics.numberOfChargingCycles, ack: true});
+						this.setStateAsync(`${message.id}.statistics.numberOfCollisions`, {val: message.attributes.statistics.numberOfCollisions, ack: true});
+						this.setStateAsync(`${message.id}.statistics.totalChargingTime`, {val: message.attributes.statistics.totalChargingTime, ack: true});
+						this.setStateAsync(`${message.id}.statistics.totalCuttingTime`, {val: message.attributes.statistics.totalCuttingTime, ack: true});
+						this.setStateAsync(`${message.id}.statistics.totalRunningTime`, {val: message.attributes.statistics.totalRunningTime, ack: true});
+						this.setStateAsync(`${message.id}.statistics.totalSearchingTime`, {val: message.attributes.statistics.totalSearchingTime, ack: true});
 						// this.log.debug(`[wss.on - message]: message.attributes.statistics: ${JSON.stringify(message.attributes.statistics)}`);
 					}
 				} else {
@@ -1470,7 +1470,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					};
 					url = 'actions';
 				} else if (command === 'PARK') { // Park mower for a duration of time, overriding schedule
-					const parkTime = await this.getStateAsync(parentPath + '.park.parkTime');
+					const parkTime = await this.getStateAsync(`${parentPath}.park.parkTime`);
 					if (!parkTime) {
 						this.log.error('Missing "parkTime". Nothing Set. (ERR_#011');
 						return;
@@ -1492,7 +1492,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					};
 					url = 'actions';
 				} else if (command === 'START') { // Park mower for a duration of time, overriding schedule
-					const startTime = await this.getStateAsync(parentPath + '.start.startTime');
+					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
 					if (!startTime) {
 						this.log.error('Missing "startTime". Nothing Set. (ERR_#012');
 						return;
@@ -1533,15 +1533,15 @@ class HusqvarnaAutomower extends utils.Adapter {
 					const tasks = [];
 					for (let i = 0; i < numberOfSchedules; i++) {
 						// create variables and get additional values
-						const scheduleStart = await this.getStateAsync(parentPath + '.schedule.' + i + '.start');
-						const scheduleDuration = await this.getStateAsync(parentPath + '.schedule.' + i + '.duration');
-						const scheduleMonday = await this.getStateAsync(parentPath + '.schedule.' + i + '.monday');
-						const scheduleThuesday = await this.getStateAsync(parentPath + '.schedule.' + i + '.tuesday');
-						const scheduleWednesday = await this.getStateAsync(parentPath + '.schedule.' + i + '.wednesday');
-						const scheduleThursday = await this.getStateAsync(parentPath + '.schedule.' + i + '.thursday');
-						const scheduleFriday = await this.getStateAsync(parentPath + '.schedule.' + i + '.friday');
-						const scheduleSaturday = await this.getStateAsync(parentPath + '.schedule.' + i + '.saturday');
-						const scheduleSunday = await this.getStateAsync(parentPath + '.schedule.' + i + '.sunday');
+						const scheduleStart = await this.getStateAsync(`${parentPath}.schedule.${i}.start`);
+						const scheduleDuration = await this.getStateAsync(`${parentPath}.schedule.${i}.duration`);
+						const scheduleMonday = await this.getStateAsync(`${parentPath}.schedule.${i}.monday`);
+						const scheduleThuesday = await this.getStateAsync(`${parentPath}.schedule.${i}.tuesday`);
+						const scheduleWednesday = await this.getStateAsync(`${parentPath}.schedule.${i}.wednesday`);
+						const scheduleThursday = await this.getStateAsync(`${parentPath}.schedule.${i}.thursday`);
+						const scheduleFriday = await this.getStateAsync(`${parentPath}.schedule.${i}.friday`);
+						const scheduleSaturday = await this.getStateAsync(`${parentPath}.schedule.${i}.saturday`);
+						const scheduleSunday = await this.getStateAsync(`${parentPath}.schedule.${i}.sunday`);
 
 						if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday) {
 							if (scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) {
