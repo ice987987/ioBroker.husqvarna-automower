@@ -1,4 +1,4 @@
-![Logo](admin/husqvarna-automower.png)
+![Logo](admin/husqvarna-automower.svg)
 # ioBroker.husqvarna-automower
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.husqvarna-automower.svg)](https://www.npmjs.com/package/iobroker.husqvarna-automower)
@@ -8,7 +8,7 @@
 <!-- ![Current version in stable repository](https://iobroker.live/badges/husqvarna-automower-stable.svg) -->
 <!-- [![Dependency Status](https://img.shields.io/david/ice987987/iobroker.husqvarna-automower.svg)](https://david-dm.org/ice987987/iobroker.husqvarna-automower) -->
 
-[![NPM](https://nodei.co/npm/iobroker.husqvarna-automower.png?downloads=true)](https://nodei.co/npm/iobroker.husqvarna-automower/)
+[![NPM](https://nodei.co/npm/iobroker.husqvarna-automower.svg?downloads=true)](https://nodei.co/npm/iobroker.husqvarna-automower/)
 
 ![Test and Release](https://github.com/ice987987/ioBroker.husqvarna-automower/workflows/Test%20and%20Release/badge.svg)
 
