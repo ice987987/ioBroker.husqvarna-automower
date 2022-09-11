@@ -39,7 +39,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 		this.autoRestartTimeout = null;
 		this.ping = null;
-		this.pingTimeout = null;
 
 		this.statisticsInterval = null;
 	}
@@ -83,15 +82,24 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			// get data from husqvarna API
 			await this.getMowerData();
+			
+			// create objects
+			await this.createObjects(this.mowerData)
+			
+			// fill in states
+			await this.fillObjects(this.mowerData)
 
 			// establish WebSocket connection
 			await this.connectToWS();
 
 			// get statistics
-			await this.getStatistics();
+			this.statisticsInterval = setInterval(async() => {
+				await this.getMowerData();
+				await this.fillObjects(this.mowerData)
+			}, this.config.statisticsInterval * 60000); // max. 10000 requests/month; (31d*24h*60min*60s*1000ms)/10000requests/month = 267840ms = 4.46min
 
 		} catch (error) {
-			this.log.error(error);
+			this.log.error(`${error} (ERR_#0001)`);
 		}
 	}
 
@@ -146,10 +154,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 				this.mowerData = response.data;
 				this.log.debug(`[getMowerData]: response.data: ${JSON.stringify(response.data)}`);
 
-				if (this.firstStart) {
-					await this.createObjects(this.mowerData)
-				}
-				await this.fillObjects(this.mowerData)
 			})
 			.catch((error) => {
 				if (error.response) {
@@ -1138,9 +1142,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.setStateAsync(`${mowerData.data[i].id}.planner.action`, {val: mowerData.data[i].attributes.planner.override.action, ack: true});
 					this.setStateAsync(`${mowerData.data[i].id}.planner.restrictedReason`, {val: mowerData.data[i].attributes.planner.restrictedReason, ack: true});
 
-					this.setStateAsync(`${mowerData.data[i].id}.metadata.connected`, {val: mowerData.data[i].attributes.metadata.connected, ack: true});
-					this.setStateAsync(`${mowerData.data[i].id}.metadata.statusTimestamp`, {val: mowerData.data[i].attributes.metadata.statusTimestamp, ack: true});
-
 					this.setStateAsync(`${mowerData.data[i].id}.positions.latitude`, {val: mowerData.data[i].attributes.positions[0].latitude, ack: true});
 					this.setStateAsync(`${mowerData.data[i].id}.positions.longitude`, {val: mowerData.data[i].attributes.positions[0].longitude, ack: true});
 					this.setStateAsync(`${mowerData.data[i].id}.positions.latlong`, {val: `${mowerData.data[i].attributes.positions[0].latitude};${mowerData.data[i].attributes.positions[0].longitude}`, ack: true});
@@ -1148,6 +1149,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.setStateAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {val: mowerData.data[i].attributes.settings.cuttingHeight, ack: true});
 					this.setStateAsync(`${mowerData.data[i].id}.settings.headlight`, {val: mowerData.data[i].attributes.settings.headlight.mode, ack: true});
 				}
+
+				this.setStateAsync(`${mowerData.data[i].id}.metadata.connected`, {val: mowerData.data[i].attributes.metadata.connected, ack: true});
+				this.setStateAsync(`${mowerData.data[i].id}.metadata.statusTimestamp`, {val: mowerData.data[i].attributes.metadata.statusTimestamp, ack: true});
 
 				this.setStateAsync(`${mowerData.data[i].id}.statistics.cuttingBladeUsageTime`, {val: mowerData.data[i].attributes.statistics.cuttingBladeUsageTime, ack: true});
 				this.setStateAsync(`${mowerData.data[i].id}.statistics.numberOfChargingCycles`, {val: mowerData.data[i].attributes.statistics.numberOfChargingCycles, ack: true});
@@ -1172,7 +1176,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 	async connectToWS() {
 		
 		if (this.wss) {
-			this.wss.close();
+			this.wss.close(1000, "Close old websocket connection before start new websocket connection.")
 		}
 
 		this.wss = new WebSocket('wss://ws.openapi.husqvarna.dev/v1', {
@@ -1195,8 +1199,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 			// Send ping to server
 			this.sendPingToServer();
 
-			// Start Heartbeat
-			this.wsHeartbeat();
 		});
 
 		this.wss.on('message', async (data, isBinary) => {
@@ -1298,24 +1300,34 @@ class HusqvarnaAutomower extends utils.Adapter {
 			}
 		});
 
-		this.wss.on('close', async (data) => {
+		//. https://docs.w3cub.com/dom/websocket/close
+		this.wss.on('close', async (data, reason) => {
+
+			// https://docs.w3cub.com/dom/closeevent/code
+			// this.wss.terminate():					readyState: 3; data: 1006 (Abnormal Closure)
+			// this.wss.close():						readyState: 3; data: 1005 (No Status Received)
+			// this.wss.close(1000, "Work complete"): 	readyState: 3; data: 1000, reason: Work complete
+			
+			// every 2 hour:			this.wss.readyState; 3; data: 1001; reason: Going away -> autoRestart()
+			// every 1 day:				this.wss.readyState: 3; data: 1006 (Abnormal Closure) -> getAccessToken() and autoRestart()
+			
+			this.log.debug(`[wss.on - close]: this.wss.readyState: ${this.wss.readyState}; data: ${data}; reason: ${reason}`);
 
 			this.ping && clearTimeout(this.ping);
-			this.pingTimeout && clearTimeout(this.pingTimeout);
-
-			this.log.debug(`[wss.on - close]: this.wss.readyState: ${this.wss.readyState}`); // value: 3
-			this.log.debug(`[wss.on - close]: data: ${data}`); // value: 1001
 
 			this.setStateAsync('info.connection', false, true);
-
+			
 			try {
-				if (data === 1001 && this.wss.readyState === 3) {
+				if (data === 1000) {
+					// do not restart because of shut down of connection from the adapter
+					this.log.debug(`[wss.on - close]: ${reason}`);
+				} else if (data === 1001) {
+					// every 2 hours
 					await this.autoRestart();
-				} else if (data === 1006 && this.wss.readyState === 3) {
+				} else if (data === 1006) {
+					// every 1 day
 					await this.getAccessToken();
 					await this.autoRestart();
-				} else if (data.wasClean) {
-					this.log.info('Connection closed cleanly');
 				} else {
 					throw new Error ('Unknown WebSocket error. (ERR_#010)');
 				}
@@ -1327,7 +1339,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		// Pong from Server
 		this.wss.on('pong', () => {
 			this.log.debug('[wss.on - pong]: WebSocket receives pong from server.');
-			this.wsHeartbeat();
+			//this.wsHeartbeat();
 		});
 
 		this.wss.on('error', (error) => {
@@ -1343,25 +1355,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 		}, 570000); // default: 10min = 600000ms / 9min30s = 570000ms
 	}
 
-	async wsHeartbeat() {
-		this.pingTimeout && clearTimeout(this.pingTimeout);
-		this.pingTimeout = setTimeout(() => {
-			this.log.debug('[wsHeartbeat]: WebSocket connection timed out.');
-			this.wss.terminate();
-		}, 570000 + 1000);
-	}
-
 	async autoRestart() {
 		this.log.debug('[autoRestart]: WebSocket connection terminated by Husqvarna-Server. Reconnect again in 5 seconds...');
 		this.autoRestartTimeout = setTimeout(() => {
 			this.connectToWS();
 		}, 5000); // min. 5s = 5000ms
-	}
-
-	async getStatistics() {
-		this.statisticsInterval = setInterval(() => {
-			this.getMowerData();
-		}, this.config.statisticsInterval * 60000); // max. 10000 requests/month; (31d*24h*60min*60s*1000ms)/10000requests/month = 267840ms = 4.46min
 	}
 
 	/**
@@ -1403,7 +1401,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			this.autoRestartTimeout && clearTimeout(this.autoRestartTimeout);
 			this.ping && clearTimeout(this.ping);
-			this.pingTimeout && clearTimeout(this.pingTimeout);
 
 			this.statisticsInterval && clearTimeout(this.statisticsInterval);
 
@@ -1423,9 +1420,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 	 * @param {ioBroker.State | null | undefined} state
 	 */
 	async onStateChange(id, state) {
+
 		if (state !== null && state !== undefined) {
 			if (state.ack === false) {
-
 				// https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme
 				this.log.debug(`[onStateChange]: id: ${id}; state: ${JSON.stringify(state)}`);
 				const idSplit = id.split('.');
@@ -1590,13 +1587,19 @@ class HusqvarnaAutomower extends utils.Adapter {
 							this.log.info(`${response.statusText}. Command ${command} Set.`);
 						}
 					})
-					.catch((error) => {
+					.catch(async (error) => {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
 							this.log.debug(`[onStateChange]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 							if (error.response.status === 400) { // Invalid schedule format in request body. Parsing message: No tasks.
 								this.log.info(`${error.response.data.errors[0].detail} Nothing set`);
+							} else if (error.response.status === 403) { // The supplied credentials are invalid (accesstoken no longer valid)
+								await this.getAccessToken();
+								await this.autoRestart();
+								// TODO (if needed): send command again
 							} else if (error.response.status === 404) { // No connection between the cloud service and the mower.
+								this.setState(`${mowerId}.metadata.connected`, {val: false, ack: true});
+								this.setState(`${mowerId}.metadata.statusTimestamp`, {val: new Date().getTime(), ack: true});
 								this.log.info(`${error.response.data.errors[0].detail} Nothing set.`);
 							}
 						} else if (error.request) {
