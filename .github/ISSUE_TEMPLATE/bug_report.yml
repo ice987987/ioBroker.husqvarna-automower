@@ -11,7 +11,7 @@ body:
         If this is the first time you are doing this, please take a few moments to read
         through the [README](https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md).
 
-        You are about to report a bug in **husqvarna-automower Adapter**. Do not proceed if your issues
+        You are about to report a bug in **"husqvarna-automower"-adapter**. Do not proceed if your issues
         occurs with ioBroker itself, any third party adapters, unofficial or outdated
         adapter versions.
 
