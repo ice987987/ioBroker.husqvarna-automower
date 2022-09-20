@@ -70,7 +70,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		}
 		// check statisticsInterval
 		if (this.config.statisticsInterval < 5 && this.config.statisticsInterval > 10080) {
-			this.log.error('"Time interval to retrieve statistical values" is not valid (5 <= t <=S 10080 minutes) (ERR_#003)');
+			this.log.error('"Time interval to retrieve statistical values" is not valid (5 <= t <= 10080 minutes) (ERR_#003)');
 			return;
 		}
 

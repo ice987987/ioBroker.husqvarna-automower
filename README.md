@@ -200,8 +200,8 @@ on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### **WORK IN PROGRESS**
-* (ice987987) BREAKING: js-controller >= v4.0.23 is and admin >= v6.2.19 is required
+### 0.3.1-beta.1 **WORK IN PROGRESS**
+* (ice987987) BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required
 * (ice987987) source code improvements
 * (ice987987) ability to update statistical values
 

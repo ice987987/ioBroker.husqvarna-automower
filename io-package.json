@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.3.0",
+        "version": "0.3.1-beta.1",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -110,7 +110,10 @@
                 "es": "mejora de la logística\ndependencias de actualización\nactualización de común. estados de cortacéspedes.errorCode\nañadiendo valores estadísticos de las estadísticas de Automower Connect API.cortaBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
                 "pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
                 "zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
-              }
+              },
+			  "0.3.1-beta.1": {
+				  "en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values"
+			  }
         },
         "titleLang": {
             "en": "Husqvarna-Automower",
