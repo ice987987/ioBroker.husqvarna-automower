@@ -28,7 +28,7 @@ This adapter fetches data from your Husqvarna lawn mower from [https://developer
 **Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started). "OLD" logins will not work.**
 
 ## Control
-
+ 
 You can send the following values to your Husqvarna lawn mower:
 * `.ACTIONS.PAUSE`: pause mower
 * `.ACTIONS.PARKUNTILNEXTSCHEDULE`: park mower until next scheduled run
