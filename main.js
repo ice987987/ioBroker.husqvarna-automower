@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-const axios = require('axios').default;
+const axios = require('axios');
 const WebSocket = require('ws');
 
 // variables
