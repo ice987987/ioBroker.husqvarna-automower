@@ -82,12 +82,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			// get data from husqvarna API
 			await this.getMowerData();
-			
+
 			// create objects
-			await this.createObjects(this.mowerData)
-			
+			await this.createObjects(this.mowerData);
+
 			// fill in states
-			await this.fillObjects(this.mowerData)
+			await this.fillObjects(this.mowerData);
 
 			// establish WebSocket connection
 			await this.connectToWS();
@@ -95,7 +95,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			// get statistics
 			this.statisticsInterval = setInterval(async() => {
 				await this.getMowerData();
-				await this.fillObjects(this.mowerData)
+				await this.fillObjects(this.mowerData);
 			}, this.config.statisticsInterval * 60000); // max. 10000 requests/month; (31d*24h*60min*60s*1000ms)/10000requests/month = 267840ms = 4.46min
 
 		} catch (error) {
@@ -223,7 +223,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {}
 					});
-					
+
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.name`, {
 						type: 'state',
 						common: {
@@ -1100,7 +1100,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 	}
 
 	async fillObjects(mowerData) {
-		for (let i in mowerData.data) {
+		for (const i in mowerData.data) {
 			if ('attributes' in mowerData.data[i]) {
 				if (this.firstStart) {
 					this.setStateAsync(`${mowerData.data[i].id}.system.type`, {val: mowerData.data[i].type, ack: true});
@@ -1168,15 +1168,15 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.log.info('Mowerdata initially saved.');
 		} else {
 			this.log.debug('Mowerstatistics updated.');
-		};
+		}
 	}
 
 	// https://javascript.info/websocket
 	// https://developer.husqvarnagroup.cloud/apis/automower-connect-api#websocket
 	async connectToWS() {
-		
+
 		if (this.wss) {
-			this.wss.close(1000, "Close old websocket connection before start new websocket connection.")
+			this.wss.close(1000, 'Close old websocket connection before start new websocket connection.');
 		}
 
 		this.wss = new WebSocket('wss://ws.openapi.husqvarna.dev/v1', {
@@ -1203,7 +1203,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 		this.wss.on('message', async (data, isBinary) => {
 			const message = isBinary ? JSON.parse(data) : JSON.parse(data.toString());
-			this.log.debug(`[wss.on - message]: ${JSON.stringify(message)}`);		
+			this.log.debug(`[wss.on - message]: ${JSON.stringify(message)}`);
 
 			try {
 				if ('attributes' in message) {
@@ -1216,32 +1216,32 @@ class HusqvarnaAutomower extends utils.Adapter {
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
 					if ('calendar' in message.attributes) {
-							// set values in "calendar"
-							for (let i = 0; i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules); i++) {
-								this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {val: message.attributes.calendar.tasks[i].start, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {val: message.attributes.calendar.tasks[i].duration, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {val: message.attributes.calendar.tasks[i].monday, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {val: message.attributes.calendar.tasks[i].tuesday, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {val: message.attributes.calendar.tasks[i].wednesday, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {val: message.attributes.calendar.tasks[i].thursday, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {val: message.attributes.calendar.tasks[i].friday, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {val: message.attributes.calendar.tasks[i].saturday, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {val: message.attributes.calendar.tasks[i].sunday, ack: true});
-							}
+						// set values in "calendar"
+						for (let i = 0; i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules); i++) {
+							this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {val: message.attributes.calendar.tasks[i].start, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {val: message.attributes.calendar.tasks[i].duration, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {val: message.attributes.calendar.tasks[i].monday, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {val: message.attributes.calendar.tasks[i].tuesday, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {val: message.attributes.calendar.tasks[i].wednesday, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {val: message.attributes.calendar.tasks[i].thursday, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {val: message.attributes.calendar.tasks[i].friday, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {val: message.attributes.calendar.tasks[i].saturday, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {val: message.attributes.calendar.tasks[i].sunday, ack: true});
+						}
 
-							// reset values in "calendar" which are not in use
-							for (let i = Object.keys(message.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
-								this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {val: 0, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {val: 0, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {val: false, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {val: false, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {val: false, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {val: false, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {val: false, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {val: false, ack: true});
-								this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {val: false, ack: true});
-							}
-							// this.log.debug(`[wss.on - message]: message.attributes.calendar: ${JSON.stringify(message.attributes.calendar)}`);
+						// reset values in "calendar" which are not in use
+						for (let i = Object.keys(message.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
+							this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {val: 0, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {val: 0, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {val: false, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {val: false, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {val: false, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {val: false, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {val: false, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {val: false, ack: true});
+							this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {val: false, ack: true});
+						}
+						// this.log.debug(`[wss.on - message]: message.attributes.calendar: ${JSON.stringify(message.attributes.calendar)}`);
 					}
 					if ('positions' in message.attributes) {
 						if (Object.keys(message.attributes.positions).length > 0) {
@@ -1307,16 +1307,16 @@ class HusqvarnaAutomower extends utils.Adapter {
 			// this.wss.terminate():					readyState: 3; data: 1006 (Abnormal Closure)
 			// this.wss.close():						readyState: 3; data: 1005 (No Status Received)
 			// this.wss.close(1000, "Work complete"): 	readyState: 3; data: 1000, reason: Work complete
-			
+
 			// every 2 hour:			this.wss.readyState; 3; data: 1001; reason: Going away -> autoRestart()
 			// every 1 day:				this.wss.readyState: 3; data: 1006 (Abnormal Closure) -> getAccessToken() and autoRestart()
-			
+
 			this.log.debug(`[wss.on - close]: this.wss.readyState: ${this.wss.readyState}; data: ${data}; reason: ${reason}`);
 
 			this.ping && clearTimeout(this.ping);
 
 			this.setStateAsync('info.connection', false, true);
-			
+
 			try {
 				if (data === 1000) {
 					// do not restart because of shut down of connection from the adapter
