@@ -1402,7 +1402,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.autoRestartTimeout && clearTimeout(this.autoRestartTimeout);
 			this.ping && clearTimeout(this.ping);
 
-			this.statisticsInterval && clearTimeout(this.statisticsInterval);
+			this.statisticsInterval && clearInterval(this.statisticsInterval);
 
 			this.setState('info.connection', false, true);
 
