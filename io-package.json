@@ -98,8 +98,8 @@
                 "es": "soporte nuevo procedimiento de inicio de sesión para el servicio web de Husqvarna utilizando \"clave de aplicación\" y \"Aplicación secreta\" en lugar de \"nombre de usuario (mailadress)\" y contraseña (issue #33)\nenlaces a la página principal de husqvarna debido a su página web actualizada\nmejorar el formulario de registro de errores",
                 "pl": "popiera nowe procedury logowania do serwisu internetowego husqvarny zamiast \"username (emailadress)\" i hasło (rekompilacja #33)\nzaktualizowanie linków do serwisu husqvarna ze względu na ich aktualizowaną stronę\npoprawiona forma błędów",
                 "zh-cn": "支持使用“应用关键”和“应用秘密”来保护克瓦纳网站的新逻辑程序,而不是“用户名称(马伊拉语)”和密码(第33号)。\n由于更新的主页,与wqvarna主页的更新联系\nb 改进报告格式"
-              },
-              "0.3.0": {
+            },
+            "0.3.0": {
                 "en": "improved logging\nupdate dependencies\nupdate of `common.states` of `.mower.errorCode`\nadding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`",
                 "de": "verbesserte protokollierung\naktualisierung der abhängigkeiten\naktualisierung von Common. Mower.errorCode\nhinzufügen von Statistikwerten aus der Automower Connect API Statistik.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime und statistics.totalSearchingTime",
                 "ru": "улучшенный вход\nобновление зависимостей\nобновление общего. состояния mower.errorCode\nдобавить значения статистики от Automower Connect API Statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
@@ -110,10 +110,19 @@
                 "es": "mejora de la logística\ndependencias de actualización\nactualización de común. estados de cortacéspedes.errorCode\nañadiendo valores estadísticos de las estadísticas de Automower Connect API.cortaBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
                 "pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
                 "zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
-              },
-			  "0.3.1-beta.3": {
-				  "en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values"
-			  }
+            },
+            "0.3.1-beta.3": {
+                "en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values",
+                "de": "BREAKING: js-controller >= v4.0.23 und admin >= v6.2.19 ist erforderlich\nQuellcode-Verbesserungen\nFähigkeit, statistische Werte zu aktualisieren",
+                "ru": "НАРУШЕНИЕ: требуется js-controller >= v4.0.23 и admin >= v6.2.19\nулучшения исходного кода\nвозможность обновления статистических значений",
+                "pt": "QUEBRA: js-controller >= v4.0.23 e admin >= v6.2.19 é necessário\nmelhorias no código fonte\ncapacidade de atualizar valores estatísticos",
+                "nl": "BREAKING: js-controller >= v4.0.23 en admin >= v6.2.19 is vereist\nbroncode verbeteringen\nmogelijkheid om statistische waarden bij te werken",
+                "fr": "BREAKING: js-controller >= v4.0.23 et admin >= v6.2.19 est requis\naméliorations du code source\npossibilité de mettre à jour les valeurs statistiques",
+                "it": "ROTTURA: js-controller >= v4.0.23 e admin >= v6.2.19 è richiesto\nmiglioramenti del codice sorgente\ncapacità di aggiornare i valori statistici",
+                "es": "ÚLTIMA HORA: se requiere js-controller >= v4.0.23 y admin >= v6.2.19\nmejoras en el código fuente\nposibilidad de actualizar valores estadísticos",
+                "pl": "ZŁAMANIE: js-controller >= v4.0.23 i admin >= v6.2.19 jest wymagany\nulepszenia kodu źródłowego\nmożliwość aktualizacji wartości statystycznych",
+                "zh-cn": "BREAKING：需要 js-controller >= v4.0.23 和 admin >= v6.2.19\n源代码改进\n更新统计值的能力"
+            }
         },
         "titleLang": {
             "en": "Husqvarna-Automower",
