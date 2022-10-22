@@ -4,5 +4,5 @@
     "applicationSecret": "Application secret",
     "applicationSecretHint": "Pobierz „tajemnicę aplikacji Husqvarna Automower” <a href='https://developer.husqvarnagroup.cloud' target='_blank'>tutaj</a>. (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
     "statisticsInterval": "Przedział czasowy na odzyskiwanie wartości statystycznych",
-	"statisticsIntervalHint": "w ciągu kilku minut (maksymalnie 10000 żądań miesięcznego i aplikacji)"
+    "statisticsIntervalHint": "w ciągu kilku minut (maksymalnie 10000 żądań miesięcznego i aplikacji)"
 }

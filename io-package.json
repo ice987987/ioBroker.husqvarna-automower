@@ -1,214 +1,202 @@
 {
-    "common": {
-        "name": "husqvarna-automower",
-        "version": "0.3.0",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            },
-            "0.0.2": {
-                "en": "initial npm release",
-                "de": "erste npm-Veröffentlichung",
-                "ru": "первоначальный выпуск npm",
-                "pt": "lançamento inicial do npm",
-                "nl": "initiële npm-release",
-                "fr": "version initiale de npm",
-                "it": "rilascio iniziale di npm",
-                "es": "versión inicial de npm",
-                "pl": "pierwsze wydanie npm",
-                "zh-cn": "初始 npm 版本"
-            },
-            "0.0.3": {
-                "en": "initial npm release",
-                "de": "erste npm-Veröffentlichung",
-                "ru": "первоначальный выпуск npm",
-                "pt": "lançamento inicial do npm",
-                "nl": "initiële npm-release",
-                "fr": "version initiale de npm",
-                "it": "rilascio iniziale di npm",
-                "es": "versión inicial de npm",
-                "pl": "pierwsze wydanie npm",
-                "zh-cn": "初始 npm 版本"
-            },
-            "0.0.4": {
-                "en": "update dependencies\nadd section \"Available values\" in readme\nadd section \"ioBroker.vis bindings\" in readme\nadd section \"How to report issues and feature requests\" in readme\nfix calendar (max 4)\npreload values after first install\nfix issue #9\nupdate `common.states` of `.mower.errorCode`",
-                "de": "Abhängigkeiten aktualisieren\nAbschnitt \"Verfügbare Werte\" in Readme hinzufügen\nAbschnitt „ioBroker.vis-Bindungen“ in Readme hinzufügen\nAbschnitt „So melden Sie Probleme und Funktionsanfragen“ in Readme hinzufügen\nKalender fixieren (max. 4)\nvorab geladene Werte nach der Erstinstallation\nProblem Nr. 9 beheben\naktualisiere `common.states` von `.mower.errorCode`",
-                "ru": "обновить зависимости\nдобавить раздел \"Доступные значения\" в readme\nдобавить раздел \"Привязки ioBroker.vis\" в readme\nдобавить раздел «Как сообщать о проблемах и запросах функций» в файле readme\nисправить календарь (максимум 4)\nзначения предварительной загрузки после первой установки\nисправить ошибку №9\nобновить `common.states` `.mower.errorCode`",
-                "pt": "atualizar dependências\nadicione a seção \"Valores disponíveis\" no leia-me\nadicione a seção \"ligações ioBroker.vis\" no readme\nadicione a seção \"Como relatar problemas e solicitações de recursos\" no leia-me\ncorrigir calendário (máximo 4)\nvalores de pré-carregamento após a primeira instalação\ncorrigir o problema nº 9\natualizar `common.states` de `.mower.errorCode`",
-                "nl": "update afhankelijkheden\nvoeg sectie \"Beschikbare waarden\" toe in readme\nvoeg sectie \"ioBroker.vis bindingen\" toe in readme\nvoeg sectie \"Hoe problemen en functieverzoeken te melden\" toe aan readme\nvaste kalender (max 4)\npreload-waarden na eerste installatie\nprobleem #9 oplossen\nupdate `common.states` van `.mower.errorCode`",
-                "fr": "mettre à jour les dépendances\najouter la section \"Valeurs disponibles\" dans le fichier readme\najouter la section \"liaisons ioBroker.vis\" dans le fichier readme\najouter la section \"Comment signaler des problèmes et des demandes de fonctionnalités\" dans le fichier readme\ncalendrier fixe (max 4)\nvaleurs de préchargement après la première installation\nrésoudre le problème n° 9\nmettre à jour `common.states` de `.mower.errorCode`",
-                "it": "aggiornare le dipendenze\naggiungi la sezione \"Valori disponibili\" in readme\naggiungi la sezione \"legami ioBroker.vis\" in readme\naggiungi la sezione \"Come segnalare problemi e richieste di funzionalità\" in readme\ncalendario fisso (max 4)\nprecaricare i valori dopo la prima installazione\nrisolvere il problema n. 9\naggiorna `common.states` di `.mower.errorCode`",
-                "es": "actualizar dependencias\nagregue la sección \"Valores disponibles\" en el archivo Léame\nagregue la sección \"enlaces ioBroker.vis\" en el archivo Léame\nagregue la sección \"Cómo informar problemas y solicitudes de funciones\" en el archivo Léame\ncalendario fijo (máximo 4)\nvalores de precarga después de la primera instalación\narreglar el problema #9\nactualizar `common.states` de `.mower.errorCode`",
-                "pl": "zaktualizuj zależności\ndodaj sekcję \"Dostępne wartości\" w readme\ndodaj sekcję \"Powiązania ioBroker.vis\" w readme\ndodaj sekcję \"Jak zgłaszać problemy i prośby o nowe funkcje\" w readme\nnapraw kalendarz (max 4)\nwstępne ładowanie wartości po pierwszej instalacji\nnapraw problem nr 9\nzaktualizuj `common.states` `.mower.errorCode`",
-                "zh-cn": "更新依赖\n在自述文件中添加“可用值”部分\n在自述文件中添加“ioBroker.vis 绑定”部分\n在自述文件中添加“如何报告问题和功能请求”部分\n修复日历（最多 4 个）\n首次安装后预加载值\n修复问题 #9\n更新`.mower.errorCode`的`common.states`"
-            },
-            "0.0.5": {
-                "en": "fix issue #10\nstore all GPS-values (delay of 500ms if more than one was received)\nimprove error handling\nimprove debug output messages",
-                "de": "Beheben Sie Problem Nr. 10\nalle GPS-Werte speichern (Verzögerung von 500ms wenn mehr als einer empfangen wurde)\nFehlerbehandlung verbessern\nVerbesserung der Debug-Ausgabemeldungen",
-                "ru": "исправить ошибку №10\nсохранить все значения GPS (задержка 500 мс, если было получено более одного)\nулучшить обработку ошибок\nулучшить выходные сообщения отладки",
-                "pt": "corrigir o problema nº 10\narmazenar todos os valores GPS (atraso de 500ms se mais de um foi recebido)\nmelhorar o tratamento de erros\nmelhorar as mensagens de saída de depuração",
-                "nl": "probleem #10 oplossen\nalle GPS-waarden opslaan (vertraging van 500ms als er meer dan één werd ontvangen)\nfoutafhandeling verbeteren\ndebug-uitvoerberichten verbeteren",
-                "fr": "résoudre le problème n° 10\nstocker toutes les valeurs GPS (délai de 500 ms si plusieurs valeurs ont été reçues)\naméliorer la gestion des erreurs\naméliorer les messages de sortie de débogage",
-                "it": "risolvere il problema n. 10\nmemorizzare tutti i valori GPS (ritardo di 500 ms se ne è stato ricevuto più di uno)\nmigliorare la gestione degli errori\nmigliorare i messaggi di output di debug",
-                "es": "arreglar el problema #10\nalmacenar todos los valores GPS (retraso de 500 ms si se recibió más de uno)\nmejorar el manejo de errores\nmejorar los mensajes de salida de depuración",
-                "pl": "napraw problem nr 10\nprzechowywać wszystkie wartości GPS (opóźnienie 500ms, jeśli otrzymano więcej niż jedną)\npoprawić obsługę błędów\npopraw komunikaty wyjściowe debugowania",
-                "zh-cn": "修复问题 #10\n存储所有 GPS 值（如果接收到多个 GPS 值，则延迟 500 毫秒）\n改进错误处理\n改进调试输出消息"
-            },
-            "0.0.6": {
-                "en": "update dependencies\nadd some more limitations in readme",
-                "de": "Abhängigkeiten aktualisieren\nFügen Sie weitere Einschränkungen in der Readme-Datei hinzu",
-                "ru": "обновить зависимости\nдобавить еще несколько ограничений в readme",
-                "pt": "atualizar dependências\nadicione mais algumas limitações no readme",
-                "nl": "update afhankelijkheden\nvoeg wat meer beperkingen toe in readme",
-                "fr": "mettre à jour les dépendances\najouter quelques limitations supplémentaires dans le fichier readme",
-                "it": "aggiornare le dipendenze\naggiungi alcune altre limitazioni nel readme",
-                "es": "actualizar dependencias\nagregue algunas limitaciones más en el archivo Léame",
-                "pl": "zaktualizuj zależności\ndodaj więcej ograniczeń w readme",
-                "zh-cn": "更新依赖\n在自述文件中添加更多限制"
-            },
-            "0.1.0": {
-                "en": "password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)\nclean up code\nimplementation of JSON config (this change requires js-controller >= v3.3.19 and admin >= v5.1.28)\nnode.js >= v14.0 is required\nupdate dependencies",
-                "de": "Passwortverschlüsselung hinzugefügt (Benutzer müssen das Passwort nach dem Update einmal neu eingeben, diese Änderung erfordert Admin >= v4.0.9)\nCode bereinigen\nImplementierung der JSON-Konfiguration (diese Änderung erfordert js-controller >= v3.3.19 und admin >= v5.1.28)\nnode.js >= v14.0 ist erforderlich\nAbhängigkeiten aktualisieren",
-                "ru": "добавлено шифрование пароля (пользователю необходимо повторно ввести пароль один раз после обновления, для этого изменения требуется admin >= v4.0.9)\nочистить код\nреализация конфигурации JSON (для этого изменения требуется js-controller >= v3.3.19 и admin >= v5.1.28)\nnode.js >= требуется версия 14.0\nобновить зависимости",
-                "pt": "criptografia de senha adicionada (o usuário precisa reinserir a senha uma vez após a atualização, esta alteração requer admin >= v4.0.9)\nlimpar código\nimplementação da configuração JSON (esta mudança requer js-controller >= v3.3.19 e admin >= v5.1.28)\nnode.js >= v14.0 é obrigatório\natualizar dependências",
-                "nl": "wachtwoordversleuteling toegevoegd (gebruiker moet het wachtwoord eenmaal opnieuw invoeren na update, deze wijziging vereist admin >= v4.0.9)\nopschonen code\nimplementatie van JSON-configuratie (voor deze wijziging is js-controller >= v3.3.19 en admin >= v5.1.28 vereist)\nnode.js >= v14.0 is vereist\nupdate afhankelijkheden",
-                "fr": "cryptage du mot de passe ajouté (l'utilisateur doit ressaisir le mot de passe une fois après la mise à jour, ce changement nécessite admin>= v4.0.9)\nnettoyer le code\nimplémentation de la configuration JSON (ce changement nécessite js-controller >= v3.3.19 et admin >= v5.1.28)\nnode.js >= v14.0 est requis\nmettre à jour les dépendances",
-                "it": "crittografia della password aggiunta (l'utente deve reinserire la password una volta dopo l'aggiornamento, questa modifica richiede admin >= v4.0.9)\ncodice di pulizia\nimplementazione della configurazione JSON (questa modifica richiede js-controller >= v3.3.19 e admin >= v5.1.28)\nnode.js >= è richiesto v14.0\naggiornare le dipendenze",
-                "es": "cifrado de contraseña agregado (el usuario debe volver a ingresar la contraseña una vez después de la actualización, este cambio requiere administrador> = v4.0.9)\ncódigo de limpieza\nimplementación de la configuración JSON (este cambio requiere js-controller >= v3.3.19 y admin >= v5.1.28)\nse requiere node.js >= v14.0\nactualizar dependencias",
-                "pl": "dodano szyfrowanie hasła (użytkownik musi ponownie wprowadzić hasło raz po aktualizacji, ta zmiana wymaga administratora >= v4.0.9)\nwyczyść kod\nimplementacja konfiguracji JSON (ta zmiana wymaga js-controller >= v3.3.19 i admin >= v5.1.28)\nnode.js >= v14.0 jest wymagany\nzaktualizuj zależności",
-                "zh-cn": "添加密码加密（用户需要在更新后重新输入一次密码，此更改需要管理员> = v4.0.9）\n清理代码\nJSON 配置的实现（此更改需要 js-controller >= v3.3.19 和 admin >= v5.1.28）\n需要 node.js >= v14.0\n更新依赖"
-            },
-            "0.2.0": {
-                "en": "support new login procedure to husqvarna's webservice using \"Application key\" and \"Application secret\" instead of \"username (emailadress)\" and \"password\" (issue #33)\nupdate links to husqvarna homepage due to their updated homepage\nimprove bug-report form",
-                "de": "unterstützung neuer Anmeldeverfahren für den Webservice von husqvarna mit \"Anwendungsschlüssel\" und \"Anwendungsgeheimnis\" anstelle von \"username (emailadress)\" und Passwort (Ausgabe #33)\naktualisierung von links zu husqvarna homepage aufgrund ihrer aktualisierten homepage\nbug-report-formular verbessern",
-                "ru": "поддержите новую процедуру входа в веб-сервис husqvarna, используя \"Ключ приложения\" и \"Секрет заявки\" вместо \"имя пользователя (адрес электронной почты)\" и пароль (выдача No33)\nобновление ссылок на домашнюю страницу husqvarna из-за обновленной домашней страницы\nулучшить форму bug-report",
-                "pt": "suporte novo procedimento de login para o webservice de husqvarna usando \"chave de aplicação\" e \"Segredo de aplicação\" em vez de \"username (emailadress)\" e senha (edição #33)\natualizar links para página inicial husqvarna devido à sua página inicial atualizada\nmelhorar o formulário de relatório de bugs",
-                "nl": "vertaling:\nvertaling:\nverbeter insect-reportvorm",
-                "fr": "soutenir une nouvelle procédure de connexion pour le service web de husqvarna en utilisant \"Application key\" et \"Application secret\" au lieu de \"username (emailadress)\" et mot de passe (issue #33)\nmettre à jour les liens vers la page d'accueil de husqvarna en raison de leur page d'accueil mise à jour\naméliorer le formulaire de rapport de bogues",
-                "it": "supporta la nuova procedura di login per il webservice di husqvarna usando \"chiave di applicazione\" e \"Segreto di applicazione\" invece di \"username (emailadress)\" e password (problema #33)\naggiornamento link a husqvarna homepage a causa della loro pagina iniziale aggiornata\nmigliorare il modulo bug-report",
-                "es": "soporte nuevo procedimiento de inicio de sesión para el servicio web de Husqvarna utilizando \"clave de aplicación\" y \"Aplicación secreta\" en lugar de \"nombre de usuario (mailadress)\" y contraseña (issue #33)\nenlaces a la página principal de husqvarna debido a su página web actualizada\nmejorar el formulario de registro de errores",
-                "pl": "popiera nowe procedury logowania do serwisu internetowego husqvarny zamiast \"username (emailadress)\" i hasło (rekompilacja #33)\nzaktualizowanie linków do serwisu husqvarna ze względu na ich aktualizowaną stronę\npoprawiona forma błędów",
-                "zh-cn": "支持使用“应用关键”和“应用秘密”来保护克瓦纳网站的新逻辑程序,而不是“用户名称(马伊拉语)”和密码(第33号)。\n由于更新的主页,与wqvarna主页的更新联系\nb 改进报告格式"
-              },
-              "0.3.0": {
-                "en": "improved logging\nupdate dependencies\nupdate of `common.states` of `.mower.errorCode`\nadding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`",
-                "de": "verbesserte protokollierung\naktualisierung der abhängigkeiten\naktualisierung von Common. Mower.errorCode\nhinzufügen von Statistikwerten aus der Automower Connect API Statistik.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime und statistics.totalSearchingTime",
-                "ru": "улучшенный вход\nобновление зависимостей\nобновление общего. состояния mower.errorCode\nдобавить значения статистики от Automower Connect API Statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
-                "pt": "registro melhorado\ndependências\natualização de comum. estados de cortador.errorCode\nadicionando valores de estatísticas do Automower Connect API statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime e statistics.totalSearchingTime",
-                "nl": "verbeterde logging\nvertaling:\nupdate van gemeenschappelijk. Staat van macht\nstatistieken toevoegen van de automatische connectie API statistieken, de BladeusageTime, statistieken en statistieken",
-                "fr": "amélioration de l ' exploitation forestière\nmettre à jour les dépendances\nmise à jour du commun. états de mower.errorCode\najout de statistiques de l'API Automower Connect. cuttingBladeUsageTime, statistiques.nombreOfChargingCycles, statistiques.nombreOfCollisions, statistiques.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
-                "it": "migliore registrazione\naggiornamento dipendenze\naggiornamento di comune. stati di tosaerba.errorCode\naggiungendo i valori statistici dalle statistiche dell'API di Automower Connect.cuttingBladeUsageTime, statistiche.numberOfChargingCycles, statistica.numberOfCollisions, statistica.totalChargingTime, statistica.totalCuttingTime, statistica.totalRunningTime e statistiche.totalSearchingTime",
-                "es": "mejora de la logística\ndependencias de actualización\nactualización de común. estados de cortacéspedes.errorCode\nañadiendo valores estadísticos de las estadísticas de Automower Connect API.cortaBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
-                "pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
-                "zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
-              }
-        },
-        "titleLang": {
-            "en": "Husqvarna-Automower",
-            "de": "Husqvarna-Automower",
-            "ru": "Husqvarna-Automower",
-            "pt": "Husqvarna-Automower",
-            "nl": "Husqvarna-Automower",
-            "fr": "Husqvarna-Automower",
-            "it": "Husqvarna-Automower",
-            "es": "Husqvarna-Automower",
-            "pl": "Husqvarna-Automower",
-            "zh-cn": "Husqvarna-Automower"
-        },
-        "desc": {
-            "en": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",
-            "de": "Dieser Adapter für verwendet die Husqvarna API, um Daten für Ihren Husqvarna Automower über das Connect-Modul anzufordern.",
-            "ru": "Этот адаптер использует API Husqvarna для запроса данных для вашей газонокосилки Husqvarna через модуль подключения.",
-            "pt": "Este adaptador usa a API Husqvarna para solicitar dados para o Husqvarna Automower por meio do módulo de conexão.",
-            "nl": "Deze adapter maakt gebruik van de Husqvarna API om gegevens voor uw Husqvarna Automower op te vragen via de connect module.",
-            "fr": "Cet adaptateur utilise l'API Husqvarna pour demander des données pour votre Husqvarna Automower via le module de connexion.",
-            "it": "Questo adattatore utilizza l'API Husqvarna per richiedere dati per il tuo Husqvarna Automower tramite il modulo di connessione.",
-            "es": "Este adaptador utiliza la API de Husqvarna para solicitar datos para su Husqvarna Automower a través del módulo de conexión.",
-            "pl": "Ten adapter wykorzystuje interfejs API Husqvarna do żądania danych dla kosiarki Husqvarna Automower za pośrednictwem modułu Connect.",
-            "zh-cn": "此适配器使用 Husqvarna API 通过连接模块为您的 Husqvarna Automower 请求数据。"
-        },
-        "authors": [
-            "ice987987 <mathias.frei1@gmail.com>"
-        ],
-        "keywords": [
-            "husqvarna-automower",
-            "husqvarna",
-            "automower",
-            "lawnmower",
-            "mower"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "husqvarna-automower.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/ice987987/ioBroker.husqvarna-automower/main/admin/husqvarna-automower.png",
-        "readme": "https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "garden",
-        "compact": true,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "materialize": true,
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=3.3.19"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=5.1.28"
-            }
-        ]
-    },
-    "encryptedNative": [
-        "applicationKey",
-        "applicationSecret"
-    ],
-    "protectedNative": [
-        "applicationKey",
-        "applicationSecret"
-    ],
-    "native": {
-        "applicationKey": "",
-        "applicationSecret": "",
-        "statisticsInterval": 720
-    },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "Device or service connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
-    ]
+	"common": {
+		"name": "husqvarna-automower",
+		"version": "0.3.1-beta.4",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			},
+			"0.0.2": {
+				"en": "initial npm release",
+				"de": "erste npm-Veröffentlichung",
+				"ru": "первоначальный выпуск npm",
+				"pt": "lançamento inicial do npm",
+				"nl": "initiële npm-release",
+				"fr": "version initiale de npm",
+				"it": "rilascio iniziale di npm",
+				"es": "versión inicial de npm",
+				"pl": "pierwsze wydanie npm",
+				"zh-cn": "初始 npm 版本"
+			},
+			"0.0.3": {
+				"en": "initial npm release",
+				"de": "erste npm-Veröffentlichung",
+				"ru": "первоначальный выпуск npm",
+				"pt": "lançamento inicial do npm",
+				"nl": "initiële npm-release",
+				"fr": "version initiale de npm",
+				"it": "rilascio iniziale di npm",
+				"es": "versión inicial de npm",
+				"pl": "pierwsze wydanie npm",
+				"zh-cn": "初始 npm 版本"
+			},
+			"0.0.4": {
+				"en": "update dependencies\nadd section \"Available values\" in readme\nadd section \"ioBroker.vis bindings\" in readme\nadd section \"How to report issues and feature requests\" in readme\nfix calendar (max 4)\npreload values after first install\nfix issue #9\nupdate `common.states` of `.mower.errorCode`",
+				"de": "Abhängigkeiten aktualisieren\nAbschnitt \"Verfügbare Werte\" in Readme hinzufügen\nAbschnitt „ioBroker.vis-Bindungen“ in Readme hinzufügen\nAbschnitt „So melden Sie Probleme und Funktionsanfragen“ in Readme hinzufügen\nKalender fixieren (max. 4)\nvorab geladene Werte nach der Erstinstallation\nProblem Nr. 9 beheben\naktualisiere `common.states` von `.mower.errorCode`",
+				"ru": "обновить зависимости\nдобавить раздел \"Доступные значения\" в readme\nдобавить раздел \"Привязки ioBroker.vis\" в readme\nдобавить раздел «Как сообщать о проблемах и запросах функций» в файле readme\nисправить календарь (максимум 4)\nзначения предварительной загрузки после первой установки\nисправить ошибку №9\nобновить `common.states` `.mower.errorCode`",
+				"pt": "atualizar dependências\nadicione a seção \"Valores disponíveis\" no leia-me\nadicione a seção \"ligações ioBroker.vis\" no readme\nadicione a seção \"Como relatar problemas e solicitações de recursos\" no leia-me\ncorrigir calendário (máximo 4)\nvalores de pré-carregamento após a primeira instalação\ncorrigir o problema nº 9\natualizar `common.states` de `.mower.errorCode`",
+				"nl": "update afhankelijkheden\nvoeg sectie \"Beschikbare waarden\" toe in readme\nvoeg sectie \"ioBroker.vis bindingen\" toe in readme\nvoeg sectie \"Hoe problemen en functieverzoeken te melden\" toe aan readme\nvaste kalender (max 4)\npreload-waarden na eerste installatie\nprobleem #9 oplossen\nupdate `common.states` van `.mower.errorCode`",
+				"fr": "mettre à jour les dépendances\najouter la section \"Valeurs disponibles\" dans le fichier readme\najouter la section \"liaisons ioBroker.vis\" dans le fichier readme\najouter la section \"Comment signaler des problèmes et des demandes de fonctionnalités\" dans le fichier readme\ncalendrier fixe (max 4)\nvaleurs de préchargement après la première installation\nrésoudre le problème n° 9\nmettre à jour `common.states` de `.mower.errorCode`",
+				"it": "aggiornare le dipendenze\naggiungi la sezione \"Valori disponibili\" in readme\naggiungi la sezione \"legami ioBroker.vis\" in readme\naggiungi la sezione \"Come segnalare problemi e richieste di funzionalità\" in readme\ncalendario fisso (max 4)\nprecaricare i valori dopo la prima installazione\nrisolvere il problema n. 9\naggiorna `common.states` di `.mower.errorCode`",
+				"es": "actualizar dependencias\nagregue la sección \"Valores disponibles\" en el archivo Léame\nagregue la sección \"enlaces ioBroker.vis\" en el archivo Léame\nagregue la sección \"Cómo informar problemas y solicitudes de funciones\" en el archivo Léame\ncalendario fijo (máximo 4)\nvalores de precarga después de la primera instalación\narreglar el problema #9\nactualizar `common.states` de `.mower.errorCode`",
+				"pl": "zaktualizuj zależności\ndodaj sekcję \"Dostępne wartości\" w readme\ndodaj sekcję \"Powiązania ioBroker.vis\" w readme\ndodaj sekcję \"Jak zgłaszać problemy i prośby o nowe funkcje\" w readme\nnapraw kalendarz (max 4)\nwstępne ładowanie wartości po pierwszej instalacji\nnapraw problem nr 9\nzaktualizuj `common.states` `.mower.errorCode`",
+				"zh-cn": "更新依赖\n在自述文件中添加“可用值”部分\n在自述文件中添加“ioBroker.vis 绑定”部分\n在自述文件中添加“如何报告问题和功能请求”部分\n修复日历（最多 4 个）\n首次安装后预加载值\n修复问题 #9\n更新`.mower.errorCode`的`common.states`"
+			},
+			"0.0.5": {
+				"en": "fix issue #10\nstore all GPS-values (delay of 500ms if more than one was received)\nimprove error handling\nimprove debug output messages",
+				"de": "Beheben Sie Problem Nr. 10\nalle GPS-Werte speichern (Verzögerung von 500ms wenn mehr als einer empfangen wurde)\nFehlerbehandlung verbessern\nVerbesserung der Debug-Ausgabemeldungen",
+				"ru": "исправить ошибку №10\nсохранить все значения GPS (задержка 500 мс, если было получено более одного)\nулучшить обработку ошибок\nулучшить выходные сообщения отладки",
+				"pt": "corrigir o problema nº 10\narmazenar todos os valores GPS (atraso de 500ms se mais de um foi recebido)\nmelhorar o tratamento de erros\nmelhorar as mensagens de saída de depuração",
+				"nl": "probleem #10 oplossen\nalle GPS-waarden opslaan (vertraging van 500ms als er meer dan één werd ontvangen)\nfoutafhandeling verbeteren\ndebug-uitvoerberichten verbeteren",
+				"fr": "résoudre le problème n° 10\nstocker toutes les valeurs GPS (délai de 500 ms si plusieurs valeurs ont été reçues)\naméliorer la gestion des erreurs\naméliorer les messages de sortie de débogage",
+				"it": "risolvere il problema n. 10\nmemorizzare tutti i valori GPS (ritardo di 500 ms se ne è stato ricevuto più di uno)\nmigliorare la gestione degli errori\nmigliorare i messaggi di output di debug",
+				"es": "arreglar el problema #10\nalmacenar todos los valores GPS (retraso de 500 ms si se recibió más de uno)\nmejorar el manejo de errores\nmejorar los mensajes de salida de depuración",
+				"pl": "napraw problem nr 10\nprzechowywać wszystkie wartości GPS (opóźnienie 500ms, jeśli otrzymano więcej niż jedną)\npoprawić obsługę błędów\npopraw komunikaty wyjściowe debugowania",
+				"zh-cn": "修复问题 #10\n存储所有 GPS 值（如果接收到多个 GPS 值，则延迟 500 毫秒）\n改进错误处理\n改进调试输出消息"
+			},
+			"0.0.6": {
+				"en": "update dependencies\nadd some more limitations in readme",
+				"de": "Abhängigkeiten aktualisieren\nFügen Sie weitere Einschränkungen in der Readme-Datei hinzu",
+				"ru": "обновить зависимости\nдобавить еще несколько ограничений в readme",
+				"pt": "atualizar dependências\nadicione mais algumas limitações no readme",
+				"nl": "update afhankelijkheden\nvoeg wat meer beperkingen toe in readme",
+				"fr": "mettre à jour les dépendances\najouter quelques limitations supplémentaires dans le fichier readme",
+				"it": "aggiornare le dipendenze\naggiungi alcune altre limitazioni nel readme",
+				"es": "actualizar dependencias\nagregue algunas limitaciones más en el archivo Léame",
+				"pl": "zaktualizuj zależności\ndodaj więcej ograniczeń w readme",
+				"zh-cn": "更新依赖\n在自述文件中添加更多限制"
+			},
+			"0.1.0": {
+				"en": "password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)\nclean up code\nimplementation of JSON config (this change requires js-controller >= v3.3.19 and admin >= v5.1.28)\nnode.js >= v14.0 is required\nupdate dependencies",
+				"de": "Passwortverschlüsselung hinzugefügt (Benutzer müssen das Passwort nach dem Update einmal neu eingeben, diese Änderung erfordert Admin >= v4.0.9)\nCode bereinigen\nImplementierung der JSON-Konfiguration (diese Änderung erfordert js-controller >= v3.3.19 und admin >= v5.1.28)\nnode.js >= v14.0 ist erforderlich\nAbhängigkeiten aktualisieren",
+				"ru": "добавлено шифрование пароля (пользователю необходимо повторно ввести пароль один раз после обновления, для этого изменения требуется admin >= v4.0.9)\nочистить код\nреализация конфигурации JSON (для этого изменения требуется js-controller >= v3.3.19 и admin >= v5.1.28)\nnode.js >= требуется версия 14.0\nобновить зависимости",
+				"pt": "criptografia de senha adicionada (o usuário precisa reinserir a senha uma vez após a atualização, esta alteração requer admin >= v4.0.9)\nlimpar código\nimplementação da configuração JSON (esta mudança requer js-controller >= v3.3.19 e admin >= v5.1.28)\nnode.js >= v14.0 é obrigatório\natualizar dependências",
+				"nl": "wachtwoordversleuteling toegevoegd (gebruiker moet het wachtwoord eenmaal opnieuw invoeren na update, deze wijziging vereist admin >= v4.0.9)\nopschonen code\nimplementatie van JSON-configuratie (voor deze wijziging is js-controller >= v3.3.19 en admin >= v5.1.28 vereist)\nnode.js >= v14.0 is vereist\nupdate afhankelijkheden",
+				"fr": "cryptage du mot de passe ajouté (l'utilisateur doit ressaisir le mot de passe une fois après la mise à jour, ce changement nécessite admin>= v4.0.9)\nnettoyer le code\nimplémentation de la configuration JSON (ce changement nécessite js-controller >= v3.3.19 et admin >= v5.1.28)\nnode.js >= v14.0 est requis\nmettre à jour les dépendances",
+				"it": "crittografia della password aggiunta (l'utente deve reinserire la password una volta dopo l'aggiornamento, questa modifica richiede admin >= v4.0.9)\ncodice di pulizia\nimplementazione della configurazione JSON (questa modifica richiede js-controller >= v3.3.19 e admin >= v5.1.28)\nnode.js >= è richiesto v14.0\naggiornare le dipendenze",
+				"es": "cifrado de contraseña agregado (el usuario debe volver a ingresar la contraseña una vez después de la actualización, este cambio requiere administrador> = v4.0.9)\ncódigo de limpieza\nimplementación de la configuración JSON (este cambio requiere js-controller >= v3.3.19 y admin >= v5.1.28)\nse requiere node.js >= v14.0\nactualizar dependencias",
+				"pl": "dodano szyfrowanie hasła (użytkownik musi ponownie wprowadzić hasło raz po aktualizacji, ta zmiana wymaga administratora >= v4.0.9)\nwyczyść kod\nimplementacja konfiguracji JSON (ta zmiana wymaga js-controller >= v3.3.19 i admin >= v5.1.28)\nnode.js >= v14.0 jest wymagany\nzaktualizuj zależności",
+				"zh-cn": "添加密码加密（用户需要在更新后重新输入一次密码，此更改需要管理员> = v4.0.9）\n清理代码\nJSON 配置的实现（此更改需要 js-controller >= v3.3.19 和 admin >= v5.1.28）\n需要 node.js >= v14.0\n更新依赖"
+			},
+			"0.2.0": {
+				"en": "support new login procedure to husqvarna's webservice using \"Application key\" and \"Application secret\" instead of \"username (emailadress)\" and \"password\" (issue #33)\nupdate links to husqvarna homepage due to their updated homepage\nimprove bug-report form",
+				"de": "unterstützung neuer Anmeldeverfahren für den Webservice von husqvarna mit \"Anwendungsschlüssel\" und \"Anwendungsgeheimnis\" anstelle von \"username (emailadress)\" und Passwort (Ausgabe #33)\naktualisierung von links zu husqvarna homepage aufgrund ihrer aktualisierten homepage\nbug-report-formular verbessern",
+				"ru": "поддержите новую процедуру входа в веб-сервис husqvarna, используя \"Ключ приложения\" и \"Секрет заявки\" вместо \"имя пользователя (адрес электронной почты)\" и пароль (выдача No33)\nобновление ссылок на домашнюю страницу husqvarna из-за обновленной домашней страницы\nулучшить форму bug-report",
+				"pt": "suporte novo procedimento de login para o webservice de husqvarna usando \"chave de aplicação\" e \"Segredo de aplicação\" em vez de \"username (emailadress)\" e senha (edição #33)\natualizar links para página inicial husqvarna devido à sua página inicial atualizada\nmelhorar o formulário de relatório de bugs",
+				"nl": "vertaling:\nvertaling:\nverbeter insect-reportvorm",
+				"fr": "soutenir une nouvelle procédure de connexion pour le service web de husqvarna en utilisant \"Application key\" et \"Application secret\" au lieu de \"username (emailadress)\" et mot de passe (issue #33)\nmettre à jour les liens vers la page d'accueil de husqvarna en raison de leur page d'accueil mise à jour\naméliorer le formulaire de rapport de bogues",
+				"it": "supporta la nuova procedura di login per il webservice di husqvarna usando \"chiave di applicazione\" e \"Segreto di applicazione\" invece di \"username (emailadress)\" e password (problema #33)\naggiornamento link a husqvarna homepage a causa della loro pagina iniziale aggiornata\nmigliorare il modulo bug-report",
+				"es": "soporte nuevo procedimiento de inicio de sesión para el servicio web de Husqvarna utilizando \"clave de aplicación\" y \"Aplicación secreta\" en lugar de \"nombre de usuario (mailadress)\" y contraseña (issue #33)\nenlaces a la página principal de husqvarna debido a su página web actualizada\nmejorar el formulario de registro de errores",
+				"pl": "popiera nowe procedury logowania do serwisu internetowego husqvarny zamiast \"username (emailadress)\" i hasło (rekompilacja #33)\nzaktualizowanie linków do serwisu husqvarna ze względu na ich aktualizowaną stronę\npoprawiona forma błędów",
+				"zh-cn": "支持使用“应用关键”和“应用秘密”来保护克瓦纳网站的新逻辑程序,而不是“用户名称(马伊拉语)”和密码(第33号)。\n由于更新的主页,与wqvarna主页的更新联系\nb 改进报告格式"
+			},
+			"0.3.0": {
+				"en": "improved logging\nupdate dependencies\nupdate of `common.states` of `.mower.errorCode`\nadding statistics values from the Automower Connect API `.statistics.cuttingBladeUsageTime`, `.statistics.numberOfChargingCycles`, `.statistics.numberOfCollisions`, `.statistics.totalChargingTime`, `.statistics.totalCuttingTime`, `.statistics.totalRunningTime` and `.statistics.totalSearchingTime`",
+				"de": "verbesserte protokollierung\naktualisierung der abhängigkeiten\naktualisierung von Common. Mower.errorCode\nhinzufügen von Statistikwerten aus der Automower Connect API Statistik.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime und statistics.totalSearchingTime",
+				"ru": "улучшенный вход\nобновление зависимостей\nобновление общего. состояния mower.errorCode\nдобавить значения статистики от Automower Connect API Statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
+				"pt": "registro melhorado\ndependências\natualização de comum. estados de cortador.errorCode\nadicionando valores de estatísticas do Automower Connect API statistics.cuttingBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime e statistics.totalSearchingTime",
+				"nl": "verbeterde logging\nvertaling:\nupdate van gemeenschappelijk. Staat van macht\nstatistieken toevoegen van de automatische connectie API statistieken, de BladeusageTime, statistieken en statistieken",
+				"fr": "amélioration de l ' exploitation forestière\nmettre à jour les dépendances\nmise à jour du commun. états de mower.errorCode\najout de statistiques de l'API Automower Connect. cuttingBladeUsageTime, statistiques.nombreOfChargingCycles, statistiques.nombreOfCollisions, statistiques.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
+				"it": "migliore registrazione\naggiornamento dipendenze\naggiornamento di comune. stati di tosaerba.errorCode\naggiungendo i valori statistici dalle statistiche dell'API di Automower Connect.cuttingBladeUsageTime, statistiche.numberOfChargingCycles, statistica.numberOfCollisions, statistica.totalChargingTime, statistica.totalCuttingTime, statistica.totalRunningTime e statistiche.totalSearchingTime",
+				"es": "mejora de la logística\ndependencias de actualización\nactualización de común. estados de cortacéspedes.errorCode\nañadiendo valores estadísticos de las estadísticas de Automower Connect API.cortaBladeUsageTime, statistics.numberOfChargingCycles, statistics.numberOfCollisions, statistics.totalChargingTime, statistics.totalCuttingTime, statistics.totalRunningTime and statistics.totalSearchingTime",
+				"pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
+				"zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
+			},
+			"0.3.1-beta.3": {
+				"en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values\nfix issue #65"
+			}
+		},
+		"titleLang": {
+			"en": "Husqvarna-Automower",
+			"de": "Husqvarna-Automower",
+			"ru": "Husqvarna-Automower",
+			"pt": "Husqvarna-Automower",
+			"nl": "Husqvarna-Automower",
+			"fr": "Husqvarna-Automower",
+			"it": "Husqvarna-Automower",
+			"es": "Husqvarna-Automower",
+			"pl": "Husqvarna-Automower",
+			"zh-cn": "Husqvarna-自动割草机"
+		},
+		"desc": {
+			"en": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",
+			"de": "Dieser Adapter für verwendet die Husqvarna API, um Daten für Ihren Husqvarna Automower über das Verbindungsmodul anzufordern.",
+			"ru": "Этот адаптер использует API Husqvarna для запроса данных для газонокосилки Husqvarna Automower через модуль подключения.",
+			"pt": "Este adaptador usa a API Husqvarna para solicitar dados para o seu Husqvarna Automower através do módulo de conexão.",
+			"nl": "Deze adapter maakt gebruik van de Husqvarna API om gegevens voor uw Husqvarna Automower op te vragen via de connect module.",
+			"fr": "Cet adaptateur utilise l'API Husqvarna pour demander des données pour votre Husqvarna Automower via le module de connexion.",
+			"it": "Questo adattatore utilizza l'API Husqvarna per richiedere i dati per il tuo Husqvarna Automower tramite il modulo di connessione.",
+			"es": "Este adaptador utiliza la API de Husqvarna para solicitar datos para su Husqvarna Automower a través del módulo de conexión.",
+			"pl": "Ten adapter wykorzystuje interfejs API Husqvarna do żądania danych dla kosiarki Husqvarna Automower za pośrednictwem modułu Connect.",
+			"zh-cn": "此适配器使用 Husqvarna API 通过连接模块为您的 Husqvarna Automower 请求数据。"
+		},
+		"authors": ["ice987987 <mathias.frei1@gmail.com>"],
+		"keywords": ["husqvarna-automower", "husqvarna", "automower", "lawnmower", "mower"],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "husqvarna-automower.svg",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/ice987987/ioBroker.husqvarna-automower/main/admin/husqvarna-automower.svg",
+		"readme": "https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "garden",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=4.0.23"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=6.2.19"
+			}
+		]
+	},
+	"encryptedNative": ["applicationKey", "applicationSecret"],
+	"protectedNative": ["applicationKey", "applicationSecret"],
+	"native": {
+		"applicationKey": "",
+		"applicationSecret": "",
+		"statisticsInterval": 720
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
 }

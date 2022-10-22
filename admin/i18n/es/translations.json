@@ -4,5 +4,5 @@
     "applicationSecret": "Application secret",
     "applicationSecretHint": "Obtenga su 'Secreto de la aplicación Husqvarna Automower' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>aquí</a>. (formato: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
     "statisticsInterval": "Intervalo de tiempo para recuperar valores estadísticos",
-	"statisticsIntervalHint": "en minutos (máx. 10000 solicitud por mes y clave de aplicación)"
+    "statisticsIntervalHint": "en minutos (máx. 10000 solicitud por mes y clave de aplicación)"
 }

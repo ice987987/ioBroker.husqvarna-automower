@@ -11,7 +11,7 @@ body:
         If this is the first time you are doing this, please take a few moments to read
         through the [README](https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md).
 
-        You are about to report a bug in **husqvarna-automower Adapter**. Do not proceed if your issues
+        You are about to report a bug in **"husqvarna-automower"-adapter**. Do not proceed if your issues
         occurs with ioBroker itself, any third party adapters, unofficial or outdated
         adapter versions.
 
@@ -36,6 +36,18 @@ body:
         ## Environment
   - type: input
     attributes:
+      label: Version of "husqvarna-automower"-adapter
+      description: Can be found in the adapters tab of ioBroker admin
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Husqvarna Automower Type
+      description: f.ex. 430x
+    validations:
+      required: true
+  - type: input
+    attributes:
       label: Version of Node.js
       description: Can be found in the host section of ioBroker admin
     validations:
@@ -44,12 +56,6 @@ body:
     attributes:
       label: Version of ioBroker js-controller
       description: Can be found in the host section of ioBroker admin
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: Version of "husqvarna-automower"-adapter
-      description: Can be found in the adapters tab of ioBroker admin
     validations:
       required: true
   - type: input

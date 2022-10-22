@@ -4,5 +4,5 @@
     "applicationSecret": "应用秘密",
     "applicationSecretHint": "在<a href='https://developer.husqvarnagroup.cloud' target='_blank'>此处</a>获取您的“Husqvarna Automower Application Secret”。(格式: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
     "statisticsInterval": "恢复统计价值的时间间隔",
-	"statisticsIntervalHint": "格式"
+    "statisticsIntervalHint": "格式"
 }
