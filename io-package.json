@@ -111,8 +111,17 @@
 				"pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
 				"zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
 			},
-			"0.3.1-beta.3": {
-				"en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values\nfix issue #65"
+			"0.3.1-beta.4": {
+				"en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values\nfix issue #65",
+				"de": "BREAKING: js-controller >= v4.0.23 und admin >= v6.2.19 ist erforderlich\nQuellcode-Verbesserungen\nFähigkeit, statistische Werte zu aktualisieren\nBeheben Sie Problem Nr. 65",
+				"ru": "НАРУШЕНИЕ: требуется js-controller >= v4.0.23 и admin >= v6.2.19\nулучшения исходного кода\nвозможность обновления статистических значений\nисправить ошибку №65",
+				"pt": "QUEBRA: js-controller >= v4.0.23 e admin >= v6.2.19 é necessário\nmelhorias no código fonte\ncapacidade de atualizar valores estatísticos\ncorrigir o problema nº 65",
+				"nl": "BREAKING: js-controller >= v4.0.23 en admin >= v6.2.19 is vereist\nbroncode verbeteringen\nmogelijkheid om statistische waarden bij te werken\nprobleem #65 oplossen",
+				"fr": "BREAKING: js-controller >= v4.0.23 et admin >= v6.2.19 est requis\naméliorations du code source\npossibilité de mettre à jour les valeurs statistiques\nrésoudre le problème #65",
+				"it": "ROTTURA: js-controller >= v4.0.23 e admin >= v6.2.19 è richiesto\nmiglioramenti del codice sorgente\ncapacità di aggiornare i valori statistici\nrisolvere il problema n. 65",
+				"es": "ÚLTIMA HORA: se requiere js-controller >= v4.0.23 y admin >= v6.2.19\nmejoras en el código fuente\nposibilidad de actualizar valores estadísticos\narreglar el problema #65",
+				"pl": "ZŁAMANIE: js-controller >= v4.0.23 i admin >= v6.2.19 jest wymagany\nulepszenia kodu źródłowego\nmożliwość aktualizacji wartości statystycznych\nnapraw problem #65",
+				"zh-cn": "BREAKING：需要 js-controller >= v4.0.23 和 admin >= v6.2.19\n源代码改进\n更新统计值的能力\n修复问题 #65"
 			}
 		},
 		"titleLang": {
