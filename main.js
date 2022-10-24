@@ -99,8 +99,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			// get statistics
 			this.statisticsInterval = setInterval(async () => {
-				await this.getMowerData();
-				await this.fillObjects(this.mowerData);
+				try {
+					await this.getMowerData();
+					await this.fillObjects(this.mowerData);
+				} catch (error) {
+					this.log.debug(`${error} (ERR_#015)`);
+				}
 			}, this.config.statisticsInterval * 60000); // max. 10000 requests/month; (31d*24h*60min*60s*1000ms)/10000requests/month = 267840ms = 4.46min
 		} catch (error) {
 			this.log.error(`${error} (ERR_#004)`);
