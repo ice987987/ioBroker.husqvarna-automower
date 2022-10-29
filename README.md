@@ -150,43 +150,120 @@ the following code can be used for html-bindings in adapter [ioBroker.vis](https
     (DE)
 
     ```
-    {value1:husqvarna-automower.0.[mowerID vom DP .system.id].mower.state;value1 === "UNKNOWN" ? "unbekannter Zustand" :: (value1 === "NOT_APPLICABLE" ? "nicht zutreffend" :: (value1 === "PAUSED" ? "Der Mäher wurde vom Benutzer angehalten." :: (value1 === "IN_OPERATION" ? "Siehe Wert in Aktivität für Status." :: (value1 === "WAIT_UPDATING" ? "Der Mäher lädt eine neue Firmware herunter." :: (value1 === "WAIT_POWER_UP" ? "Der Mäher führt Einschalttests durch." :: (value1 === "RESTRICTED" ? "Mäher kann derzeit nicht mähen aufgrund von Wochenkalender oder manuellem Parkieren." :: (value1 === "OFF" ? "Der Mäher ist ausgeschaltet." :: (value1 === "STOPPED" ? "Mäher ist gestoppt, erfordert manuellen Eingriff." :: (value1 === "ERROR" ? "Es ist ein Fehler aufgetreten. Prüfen Sie die Fehermeldung. Mäher erfordert manuellen Eingriff." :: (value1 === "FATAL_ERROR" ? "Es ist ein schwerwiegender Fehler aufgetreten. Prüfen Sie die Fehlermeldung. Mäher erfordert manuellen Eingriff." :: (value1 === "ERROR_AT_POWER_UP" ? "Es ist ein Fehler beim Einschalten aufgetreten. Prüfen Sie die Fehlermeldung. Mäher erfordert manuellen Eingriff." :: "Aktivität #" + value1 + " unbekannt")))))))))))}
+    {value1:husqvarna-automower.0.[mowerID vom DP .system.id].mower.chargingTimeToday and chargingTimeTotalstate;value1 === "UNKNOWN" ? "unbekannter Zustand" :: (value1 === "NOT_APPLICABLE" ? "nicht zutreffend" :: (value1 === "PAUSED" ? "Der Mäher wurde vom Benutzer angehalten." :: (value1 === "IN_OPERATION" ? "Siehe Wert in Aktivität für Status." :: (value1 === "WAIT_UPDATING" ? "Der Mäher lädt eine neue Firmware herunter." :: (value1 === "WAIT_POWER_UP" ? "Der Mäher führt Einschalttests durch." :: (value1 === "RESTRICTED" ? "Mäher kann derzeit nicht mähen aufgrund von Wochenkalender oder manuellem Parkieren." :: (value1 === "OFF" ? "Der Mäher ist ausgeschaltet." :: (value1 === "STOPPED" ? "Mäher ist gestoppt, erfordert manuellen Eingriff." :: (value1 === "ERROR" ? "Es ist ein Fehler aufgetreten. Prüfen Sie die Fehermeldung. Mäher erfordert manuellen Eingriff." :: (value1 === "FATAL_ERROR" ? "Es ist ein schwerwiegender Fehler aufgetreten. Prüfen Sie die Fehlermeldung. Mäher erfordert manuellen Eingriff." :: (value1 === "ERROR_AT_POWER_UP" ? "Es ist ein Fehler beim Einschalten aufgetreten. Prüfen Sie die Fehlermeldung. Mäher erfordert manuellen Eingriff." :: "Aktivität #" + value1 + " unbekannt")))))))))))}
     ```
 
 ## Script for statistics
+_(special thanks to @ArnoD15)_
 
 The following value will be calculated:
 
--   Distance between mower and charging station
+- Charging Time Today and Charging Time Total
+- Mowing Time Today and Mowing Time Total
+- Driven Distance Today and Driven Distance Total
+- Distance between mower and charging station
+- Convert start and end time of schedules to minutes and hours
+- Create/update google maps link
+- possibility to park mower during rain until next schedule
 
-For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `PRAEFIX`, `FOLDER` and `MOWERID` in section `Configuration`.
+For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `instance`, `pathLevel1`, `pathLevel2`, `mowerID` and `sID_RainSensor` in section `USER CONFIGURATION`.
 
 ```
-// Configuration
-const PRAEFIX = '0_userdata.0.'; // Main folder
-const FOLDER = 'automower.'; // Sub folder
-const MOWERID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; // get value from "husqvarna-automower.0.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.system.id"
+//***************************************************************************************************
+//++++++++++++++++++++++++++++++++++++++++ USER CONFIGURATION +++++++++++++++++++++++++++++++++++++++
 
-// create required folders and states
-setObject(PRAEFIX + FOLDER, {
-    type: 'folder',
-    common: {name: 'Statistics for Husqvarna-Automower'},
-    native: {}
-});
-setObject(PRAEFIX + FOLDER + MOWERID, {
-    type: 'folder',
-    common: {name: 'Statistics for mower with ID ' + MOWERID},
-    native: {}
-});
+const instance = '0_userdata.0';                               // Type your instance name
+const pathLevel1 = 'husqvarna';                                // Type your path name
+const pathLevel2 = ['statistics', 'schedules', 'general'];     // Type your folder names
+const mowerID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';        // Mower ID from Husqvarna automower
+const sID_RainSensor = 'hm-rpc.0.12345678901234.1.RAINING';    // Path rain sensor (true = rain)
 
-createState(PRAEFIX + FOLDER + MOWERID + '.distanceFromChargingStation', 0, false, {name: 'Distance from charging station', desc: 'Distance from charging station', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'm'});
+//++++++++++++++++++++++++++++++++++++++ END USER CONFIGURATION +++++++++++++++++++++++++++++++++++++
+//***************************************************************************************************
 
-// get distance between automower and charging station
+let drivenDistanceToday;
+let drivenDistanceTotal;
+let drivenDistance = 0;
+let chargingTimeToday;
+let chargingTimeTotal;
+let chargingTime = 0;
+let mowingTimeToday;
+let mowingTimeTotal;
+let mowingTime = 0;
 let chargingStationLatitude = 0;
 let chargingStationLongitude = 0;
 let distanceFromChargingStation = 0;
-on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}, function (obj) {
-    if (getState('husqvarna-automower.0.' + MOWERID + '.mower.activity').val === 'CHARGING' || getState('husqvarna-automower.0.' + MOWERID + '.mower.activity').val === 'PARKED_IN_CS') {
+
+// create required folders and states
+CreateState();
+async function CreateState() {
+    for (let i = 0; i <= 3; i++) {
+        createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${i}`, '00:00', false, {name: `Schedule ${i} start time`, desc: `Start time timer ${i}`, role: 'value', type: 'string', read: true, write: true, def: '00:00'});
+        createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${i}`, '00:00', false, {name: `Schedule ${i} end time`, desc: `End time timer ${i}`, role: 'value', type: 'string', read: true, write: true, def: '00:00'});
+    }
+    await createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceToday`, 0, false, {name: 'Driven Distance Today', desc: 'Driven Distance Today', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'km'});
+    await createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceTotal`, 0, false, {name: 'Driven Distance Total', desc: 'Driven Distance Total', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'km'});
+    await createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.chargingTimeToday`, 0, false, {name: 'Charging Time Today', desc: 'Charging Time Today', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'ms'});
+    await createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`, 0, false, {name: 'Mowing Time Total', desc: 'Mowing Time Total', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'ms'});
+    await createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.distanceFromChargingStation`, 0, false, {name: 'Distance from charging station', desc: 'Distance from charging station', role: 'state', type: 'number', read: true, write: true, def: 0, unit: 'm'});
+    await createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[2]}.GoogleMapsLink`, '', false, {name: 'Google Maps Link', desc: 'Google Maps Link', role: 'value', type: 'string', read: true, write: true, def: ''});
+    log('-==== folders and states created ====-', 'debug')
+    drivenDistanceToday = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceToday`)).val;
+    drivenDistanceTotal = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceTotal`)).val;
+    chargingTimeToday = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.chargingTimeToday`)).val;
+    mowingTimeToday = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`)).val;
+}
+//******************************************************* Adapter Husqvarna-Automower *******************************************************/
+const sID_Mower_activity = `husqvarna-automower.0.${mowerID}.mower.activity`;
+const sID_Latlong = `husqvarna-automower.0.${mowerID}.positions.latlong`;
+const sID_PARKUNTILNEXTSCHEDULE = `husqvarna-automower.0.${mowerID}.ACTIONS.PARKUNTILNEXTSCHEDULE`;
+const sID_MoverLatLong = `husqvarna-automower.0.${mowerID}.positions.latlong`;
+//************************************************************ Script Husqvarna *************************************************************/
+const sID_drivenDistanceToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceToday`;
+const sID_drivenDistanceTotal = `${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceTotal`;
+const sID_distanceFromChargingStation = `${instance}.${pathLevel1}.${pathLevel2[0]}.distanceFromChargingStation`;
+const sID_chargingTimeToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.chargingTimeToday`;
+const sID_mowingTimeToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`;
+const sID_GoogleLink = `${instance}.${pathLevel1}.${pathLevel2[2]}.GoogleMapsLink`;
+const sID_StartTime_0 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_0`;
+const sID_EndTime_0 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_0`;
+const sID_StartTime_1 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_1`;
+const sID_EndTime_1 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_1`;
+const sID_StartTime_2 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_2`;
+const sID_EndTime_2 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_2`;
+const sID_StartTime_3 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_3`;
+const sID_EndTime_3 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_3`;
+const arrayID_Times = [sID_StartTime_0, sID_EndTime_0, sID_StartTime_1, sID_EndTime_1, sID_StartTime_2, sID_EndTime_2, sID_StartTime_3, sID_EndTime_3];
+
+// reset variables "[...]Today" every midnight
+schedule('0 0 * * *', function () {
+    drivenDistanceToday = 0;
+    setState(sID_drivenDistanceToday, drivenDistanceToday, true);
+    chargingTimeToday = 0;
+    setState(sID_chargingTimeToday, chargingTimeToday, true);
+    mowingTimeToday = 0;
+    setState(sID_mowingTimeToday, mowingTimeToday, true);
+});
+
+// get chargingTimeToday and chargingTimeTotal
+on({id: sID_Mower_activity, oldVal: 'CHARGING'}, function (obj) {
+    chargingTime = obj.state.ts - obj.oldState.ts;
+    log(`chargingTime: ${chargingTime / 1000}s`, 'debug');
+    chargingTimeToday = chargingTime + chargingTimeToday;
+    setState(sID_chargingTimeToday, chargingTimeToday, true);
+});
+
+// get mowingTimeToday and mowingTimeTotal
+on({id: sID_Mower_activity, oldVal: 'MOWING'}, function (obj) {
+    mowingTime = obj.state.ts - obj.oldState.ts;
+    log(`mowingTime: ${mowingTime / 1000}s`, 'debug');
+    mowingTimeToday = mowingTime + mowingTimeToday;
+    setState(sID_mowingTimeToday, mowingTimeToday, true);
+});
+
+// get distance from automower to charging station, drivenDistanceToday and drivenDistanceTotal
+on({id: sID_Latlong, change: 'ne'}, async function (obj) {
+    if (getState(sID_Mower_activity).val === 'CHARGING' || getState(sID_Mower_activity).val === 'PARKED_IN_CS') {
         if (chargingStationLatitude !== 0 && chargingStationLongitude !== 0) {
             chargingStationLatitude = (Number(obj.state.val.split(';')[0]) + Number(chargingStationLatitude)) / 2;
             chargingStationLongitude = (Number(obj.state.val.split(';')[1]) + Number(chargingStationLongitude)) / 2;
@@ -194,11 +271,67 @@ on({id: 'husqvarna-automower.0.' + MOWERID + '.positions.latlong', change: 'ne'}
             chargingStationLatitude = obj.state.val.split(';')[0];
             chargingStationLongitude = obj.state.val.split(';')[1];
         }
-    }
+    } 
     distanceFromChargingStation = 1000 * 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(chargingStationLatitude * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(chargingStationLatitude * (Math.PI / 180)) * Math.cos(chargingStationLongitude * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
-    log('distanceFromChargingStation: ' + distanceFromChargingStation + 'm', 'debug');
-    setState(PRAEFIX + FOLDER + MOWERID + '.distanceFromChargingStation', distanceFromChargingStation, true);
+    log(`distanceFromChargingStation: ${distanceFromChargingStation}m`, 'debug');
+    await setStateAsync(sID_distanceFromChargingStation, distanceFromChargingStation, true);
+
+    if (getState(sID_Mower_activity).val === 'MOWING' || getState(sID_Mower_activity).val === 'GOING_HOME' || getState(sID_Mower_activity).val === 'LEAVING') {
+        drivenDistance = 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(obj.oldState.val.split(';')[0] * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[1] * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
+        log(`distanceDriven: ${drivenDistance}km`, 'debug');
+        drivenDistanceToday = drivenDistanceToday + drivenDistance;
+        drivenDistanceTotal = drivenDistanceTotal + drivenDistance;
+        await setStateAsync(sID_drivenDistanceToday, round(drivenDistanceToday, 2), true);
+        await setStateAsync(sID_drivenDistanceTotal, round(drivenDistanceTotal, 2), true);
+    }
 });
+
+// Convert start and end time to minutes
+on({id: arrayID_Times, change: 'ne'}, async function (obj) {
+    let arryObj_ID = obj.id.split('.');
+    let scheduleNr = arryObj_ID[4].substring(arryObj_ID[4].length - 1, arryObj_ID[4].length);
+    let duration_min = 0;
+    let start_min = 0;        
+    let startTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${scheduleNr}`)).val;
+    let endTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${scheduleNr}`)).val;
+
+    // Time is divided into hours and minutes
+    let arrayStartTime = startTime.split(':');
+    let arrayEndTime = endTime.split(':');
+    let startTime_hours = arrayStartTime[0];   
+    let endTime_hours = arrayEndTime[0];   
+    let startTime_minutes = arrayStartTime[1];   
+    let endTime_minutes = arrayEndTime[1];   
+
+    // Convert time to minutes since the beginning of the day
+    start_min = (startTime_hours * 60) + parseInt(startTime_minutes);
+    // Convert time in minutes from start to end time (duration)
+    duration_min = ((endTime_hours * 60) + parseInt(endTime_minutes)) - start_min;
+    if (duration_min < 0) {
+        duration_min = 0;
+    };
+    await setStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${scheduleNr}.start`, start_min, true);
+    await setStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${scheduleNr}.duration`, duration_min, true);
+});
+
+// update google maps link
+on({id: sID_MoverLatLong, change: 'ne'}, async function (obj) {
+    let arryLatLong = getState(obj.id).val.split(';');
+    let GoogleLink = `https://www.google.com/maps/place/${arryLatLong[0]},${arryLatLong[1]}/@?hl=de`;
+    await setStateAsync(sID_GoogleLink, GoogleLink, true);
+});
+
+// during rain, park until next schedule
+on({id: sID_RainSensor, change: 'ne', val: true}, async function () {
+   await setStateAsync(sID_PARKUNTILNEXTSCHEDULE, true);
+   log('-==== It is raining. Mower is parked. ====-', 'info');
+});
+
+// round
+function round(digit, digits) {
+    digit = (Math.round(digit * Math.pow(10, digits)) / Math.pow(10, digits));
+    return digit;
+}
 ```
 
 ## How to report issues and feature requests
