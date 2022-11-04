@@ -124,7 +124,6 @@
 				"zh-cn": "BREAKING：需要 js-controller >= v4.0.23 和 admin >= v6.2.19\n源代码改进\n更新统计值的能力\n修复问题 #65"
 			}
 		},
-		"title": "husqvarna-automower",
 		"titleLang": {
 			"en": "husqvarna-automower",
 			"de": "husqvarna-automower",
