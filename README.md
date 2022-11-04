@@ -165,7 +165,7 @@ The following value will be calculated:
 -   Distance between mower and charging station
 -   Convert start and end time of schedules to minutes and hours
 -   Create/update google maps link
--   possibility to park mower during rain until next schedule
+-   Possibility to park mower during rain until next schedule
 
 For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `instance`, `pathLevel1`, `pathLevel2`, `mowerID` and `sID_RainSensor` in section `USER CONFIGURATION`.
 
@@ -349,7 +349,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.1-beta.6 **WORK IN PROGRESS**
+### 0.3.1 (04.11.2022)
 
 -   (ice987987) BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required
 -   (ice987987) source code improvements
