@@ -1,59 +1,68 @@
 {
-    "type": "panel",
-    "i18n": true,
-    "items": {
-        "applicationKey": {
-            "newLine": true,
-            "type": "password",
-            "label": "applicationKey",
-            "help": "applicationKeyHint",
-            "validator": "data.applicationKey.match(/[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/)",
-            "validatorNoSaveOnError": true,
-            "visible": true,
-            "repeat": false,
-            "xs": 12,
-            "sm": 12,
-            "md": 8,
-            "lg": 8
-        },
-        "applicationSecret": {
-            "newLine": true,
-            "type": "password",
-            "label": "applicationSecret",
-            "help": "applicationSecretHint",
-            "validator": "data.applicationSecret.match(/[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/)",
-            "validatorNoSaveOnError": true,
-            "visible": true,
-            "repeat": false,
-            "xs": 12,
-            "sm": 12,
-            "md": 8,
-            "lg": 8
-        },
-        "statisticsInterval": {
-            "newLine": true,
-            "type": "number",
-            "label": "statisticsInterval",
-            "help": "statisticsIntervalHint",
-            "min": 5,
-            "max": 10080,
-            "step": 1,
-            "validator": "data.statisticsInterval >= 5 && data.statisticsInterval <= 10080",
-            "validatorNoSaveOnError": true,
-            "xs": 12,
-            "sm": 12,
-            "md": 8,
-            "lg": 8
-        },
-        "_helpLink": {
-            "newLine": true,
-            "type": "staticLink",
-            "label": "Readme",
-            "noTranslation": true,
-            "variant": "contained",
-            "color": "primary",
-            "button": true,
-            "href": "https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md"
-        }
-    }
+	"type": "panel",
+	"i18n": true,
+	"items": {
+		"applicationKey": {
+			"newLine": true,
+			"type": "password",
+			"label": "applicationKey",
+			"help": "applicationKeyHint",
+			"validator": "data.applicationKey.match(/[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/)",
+			"validatorNoSaveOnError": true,
+			"visible": true,
+			"repeat": false,
+			"xs": 12,
+			"sm": 12,
+			"md": 8,
+			"lg": 8
+		},
+		"applicationSecret": {
+			"newLine": true,
+			"type": "password",
+			"label": "applicationSecret",
+			"help": "applicationSecretHint",
+			"validator": "data.applicationSecret.match(/[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/)",
+			"validatorNoSaveOnError": true,
+			"visible": true,
+			"repeat": false,
+			"xs": 12,
+			"sm": 12,
+			"md": 8,
+			"lg": 8
+		},
+		"statisticsInterval": {
+			"newLine": true,
+			"type": "number",
+			"label": "statisticsInterval",
+			"help": "statisticsIntervalHint",
+			"min": 5,
+			"max": 10080,
+			"step": 1,
+			"validator": "data.statisticsInterval >= 5 && data.statisticsInterval <= 10080",
+			"validatorNoSaveOnError": true,
+			"xs": 12,
+			"sm": 12,
+			"md": 8,
+			"lg": 8
+		},
+		"_divider": {
+			"newLine": true,
+			"type": "divider",
+			"color": "primary",
+			"xs": 12,
+			"sm": 12,
+			"md": 8,
+			"lg": 8
+		},
+		"_helpLink": {
+			"newLine": true,
+			"type": "staticLink",
+			"text": "Readme",
+			"noTranslation": true,
+			"variant": "contained",
+			"color": "primary",
+			"button": true,
+			"href": "https://github.com/ice987987/ioBroker.husqvarna-automower/blob/main/README.md"
+		}
+	}
 }

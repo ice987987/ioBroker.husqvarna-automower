@@ -4,5 +4,5 @@
     "applicationSecret": "Application secret",
     "applicationSecretHint": "Haal uw 'Husqvarna Automower-toepassingsgeheim' <a href='https://developer.husqvarnagroup.cloud' target='_blank'>hier</a> op. (formaat: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
     "statisticsInterval": "Tijdstip om statistische waarden te halen",
-	"statisticsIntervalHint": "1000 verzoek per maand en Applicatiesleutel"
+    "statisticsIntervalHint": "1000 verzoek per maand en Applicatiesleutel"
 }

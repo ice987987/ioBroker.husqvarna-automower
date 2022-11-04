@@ -2,13 +2,6 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {},
-	"include": [
-		"**/*.js",
-		"**/*.d.ts"
-	],
-	"exclude": [
-		"**/build",
-		"node_modules/",
-		"widgets/"
-	]
+	"include": ["**/*.js", "**/*.d.ts"],
+	"exclude": ["**/build", "node_modules/", "widgets/"]
 }
