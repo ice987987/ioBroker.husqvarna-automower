@@ -2,7 +2,7 @@
 	"cli": true,
 	"target": "directory",
 	"adapterName": "husqvarna-automower",
-	"title": "Husqvarna-Automower",
+	"title": "husqvarna-automower",
 	"description": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",
 	"keywords": ["husqvarna-automower", "husqvarna", "automower", "lawnmower", "mower"],
 	"expert": "yes",

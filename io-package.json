@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "husqvarna-automower",
-		"version": "0.3.1-beta.5",
+		"version": "0.3.1-beta.6",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -111,7 +111,7 @@
 				"pl": "polepszenie logowania\nzależności\naktualizacja powszechna. Państwa kosiące.errorCode\ndodał statystyki z API Automower Connect API.cuttingBladeUsageTime, statystyki. NumberChargingCycles, statystyki.OfCollisions, statystyki.totalChargingTime, statystyki.total Time, statystyki.totalRunningTime i statystyki.totalSearchingTime.totalSearchingTime",
 				"zh-cn": "改进的伐木\na. 最新受扶养人\n共同更新。 州\n统计数据增加了自自动投资计划统计的统计价值,BladeUsageT制度,统计编号:OfCharing Cycle,统计数字.OfCollisions,统计.totalCharingT制度,统计.totalCuttingT,统计数字。"
 			},
-			"0.3.1-beta.5": {
+			"0.3.1-beta.6": {
 				"en": "BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required\nsource code improvements\nability to update statistical values\nfix issue #65",
 				"de": "BREAKING: js-controller >= v4.0.23 und admin >= v6.2.19 ist erforderlich\nQuellcode-Verbesserungen\nFähigkeit, statistische Werte zu aktualisieren\nBeheben Sie Problem Nr. 65",
 				"ru": "НАРУШЕНИЕ: требуется js-controller >= v4.0.23 и admin >= v6.2.19\nулучшения исходного кода\nвозможность обновления статистических значений\nисправить ошибку №65",
@@ -124,17 +124,18 @@
 				"zh-cn": "BREAKING：需要 js-controller >= v4.0.23 和 admin >= v6.2.19\n源代码改进\n更新统计值的能力\n修复问题 #65"
 			}
 		},
+		"title": "husqvarna-automower",
 		"titleLang": {
-			"en": "Husqvarna-Automower",
-			"de": "Husqvarna-Automower",
-			"ru": "Husqvarna-Automower",
-			"pt": "Husqvarna-Automower",
-			"nl": "Husqvarna-Automower",
-			"fr": "Husqvarna-Automower",
-			"it": "Husqvarna-Automower",
-			"es": "Husqvarna-Automower",
-			"pl": "Husqvarna-Automower",
-			"zh-cn": "Husqvarna-自动割草机"
+			"en": "husqvarna-automower",
+			"de": "husqvarna-automower",
+			"ru": "Husqvarna-автоматическая газонокосилка",
+			"pt": "husqvarna-automower",
+			"nl": "husqvarna-automower",
+			"fr": "tondeuse automatique husqvarna",
+			"it": "husqvarna-tosaerba",
+			"es": "husqvarna-automower",
+			"pl": "husqvarna-automower",
+			"zh-cn": "husqvarna-自动割草机"
 		},
 		"desc": {
 			"en": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",

@@ -154,17 +154,18 @@ the following code can be used for html-bindings in adapter [ioBroker.vis](https
     ```
 
 ## Script for statistics
+
 _(special thanks to @ArnoD15)_
 
 The following value will be calculated:
 
-- Charging Time Today and Charging Time Total
-- Mowing Time Today and Mowing Time Total
-- Driven Distance Today and Driven Distance Total
-- Distance between mower and charging station
-- Convert start and end time of schedules to minutes and hours
-- Create/update google maps link
-- possibility to park mower during rain until next schedule
+-   Charging Time Today and Charging Time Total
+-   Mowing Time Today and Mowing Time Total
+-   Driven Distance Today and Driven Distance Total
+-   Distance between mower and charging station
+-   Convert start and end time of schedules to minutes and hours
+-   Create/update google maps link
+-   possibility to park mower during rain until next schedule
 
 For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `instance`, `pathLevel1`, `pathLevel2`, `mowerID` and `sID_RainSensor` in section `USER CONFIGURATION`.
 
@@ -271,7 +272,7 @@ on({id: sID_Latlong, change: 'ne'}, async function (obj) {
             chargingStationLatitude = obj.state.val.split(';')[0];
             chargingStationLongitude = obj.state.val.split(';')[1];
         }
-    } 
+    }
     distanceFromChargingStation = 1000 * 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(chargingStationLatitude * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(chargingStationLatitude * (Math.PI / 180)) * Math.cos(chargingStationLongitude * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
     log(`distanceFromChargingStation: ${distanceFromChargingStation}m`, 'debug');
     await setStateAsync(sID_distanceFromChargingStation, distanceFromChargingStation, true);
@@ -291,17 +292,17 @@ on({id: arrayID_Times, change: 'ne'}, async function (obj) {
     let arryObj_ID = obj.id.split('.');
     let scheduleNr = arryObj_ID[4].substring(arryObj_ID[4].length - 1, arryObj_ID[4].length);
     let duration_min = 0;
-    let start_min = 0;        
+    let start_min = 0;
     let startTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${scheduleNr}`)).val;
     let endTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${scheduleNr}`)).val;
 
     // Time is divided into hours and minutes
     let arrayStartTime = startTime.split(':');
     let arrayEndTime = endTime.split(':');
-    let startTime_hours = arrayStartTime[0];   
-    let endTime_hours = arrayEndTime[0];   
-    let startTime_minutes = arrayStartTime[1];   
-    let endTime_minutes = arrayEndTime[1];   
+    let startTime_hours = arrayStartTime[0];
+    let endTime_hours = arrayEndTime[0];
+    let startTime_minutes = arrayStartTime[1];
+    let endTime_minutes = arrayEndTime[1];
 
     // Convert time to minutes since the beginning of the day
     start_min = (startTime_hours * 60) + parseInt(startTime_minutes);
@@ -348,7 +349,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.1-beta.5 **WORK IN PROGRESS**
+### 0.3.1-beta.6 **WORK IN PROGRESS**
 
 -   (ice987987) BREAKING: js-controller >= v4.0.23 and admin >= v6.2.19 is required
 -   (ice987987) source code improvements

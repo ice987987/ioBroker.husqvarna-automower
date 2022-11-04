@@ -57,7 +57,7 @@
 		"_helpLink": {
 			"newLine": true,
 			"type": "staticLink",
-			"label": "Readme",
+			"text": "Readme",
 			"noTranslation": true,
 			"variant": "contained",
 			"color": "primary",
