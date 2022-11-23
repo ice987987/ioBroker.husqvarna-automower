@@ -1,0 +1,8 @@
+{
+    "applicationKey": "Ключ програми",
+    "applicationKeyHint": "Отримайте свій «ключ програми Husqvarna Automower» <a href='https://developer.husqvarnagroup.cloud' target='_blank'>тут</a>. (формат: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
+    "applicationSecret": "Секрет програми",
+    "applicationSecretHint": "Отримайте свій «Секрет програми Husqvarna Automower» <a href='https://developer.husqvarnagroup.cloud' target='_blank'>тут</a>. (формат: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
+    "statisticsInterval": "Інтервал часу для отримання статистичних значень",
+    "statisticsIntervalHint": "за хвилини (макс. 10000 запитів на місяць і ключ програми)"
+}

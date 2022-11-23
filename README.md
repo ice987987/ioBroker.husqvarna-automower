@@ -20,6 +20,10 @@
 
 This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection and works with [Automower Connect API](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API) v1.0.0.
 
+## Disclaimer
+
+All product and company names or logos are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them or any associated subsidiaries! This personal project is maintained in spare time and has no business goal. Husqvarna Automower is a trademark of Husqvarna Group.
+
 ## Installation requirements
 
 -   node.js >= v14.0 is required
@@ -348,6 +352,11 @@ function round(digit, digits) {
 ## Changelog
 
 <!-- ### **WORK IN PROGRESS** -->
+
+### 0.3.2-beta.1 **WORK IN PROGRESS**
+
+-   (ice987987) add section "disclaimer" in readme
+-   (ice987987) add ukrainian language
 
 ### 0.3.1 (04.11.2022)
 
