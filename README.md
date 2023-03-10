@@ -28,7 +28,7 @@ All product and company names or logos are trademarks™ or registered® tradema
 
 -   node.js >= v14.0 is required
 -   js-controller >= v4.0.23 is required
--   admin >= v6.2.19 is required
+-   admin >= v6.3.5 is required
 -   This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
 
 **Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started). "OLD" logins will not work.**
