@@ -355,6 +355,7 @@ function round(digit, digits) {
 
 ### 0.3.2-beta.1 **WORK IN PROGRESS**
 
+-   (ice987987) BREAKING: admin >= v6.3.5 is required
 -   (ice987987) add section "disclaimer" in readme
 -   (ice987987) add ukrainian language
 
