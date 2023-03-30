@@ -353,6 +353,10 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
+### 0.3.3-beta.1
+
+-   (MK-2001) simple check if response contains geo data added
+
 ### 0.3.2 (30.03.2023)
 
 -   (ice987987) BREAKING: admin >= v6.3.5 is required

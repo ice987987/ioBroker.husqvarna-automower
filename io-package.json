@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.3.2",
+        "version": "0.3.3-beta.1",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -145,6 +145,9 @@
                 "pl": "UWAGA: wymagany jest admin >= v6.3.5, dodano język ukraiński",
                 "uk": "ПОЛИМАННЯ: потрібен admin >= v6.3.5, додано українську мову",
                 "zh-cn": "BREAKING：需要 admin >= v6.3.5，添加了乌克兰语"
+            },
+            "0.3.3-beta.1": {
+                "en": "simple check if response contains geo data added"
             }
         },
         "titleLang": {
