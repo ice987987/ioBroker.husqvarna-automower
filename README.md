@@ -353,11 +353,11 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.2-beta.1 **WORK IN PROGRESS**
+### 0.3.2 (30.03.2023)
 
 -   (ice987987) BREAKING: admin >= v6.3.5 is required
--   (ice987987) add section "disclaimer" in readme
--   (ice987987) add ukrainian language
+-   (ice987987) section "disclaimer" in readme added
+-   (ice987987) ukrainian language added
 
 ### 0.3.1 (04.11.2022)
 

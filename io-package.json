@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.3.2-beta.1",
+        "version": "0.3.2",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -133,18 +133,18 @@
                 "zh-cn": "BREAKING：需要 js-controller >= v4.0.23 和 admin >= v6.2.19\n源代码改进\n更新统计值的能力\n修复问题 #65",
                 "uk": "ПОЛИМАННЯ: потрібен js-controller >= v4.0.23 і admin >= v6.2.19\nпокращення вихідного коду\nможливість оновлення статистичних значень\nвиправити проблему №65"
             },
-            "0.3.2-beta.1": {
-                "en": "update readme",
-                "de": "Readme aktualisieren",
-                "ru": "обновить ридми",
-                "pt": "atualizar leia-me",
-                "nl": "update leesmij",
-                "fr": "mettre à jour le fichier lisez-moi",
-                "it": "aggiorna il file leggimi",
-                "es": "actualizar Léame",
-                "pl": "zaktualizuj plik readme",
-                "uk": "оновити readme",
-                "zh-cn": "更新自述文件"
+            "0.3.2": {
+                "en": "BREAKING: admin >= v6.3.5 is required, ukrainian language added",
+                "de": "BREAKING: admin >= v6.3.5 ist erforderlich, ukrainische Sprache hinzugefügt",
+                "ru": "BREAKING: требуется admin >= v6.3.5, добавлен украинский язык",
+                "pt": "BREAKING: admin >= v6.3.5 é obrigatório, idioma ucraniano adicionado",
+                "nl": "BREAKING: admin >= v6.3.5 is vereist, Oekraïense taal toegevoegd",
+                "fr": "RUPTURE: admin>= v6.3.5 est requis, langue ukrainienne ajoutée",
+                "it": "BREAKING: è richiesto admin >= v6.3.5, aggiunta la lingua ucraina",
+                "es": "ÚLTIMA HORA: se requiere admin >= v6.3.5, se agregó el idioma ucraniano",
+                "pl": "UWAGA: wymagany jest admin >= v6.3.5, dodano język ukraiński",
+                "uk": "ПОЛИМАННЯ: потрібен admin >= v6.3.5, додано українську мову",
+                "zh-cn": "BREAKING：需要 admin >= v6.3.5，添加了乌克兰语"
             }
         },
         "titleLang": {
