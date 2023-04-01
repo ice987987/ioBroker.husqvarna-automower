@@ -43,8 +43,8 @@ You can send the following values to your Husqvarna lawn mower:
 -   `.ACTIONS.park.PARK`: park mower for a duration of time `.ACTIONS.park.parkTime` (in minutes), overriding schedule
 -   `.ACTIONS.RESUMESCHEDULE`: resume mower according to schedule
 -   `.ACTIONS.start.START`: start mower and cut for a duration of time `.ACTIONS.start.startTime` (in minutes), overriding schedule
--   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight [^2][^3]
--   `.ACTIONS.HEADLIGHT`: Update headlight
+-   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight and current status[^2][^3]
+-   `.ACTIONS.HEADLIGHT`: Update headlight and current status
 -   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday` [^2]
     [^2]: Do not use for 550 EPOS and Ceora due to [Husqvarna's API-limitation](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme)
     [^3]: not supported models: 405X, 415X and 435X AWD (you will get the error "This mower use missions and can not be updated by this endpoint")
@@ -73,11 +73,9 @@ You get the following values from your Husqvarna lawn mower:
 -   `.planner.action`: TODO
 -   `.planner.nextStartTimestamp`: Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower
 -   `.planner.restrictedReason`: restrictedReason
--   `.positions.latitude`: Position latitude
--   `.positions.longitude`: Position longitude
--   `.positions.latlong`: Position "latitude;longitude"
--   `.settings.cuttingHeight`: Prescaled cutting height, Range: 1...9
--   `.settings.headlight`: Headlight status
+-   `.positions.latitude`: Position latitude[^5]
+-   `.positions.longitude`: Position longitude[^5]
+-   `.positions.latlong`: Position "latitude;longitude"[^5]
 -   `.statistics.cuttingBladeUsageTime`: Cutting blade usage time, time in s[^4]
 -   `.statistics.numberOfChargingCycles`: Numbers of charging cycles, time in s[^4]
 -   `.statistics.numberOfCollisions`: Numbers of collisions, time in s[^4]
@@ -91,6 +89,7 @@ You get the following values from your Husqvarna lawn mower:
 -   `.system.serialNumber`: Device serialnumber
 -   `.system.type`: Device type
     [^4]: If a value is missing or zero (0) the mower does not support the value
+    [^5]: If no GPS-Signal is available, those values are not updated
 
 ## Limitation
 
@@ -353,9 +352,10 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.3-beta.1
+### 0.3.3-beta.2
 
 -   (MK-2001) simple check if response contains geo data added [#98](https://github.com/ice987987/ioBroker.husqvarna-automower/pull/98)
+-   (ice987987) `.settings.cuttingHeight` and `.settings.headlight` removed [#99](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/99)
 
 ### 0.3.2 (30.03.2023)
 

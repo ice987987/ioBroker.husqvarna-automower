@@ -844,48 +844,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {},
 					});
 
-					// create channel "settings"
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings`, {
-						type: 'channel',
-						common: {
-							name: 'Settings',
-							desc: 'Settings',
-						},
-						native: {},
-					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {
-						type: 'state',
-						common: {
-							name: 'Prescaled cutting height, Range: 1...9',
-							desc: 'Prescaled cutting height, Range: 1...9',
-							type: 'number',
-							role: 'state',
-							min: 1,
-							max: 9,
-							read: true,
-							write: false,
-						},
-						native: {},
-					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings.headlight`, {
-						type: 'state',
-						common: {
-							name: 'Headlight status',
-							desc: 'Headlight status',
-							type: 'string',
-							role: 'state',
-							states: {
-								ALWAYS_ON: 'ALWAYS ON',
-								ALWAYS_OFF: 'ALWAYS OFF',
-								EVENING_ONLY: 'EVENING ONLY',
-								EVENING_AND_NIGHT: 'EVENING AND NIGHT',
-							},
-							read: true,
-							write: false,
-						},
-						native: {},
-					});
-
 					// create channel "statistics"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics`, {
 						type: 'channel',
@@ -1460,11 +1418,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 					}
 
-					this.setStateAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {
+					this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`, {
 						val: mowerData.data[i].attributes.settings.cuttingHeight,
 						ack: true,
 					});
-					this.setStateAsync(`${mowerData.data[i].id}.settings.headlight`, {
+					this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`, {
 						val: mowerData.data[i].attributes.settings.headlight.mode,
 						ack: true,
 					});
@@ -1554,14 +1512,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 			try {
 				if ('attributes' in message) {
 					if ('cuttingHeight' in message.attributes) {
-						this.setStateAsync(`${message.id}.settings.cuttingHeight`, {
+						this.setStateAsync(`${message.id}.husqvarna-automower.ACTIONS.CUTTINGHEIGHT`, {
 							val: message.attributes.cuttingHeight,
 							ack: true,
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.cuttingHeight: ${message.attributes.cuttingHeight}`);
 					}
 					if ('headlight' in message.attributes) {
-						this.setStateAsync(`${message.id}.settings.headlight`, {
+						this.setStateAsync(`${message.id}.ACTIONS.HEADLIGHT`, {
 							val: message.attributes.headlight.mode,
 							ack: true,
 						});
