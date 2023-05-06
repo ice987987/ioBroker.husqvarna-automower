@@ -571,7 +571,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-
+/*
 					// create channel "calendar"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar`, {
 						type: 'channel',
@@ -704,7 +704,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							native: {},
 						});
 					}
-
+*/
 					// create channel "planner"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner`, {
 						type: 'channel',
@@ -1341,39 +1341,39 @@ class HusqvarnaAutomower extends utils.Adapter {
 						Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules);
 						j++
 					) {
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.start`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.start`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].start,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.duration`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.duration`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].duration,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.monday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.monday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].monday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.tuesday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.tuesday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].tuesday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.wednesday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.wednesday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].wednesday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.thursday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.thursday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].thursday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.friday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.friday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].friday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.saturday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.saturday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].saturday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.sunday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.sunday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].sunday,
 							ack: true,
 						});

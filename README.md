@@ -54,15 +54,6 @@ You can send the following values to your Husqvarna lawn mower:
 You get the following values from your Husqvarna lawn mower:
 
 -   `.battery.batteryPercent`: Information about the battery in the mower
--   `.calendar.[0-3].start`: Start time expressed in minutes after midnight
--   `.calendar.[0-3].duration`: Duration time expressed in minutes
--   `.calendar.[0-3].monday`: Enabled on Mondays
--   `.calendar.[0-3].tuesday`: Enabled on Tuesdays
--   `.calendar.[0-3].wednesday`: Enabled on Wednesdays
--   `.calendar.[0-3].thurdsay`: Enabled on Thursdays
--   `.calendar.[0-3].friday`: Enabled on Fridays
--   `.calendar.[0-3].saturday`: Enabled on Saturdays
--   `.calendar.[0-3].sunday`: Enabled on Sundays
 -   `.metadata.connected`: is the mower currently connected
 -   `.metadata.statusTimestamp`: is the mower currently connected, time in ms
 -   `.mower.activity`: Information about the mowers current activity
@@ -352,10 +343,11 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.3-beta.2
+### 0.3.3-beta.3
 
 -   (MK-2001) simple check if response contains geo data added [#98](https://github.com/ice987987/ioBroker.husqvarna-automower/pull/98)
 -   (ice987987) `.settings.cuttingHeight` and `.settings.headlight` removed [#99](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/99)
+-   (ice987987) `.calendar.[0-3].start`, `.calendar.[0-3].duration`, `.calendar.[0-3].monday`, `.calendar.[0-3].tuesday`, `.calendar.[0-3].wednesday`, `.calendar.[0-3].thurdsay`, `.calendar.[0-3].friday`, `.calendar.[0-3].saturday` and `.calendar.[0-3].sunday` removed
 
 ### 0.3.2 (30.03.2023)
 
