@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-const axios = require('axios');
+const axios = require('axios').default;
 const WebSocket = require('ws');
 
 // variables
@@ -120,8 +120,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		})
 			.then((response) => {
 				this.log.debug(
-					`[getAccessToken]: HTTP status response: ${response.status} ${
-						response.statusText
+					`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText
 					}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 						response.headers,
 					)}; data: ${JSON.stringify(response.data)}`,
@@ -168,8 +167,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		})
 			.then(async (response) => {
 				this.log.debug(
-					`[getMowerData]: HTTP status response: ${response.status} ${
-						response.statusText
+					`[getMowerData]: HTTP status response: ${response.status} ${response.statusText
 					}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 						response.headers,
 					)}; data: ${JSON.stringify(response.data)}`,
@@ -204,8 +202,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		// this.log.debug(`[createObjects]: listMowers: ${JSON.stringify(listMowers)}`);
 
 		this.log.debug(
-			`[createObjects]: start objects creation for ${Object.keys(mowerData.data).length} device${
-				Object.keys(mowerData.data).length > 1 ? 's' : ''
+			`[createObjects]: start objects creation for ${Object.keys(mowerData.data).length} device${Object.keys(mowerData.data).length > 1 ? 's' : ''
 			}...`,
 		);
 		if (Object.keys(mowerData.data).length !== 0) {
@@ -571,7 +568,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-/*
+					/*
 					// create channel "calendar"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar`, {
 						type: 'channel',
@@ -704,7 +701,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							native: {},
 						});
 					}
-*/
+					*/
 					// create channel "planner"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner`, {
 						type: 'channel',
@@ -1403,7 +1400,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].attributes.planner.restrictedReason,
 						ack: true,
 					});
-					if(mowerData.data[i].attributes.positions.length > 0){
+					if (mowerData.data[i].attributes.positions.length > 0) {
 						this.setStateAsync(`${mowerData.data[i].id}.positions.latitude`, {
 							val: mowerData.data[i].attributes.positions[0].latitude,
 							ack: true,
@@ -1794,8 +1791,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			})
 				.then((response) => {
 					this.log.debug(
-						`[onUnload]: HTTP status response: ${response.status} ${
-							response.statusText
+						`[onUnload]: HTTP status response: ${response.status} ${response.statusText
 						}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 							response.headers,
 						)}; data: ${JSON.stringify(response.data)}`,
@@ -2032,8 +2028,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				})
 					.then((response) => {
 						this.log.debug(
-							`[onStateChange]: HTTP status response: ${response.status} ${
-								response.statusText
+							`[onStateChange]: HTTP status response: ${response.status} ${response.statusText
 							}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 								response.headers,
 							)}; data: ${JSON.stringify(response.data)}`,
@@ -2046,8 +2041,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
 							this.log.debug(
-								`[onStateChange]: HTTP status response: ${
-									error.response.status
+								`[onStateChange]: HTTP status response: ${error.response.status
 								}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(
 									error.response.data,
 								)}`,
