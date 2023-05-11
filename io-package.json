@@ -147,7 +147,17 @@
                 "zh-cn": "BREAKING：需要 admin >= v6.3.5，添加了乌克兰语"
             },
             "0.3.3": {
-                "en": "simple check if response contains geo data added, dependencies updated"
+                "en": "simple check if response contains geo data added, dependencies updated",
+                "de": "Einfache Überprüfung, ob die Antwort hinzugefügte Geodaten enthält und Abhängigkeiten aktualisiert wurden",
+                "ru": "простая проверка, содержит ли ответ добавленные геоданные, обновленные зависимости",
+                "pt": "verificação simples se a resposta contém dados geográficos adicionados, dependências atualizadas",
+                "nl": "eenvoudige controle of het antwoord geografische gegevens bevat, bijgewerkte afhankelijkheden",
+                "fr": "vérification simple si la réponse contient des données géographiques ajoutées, les dépendances mises à jour",
+                "it": "semplice controllo se la risposta contiene dati geografici aggiunti, dipendenze aggiornate",
+                "es": "simplemente verifique si la respuesta contiene datos geográficos agregados, dependencias actualizadas",
+                "pl": "proste sprawdzenie, czy odpowiedź zawiera dodane dane geograficzne, zaktualizowane zależności",
+                "uk": "проста перевірка, чи містить відповідь додані геодані, оновлені залежності",
+                "zh-cn": "简单检查响应是否包含添加的地理数据、更新的依赖项"
             }
         },
         "titleLang": {
