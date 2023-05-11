@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.3.3-beta.1",
+        "version": "0.3.3",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -146,18 +146,8 @@
                 "uk": "ПОЛИМАННЯ: потрібен admin >= v6.3.5, додано українську мову",
                 "zh-cn": "BREAKING：需要 admin >= v6.3.5，添加了乌克兰语"
             },
-            "0.3.3-beta.1": {
-                "en": "simple check if response contains geo data added",
-                "de": "Einfache Überprüfung, ob die Antwort hinzugefügte Geodaten enthält",
-                "ru": "простая проверка, содержит ли ответ добавленные геоданные",
-                "pt": "verificação simples se a resposta contém dados geográficos adicionados",
-                "nl": "eenvoudige controle of het antwoord geografische gegevens bevat die zijn toegevoegd",
-                "fr": "vérifier simplement si la réponse contient des données géographiques ajoutées",
-                "it": "semplice controllo se la risposta contiene dati geografici aggiunti",
-                "es": "simplemente verifique si la respuesta contiene datos geográficos agregados",
-                "pl": "proste sprawdzenie, czy odpowiedź zawiera dodane dane geograficzne",
-                "uk": "проста перевірка, чи містить відповідь додані геодані",
-                "zh-cn": "简单检查响应是否包含添加的地理数据"
+            "0.3.3": {
+                "en": "simple check if response contains geo data added, dependencies updated"
             }
         },
         "titleLang": {

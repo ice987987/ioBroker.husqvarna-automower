@@ -353,9 +353,10 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.3-beta.1
+### 0.3.3 (11.05.2023)
 
 -   (MK-2001) simple check if response contains geo data added [#98](https://github.com/ice987987/ioBroker.husqvarna-automower/pull/98)
+-   (ice987987) dependencies updated
 
 ### 0.3.2 (30.03.2023)
 
