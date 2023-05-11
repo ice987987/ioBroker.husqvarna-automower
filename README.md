@@ -149,7 +149,7 @@ the following code can be used for html-bindings in adapter [ioBroker.vis](https
 
 ## Script for statistics
 
-_(special thanks to @ArnoD15)_
+_(initial script by @ArnoD15, modified by @ice987987)_
 
 The following value will be calculated:
 
@@ -192,7 +192,7 @@ let distanceFromChargingStation = 0;
 // create required folders and states
 CreateState();
 async function CreateState() {
-    for (let i = 0; i <= 3; i++) {
+    for (let i = 0; i < 4; i++) {
         createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${i}`, '00:00', false, {name: `Schedule ${i} start time`, desc: `Start time timer ${i}`, role: 'value', type: 'string', read: true, write: true, def: '00:00'});
         createStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${i}`, '00:00', false, {name: `Schedule ${i} end time`, desc: `End time timer ${i}`, role: 'value', type: 'string', read: true, write: true, def: '00:00'});
     }
@@ -207,12 +207,19 @@ async function CreateState() {
     drivenDistanceTotal = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceTotal`)).val;
     chargingTimeToday = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.chargingTimeToday`)).val;
     mowingTimeToday = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`)).val;
-}
+};
 //******************************************************* Adapter Husqvarna-Automower *******************************************************/
 const sID_Mower_activity = `husqvarna-automower.0.${mowerID}.mower.activity`;
 const sID_Latlong = `husqvarna-automower.0.${mowerID}.positions.latlong`;
 const sID_PARKUNTILNEXTSCHEDULE = `husqvarna-automower.0.${mowerID}.ACTIONS.PARKUNTILNEXTSCHEDULE`;
 const sID_MoverLatLong = `husqvarna-automower.0.${mowerID}.positions.latlong`;
+const sID_HusqvarnaSchedules = [];
+$(`state[id=husqvarna-automower.0.${mowerID}.ACTIONS.schedule.*.start]`).each(function(id) {
+    sID_HusqvarnaSchedules.push(id);
+});
+$(`state[id=husqvarna-automower.0.${mowerID}.ACTIONS.schedule.*.duration]`).each(function(id) {
+    sID_HusqvarnaSchedules.push(id);
+});
 //************************************************************ Script Husqvarna *************************************************************/
 const sID_drivenDistanceToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceToday`;
 const sID_drivenDistanceTotal = `${instance}.${pathLevel1}.${pathLevel2[0]}.drivenDistanceTotal`;
@@ -220,6 +227,7 @@ const sID_distanceFromChargingStation = `${instance}.${pathLevel1}.${pathLevel2[
 const sID_chargingTimeToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.chargingTimeToday`;
 const sID_mowingTimeToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`;
 const sID_GoogleLink = `${instance}.${pathLevel1}.${pathLevel2[2]}.GoogleMapsLink`;
+/*
 const sID_StartTime_0 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_0`;
 const sID_EndTime_0 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_0`;
 const sID_StartTime_1 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_1`;
@@ -229,6 +237,11 @@ const sID_EndTime_2 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_2`;
 const sID_StartTime_3 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_3`;
 const sID_EndTime_3 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_3`;
 const arrayID_Times = [sID_StartTime_0, sID_EndTime_0, sID_StartTime_1, sID_EndTime_1, sID_StartTime_2, sID_EndTime_2, sID_StartTime_3, sID_EndTime_3];
+*/
+const arrayID_Times = [];
+$(`state[id=${instance}.${pathLevel1}.${pathLevel2[1]}.*]`).each(function(id) {
+    arrayID_Times.push(id);
+});
 
 // reset variables "[...]Today" every midnight
 schedule('0 0 * * *', function () {
@@ -265,12 +278,12 @@ on({id: sID_Latlong, change: 'ne'}, async function (obj) {
         } else {
             chargingStationLatitude = obj.state.val.split(';')[0];
             chargingStationLongitude = obj.state.val.split(';')[1];
-        }
-    }
+        };
+    };
     distanceFromChargingStation = 1000 * 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(chargingStationLatitude * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(chargingStationLatitude * (Math.PI / 180)) * Math.cos(chargingStationLongitude * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
     log(`distanceFromChargingStation: ${distanceFromChargingStation}m`, 'debug');
     await setStateAsync(sID_distanceFromChargingStation, distanceFromChargingStation, true);
-
+    
     if (getState(sID_Mower_activity).val === 'MOWING' || getState(sID_Mower_activity).val === 'GOING_HOME' || getState(sID_Mower_activity).val === 'LEAVING') {
         drivenDistance = 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(obj.oldState.val.split(';')[0] * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[1] * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
         log(`distanceDriven: ${drivenDistance}km`, 'debug');
@@ -278,26 +291,27 @@ on({id: sID_Latlong, change: 'ne'}, async function (obj) {
         drivenDistanceTotal = drivenDistanceTotal + drivenDistance;
         await setStateAsync(sID_drivenDistanceToday, round(drivenDistanceToday, 2), true);
         await setStateAsync(sID_drivenDistanceTotal, round(drivenDistanceTotal, 2), true);
-    }
+    };
 });
 
-// Convert start and end time to minutes
+/*
+// Convert start and end time to minutes and change adapter IDs
 on({id: arrayID_Times, change: 'ne'}, async function (obj) {
     let arryObj_ID = obj.id.split('.');
     let scheduleNr = arryObj_ID[4].substring(arryObj_ID[4].length - 1, arryObj_ID[4].length);
     let duration_min = 0;
-    let start_min = 0;
+    let start_min = 0;        
     let startTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${scheduleNr}`)).val;
     let endTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${scheduleNr}`)).val;
-
+    
     // Time is divided into hours and minutes
     let arrayStartTime = startTime.split(':');
     let arrayEndTime = endTime.split(':');
-    let startTime_hours = arrayStartTime[0];
-    let endTime_hours = arrayEndTime[0];
-    let startTime_minutes = arrayStartTime[1];
-    let endTime_minutes = arrayEndTime[1];
-
+    let startTime_hours = arrayStartTime[0];   
+    let endTime_hours = arrayEndTime[0];   
+    let startTime_minutes = arrayStartTime[1];   
+    let endTime_minutes = arrayEndTime[1];   
+    
     // Convert time to minutes since the beginning of the day
     start_min = (startTime_hours * 60) + parseInt(startTime_minutes);
     // Convert time in minutes from start to end time (duration)
@@ -307,6 +321,45 @@ on({id: arrayID_Times, change: 'ne'}, async function (obj) {
     };
     await setStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${scheduleNr}.start`, start_min, true);
     await setStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${scheduleNr}.duration`, duration_min, true);
+});
+*/
+
+// Convert start and end time to minutes
+on({id: arrayID_Times, change: 'ne', ack: false}, async function (obj) {
+    if (obj.id.split('.')[obj.id.split('.').length - 1].split('_')[0] === 'startTime') {
+        let startTime = obj.state.val.split(':')[0] * 60 + Number(obj.state.val.split(':')[1]);
+        setState(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 1].split('_')[1]}.start`, startTime, false);
+        let endTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${obj.id.split('.')[obj.id.split('.').length - 1].split('_')[1]}`)).val;
+        let duration = endTime.split(':')[0] * 60 + Number(endTime.split(':')[1]) - startTime;
+        setState(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 1].split('_')[1]}.duration`, duration, false);
+    } else {
+        let startTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${obj.id.split('.')[obj.id.split('.').length - 1].split('_')[1]}`)).val;
+        let startTimeMin = startTime.split(':')[0] * 60 + Number(startTime.split(':')[1]);
+        let duration = obj.state.val.split(':')[0] * 60 + Number(obj.state.val.split(':')[1]) - startTimeMin;
+        setState(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 1].split('_')[1]}.duration`, duration, false);
+    };
+});
+
+// Convert start and end time to hh:mm
+on({id: sID_HusqvarnaSchedules, change: 'ne', ack: true}, async function (obj) {
+    if (obj.id.split('.')[obj.id.split('.').length - 1] === 'start') {
+        let m = obj.state.val % 60;
+        let h = (obj.state.val - m) / 60;
+        let HHMM = (h < 10 ? '0' : '') + h.toString() + ':' + (m < 10 ? '0' : '') + m.toString();
+        await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${obj.id.split('.')[obj.id.split('.').length - 2]}`, HHMM, true);
+        let endTime = obj.state.val + (await getStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 2]}.duration`)).val;
+        let m1 = endTime % 60;
+        let h1 = (endTime - m1) / 60;
+        let HHMM1 = (h1 < 10 ? '0' : '') + h1.toString() + ':' + (m1 < 10 ? '0' : '') + m1.toString();
+        await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${obj.id.split('.')[obj.id.split('.').length - 2]}`, HHMM1, true);
+    } else {
+        let startTime = (await getStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 2]}.start`)).val;
+        let endTime = startTime + obj.state.val;
+        let m = endTime % 60;
+        let h = (endTime - m) / 60;
+        let HHMM = (h < 10 ? '0' : '') + h.toString() + ':' + (m < 10 ? '0' : '') + m.toString();
+        await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${obj.id.split('.')[obj.id.split('.').length - 2]}`, HHMM, true);
+    };
 });
 
 // update google maps link
@@ -319,14 +372,14 @@ on({id: sID_MoverLatLong, change: 'ne'}, async function (obj) {
 // during rain, park until next schedule
 on({id: sID_RainSensor, change: 'ne', val: true}, async function () {
    await setStateAsync(sID_PARKUNTILNEXTSCHEDULE, true);
-   log('-==== It is raining. Mower is parked. ====-', 'info');
+   log('-==== It is raining. Mower is parked. ====-', 'info')
 });
 
 // round
 function round(digit, digits) {
     digit = (Math.round(digit * Math.pow(10, digits)) / Math.pow(10, digits));
     return digit;
-}
+};
 ```
 
 ## How to report issues and feature requests
@@ -343,11 +396,18 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.3.3-beta.3
+### 0.4.0-beta.1
 
--   (MK-2001) simple check if response contains geo data added [#98](https://github.com/ice987987/ioBroker.husqvarna-automower/pull/98)
--   (ice987987) `.settings.cuttingHeight` and `.settings.headlight` removed [#99](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/99)
--   (ice987987) `.calendar.[0-3].start`, `.calendar.[0-3].duration`, `.calendar.[0-3].monday`, `.calendar.[0-3].tuesday`, `.calendar.[0-3].wednesday`, `.calendar.[0-3].thurdsay`, `.calendar.[0-3].friday`, `.calendar.[0-3].saturday` and `.calendar.[0-3].sunday` removed
+-   (ice987987) BREAKING: `.settings.cuttingHeight` and `.settings.headlight` removed [#99](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/99)
+-   (ice987987) BREAKING: `.calendar.[0-3].start`, `.calendar.[0-3].duration`, `.calendar.[0-3].monday`, `.calendar.[0-3].tuesday`, `.calendar.[0-3].wednesday`, `.calendar.[0-3].thurdsay`, `.calendar.[0-3].friday`, `.calendar.[0-3].saturday` and `.calendar.[0-3].sunday` removed
+-   (ice987987) dependencies updated
+-   (ice987987) adapter icon updated
+-   (ice987987) script for statistics updated
+
+### 0.3.3 (11.05.2023)
+
+-   (MK-2001) simple check if response contains geo data added #98
+-   (ice987987) dependencies updated
 
 ### 0.3.2 (30.03.2023)
 

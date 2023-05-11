@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.3.3-beta.3",
+        "version": "0.4.0-beta.1",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -146,18 +146,31 @@
                 "uk": "ПОЛИМАННЯ: потрібен admin >= v6.3.5, додано українську мову",
                 "zh-cn": "BREAKING：需要 admin >= v6.3.5，添加了乌克兰语"
             },
-            "0.3.3-beta.3": {
-                "en": "simple check if response contains geo data added, .settings.cuttingHeight and .settings.headlight removed, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, .calendar.[0-3].saturday and .calendar.[0-3].sunday removed",
-                "de": "einfache Prüfung, ob Antwort Geodaten enthält hinzugefügt, .settings.cuttingHeight und .settings.headlight entfernt, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .Montag, .Kalender.[0-3].Dienstag, .Kalender.[0-3].Mittwoch, .Kalender.[0-3].Donnerstag, .Kalender.[0-3].Freitag, .Kalender. [0-3].samstag und .calendar.[0-3].sonntag entfernt",
-                "ru": "простая проверка, содержит ли ответ добавленные геоданные, удаленные .settings.cuttingHeight и .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .понедельник, .календарь.[0-3].вторник, .календарь.[0-3].среда, .календарь.[0-3].четверг, .календарь.[0-3].пятница, .календарь. [0-3].saturday и .calendar.[0-3].sunday удалены",
-                "pt": "verificação simples se a resposta contém dados geográficos adicionados, .settings.cuttingHeight e .settings.headlight removidos, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .segunda-feira, .calendar.[0-3].terça-feira, .calendar.[0-3].quarta-feira, .calendar.[0-3].quinta-feira, .calendar.[0-3].sexta-feira, .calendar. [0-3].sábado e .calendar.[0-3].domingo removidos",
-                "nl": "eenvoudige controle of reactie geodata bevat toegevoegd, .settings.cuttingHeight en .settings.headlight verwijderd, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .maandag, .calendar.[0-3].dinsdag, .calendar.[0-3].woensdag, .calendar.[0-3].donderdag, .calendar.[0-3].vrijdag, .calendar. [0-3].zaterdag en .kalender.[0-3].zondag verwijderd",
-                "fr": "vérification simple si la réponse contient des données géographiques ajoutées, .settings.cuttingHeight et .settings.headlight supprimés, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .lundi, .calendar.[0-3].mardi, .calendar.[0-3].mercredi, .calendar.[0-3].jeudi, .calendar.[0-3].vendredi, .calendar. [0-3].saturday et .calendar.[0-3].sunday supprimés",
-                "it": "controllo semplice se la risposta contiene dati geografici aggiunti, .settings.cuttingHeight e .settings.headlight rimossi, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .monday, .calendar.[0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, .calendar. [0-3].sabato e .calendar.[0-3].domenica rimossi",
-                "es": "simplemente verifique si la respuesta contiene datos geográficos agregados, .settings.cuttingHeight y .settings.headlight eliminados, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .lunes, .calendario.[0-3].martes, .calendario.[0-3].miércoles, .calendario.[0-3].jueves, .calendario.[0-3].viernes, .calendario. [0-3].sábado y .calendario.[0-3].domingo eliminado",
-                "pl": "proste sprawdzenie, czy odpowiedź zawiera dodane dane geograficzne, usunięte .settings.cuttingHeight i .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .poniedziałek, .kalendarz.[0-3].wtorek, .kalendarz.[0-3].środa, .kalendarz.[0-3].czwartek, .kalendarz.[0-3].piątek, .kalendarz. [0-3].sobota i .kalendarz.[0-3].niedziela usunięte",
-                "uk": "проста перевірка, чи містить відповідь додані геодані, видалені .settings.cuttingHeight і .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3] .понеділок, .календар.[0-3].вівторок, .календар.[0-3].середа, .календар.[0-3].четвер, .календар.[0-3].п'ятниця, .календар. [0-3].subota та .calendar.[0-3].sunday видалено",
-                "zh-cn": "简单检查响应是否包含添加的地理数据、.settings.cuttingHeight 和 .settings.headlight 已删除、.calendar.[0-3].start、.calendar.[0-3].duration、.calendar.[0-3] .monday, .calendar.[0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, .calendar. [0-3].saturday 和 .calendar.[0-3].sunday 已删除"
+            "0.3.3": {
+                "en": "simple check if response contains geo data added, dependencies updated",
+                "de": "Einfache Überprüfung, ob die Antwort hinzugefügte Geodaten enthält und Abhängigkeiten aktualisiert wurden",
+                "ru": "простая проверка, содержит ли ответ добавленные геоданные, обновленные зависимости",
+                "pt": "verificação simples se a resposta contém dados geográficos adicionados, dependências atualizadas",
+                "nl": "eenvoudige controle of het antwoord geografische gegevens bevat, bijgewerkte afhankelijkheden",
+                "fr": "vérification simple si la réponse contient des données géographiques ajoutées, les dépendances mises à jour",
+                "it": "semplice controllo se la risposta contiene dati geografici aggiunti, dipendenze aggiornate",
+                "es": "simplemente verifique si la respuesta contiene datos geográficos agregados, dependencias actualizadas",
+                "pl": "proste sprawdzenie, czy odpowiedź zawiera dodane dane geograficzne, zaktualizowane zależności",
+                "uk": "проста перевірка, чи містить відповідь додані геодані, оновлені залежності",
+                "zh-cn": "简单检查响应是否包含添加的地理数据、更新的依赖项"
+            },
+            "0.4.0-beta.1": {
+                "en": "BREAKING: .settings.cuttingHeight and .settings.headlight removed, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3].saturday and .calendar.[0-3].sunday removed, adapter icon updated, script for statistics updated",
+                "de": "BREAKING: .settings.cuttingHeight und .settings.headlight entfernt, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3] .saturday und .calendar.[0-3].sunday entfernt, Adaptersymbol aktualisiert, Skript für Statistiken aktualisiert",
+                "ru": "НАРУШЕНИЕ: .settings.cuttingHeight и .settings.headlight удалены, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].вторник, .календарь.[0-3].среда, .календарь.[0-3].четверг, .календарь.[0-3].пятница, РАЗРЫВ: .календарь.[0-3] .saturday и .calendar.[0-3].sunday удалены, обновлена ​​иконка адаптера, обновлен скрипт для статистики",
+                "pt": "QUEBRA: .settings.cuttingHeight e .settings.headlight removidos, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].terça-feira, .calendar.[0-3].quarta-feira, .calendar.[0-3].quinta-feira, .calendar.[0-3].sexta-feira, QUEBRA: .calendar.[0-3] .saturday e .calendar.[0-3].sunday removidos, ícone do adaptador atualizado, script para estatísticas atualizado",
+                "nl": "BREAKING: .settings.cuttingHoogte en .settings.koplamp verwijderd, .calendar.[0-3].start, .calendar.[0-3].duur, .calendar.[0-3].maandag, .calendar.[ 0-3].dinsdag, .calendar.[0-3].woensdag, .calendar.[0-3].donderdag, .calendar.[0-3].vrijdag, BREAKING: .calendar.[0-3] .saturday en .calendar.[0-3].sunday verwijderd, adapterpictogram bijgewerkt, script voor statistieken bijgewerkt",
+                "fr": "BREAKING : .settings.cuttingHeight et .settings.headlight supprimés, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].mardi, .calendar.[0-3].mercredi, .calendar.[0-3].jeudi, .calendar.[0-3].vendredi, BREAKING : .calendar.[0-3] .saturday et .calendar.[0-3].sunday supprimés, icône de l'adaptateur mise à jour, script pour les statistiques mis à jour",
+                "it": "ROTTURA: .settings.cuttingHeight e .settings.headlight rimossi, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, ULTIMO: .calendar.[0-3] .saturday e .calendar.[0-3].sunday rimossi, icona dell'adattatore aggiornata, script per le statistiche aggiornato",
+                "es": "ÚLTIMA HORA: .settings.cuttingHeight y .settings.headlight eliminados, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].martes, .calendario.[0-3].miércoles, .calendario.[0-3].jueves, .calendario.[0-3].viernes, ÚLTIMA HORA: .calendario.[0-3] .saturday y .calendar.[0-3].sunday eliminados, ícono de adaptador actualizado, secuencia de comandos para estadísticas actualizada",
+                "pl": "BREAKING: usunięto .settings.cuttingHeight i .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].poniedziałek, .calendar.[ 0-3].wtorek, .kalendarz.[0-3].środa, .kalendarz.[0-3].czwartek, .kalendarz.[0-3].piątek, BREAKING: .kalendarz.[0-3] usunięto .sobotę i .kalendarz.[0-3].sunday, zaktualizowano ikonę adaptera, zaktualizowano skrypt statystyk",
+                "uk": "ПОРУШЕННЯ: видалено .settings.cuttingHeight і .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].понеділок, .calendar.[ 0-3].вівторок, .календар.[0-3].середа, .календар.[0-3].четвер, .календар.[0-3].п'ятниця, BREAKING: .календар.[0-3] .saturday і .calendar.[0-3].sunday видалено, піктограму адаптера оновлено, сценарій статистики оновлено",
+                "zh-cn": "中断：.settings.cuttingHeight 和 .settings.headlight 已删除，.calendar.[0-3].start，.calendar.[0-3].duration，.calendar.[0-3].monday，.calendar.[ 0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3] .saturday 和 .calendar.[0-3].sunday 已删除，适配器图标已更新，统计脚本已更新"
             }
         },
         "titleLang": {
