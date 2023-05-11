@@ -227,17 +227,6 @@ const sID_distanceFromChargingStation = `${instance}.${pathLevel1}.${pathLevel2[
 const sID_chargingTimeToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.chargingTimeToday`;
 const sID_mowingTimeToday = `${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`;
 const sID_GoogleLink = `${instance}.${pathLevel1}.${pathLevel2[2]}.GoogleMapsLink`;
-/*
-const sID_StartTime_0 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_0`;
-const sID_EndTime_0 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_0`;
-const sID_StartTime_1 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_1`;
-const sID_EndTime_1 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_1`;
-const sID_StartTime_2 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_2`;
-const sID_EndTime_2 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_2`;
-const sID_StartTime_3 = `${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_3`;
-const sID_EndTime_3 = `${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_3`;
-const arrayID_Times = [sID_StartTime_0, sID_EndTime_0, sID_StartTime_1, sID_EndTime_1, sID_StartTime_2, sID_EndTime_2, sID_StartTime_3, sID_EndTime_3];
-*/
 const arrayID_Times = [];
 $(`state[id=${instance}.${pathLevel1}.${pathLevel2[1]}.*]`).each(function(id) {
     arrayID_Times.push(id);
@@ -293,36 +282,6 @@ on({id: sID_Latlong, change: 'ne'}, async function (obj) {
         await setStateAsync(sID_drivenDistanceTotal, round(drivenDistanceTotal, 2), true);
     };
 });
-
-/*
-// Convert start and end time to minutes and change adapter IDs
-on({id: arrayID_Times, change: 'ne'}, async function (obj) {
-    let arryObj_ID = obj.id.split('.');
-    let scheduleNr = arryObj_ID[4].substring(arryObj_ID[4].length - 1, arryObj_ID[4].length);
-    let duration_min = 0;
-    let start_min = 0;        
-    let startTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${scheduleNr}`)).val;
-    let endTime = (await getStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${scheduleNr}`)).val;
-    
-    // Time is divided into hours and minutes
-    let arrayStartTime = startTime.split(':');
-    let arrayEndTime = endTime.split(':');
-    let startTime_hours = arrayStartTime[0];   
-    let endTime_hours = arrayEndTime[0];   
-    let startTime_minutes = arrayStartTime[1];   
-    let endTime_minutes = arrayEndTime[1];   
-    
-    // Convert time to minutes since the beginning of the day
-    start_min = (startTime_hours * 60) + parseInt(startTime_minutes);
-    // Convert time in minutes from start to end time (duration)
-    duration_min = ((endTime_hours * 60) + parseInt(endTime_minutes)) - start_min;
-    if (duration_min < 0) {
-        duration_min = 0;
-    };
-    await setStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${scheduleNr}.start`, start_min, true);
-    await setStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${scheduleNr}.duration`, duration_min, true);
-});
-*/
 
 // Convert start and end time to minutes
 on({id: arrayID_Times, change: 'ne', ack: false}, async function (obj) {
