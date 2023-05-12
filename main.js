@@ -1322,7 +1322,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			try {
 				if ('attributes' in message) {
 					if ('cuttingHeight' in message.attributes) {
-						this.setStateAsync(`${message.id}.husqvarna-automower.ACTIONS.CUTTINGHEIGHT`, {
+						this.setStateAsync(`${message.id}.ACTIONS.CUTTINGHEIGHT`, {
 							val: message.attributes.cuttingHeight,
 							ack: true,
 						});
@@ -1335,7 +1335,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
-					if ('calendar' in message.attributes) {
+					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
 						// set values in "calendar"
 						for (
 							let i = 0;
