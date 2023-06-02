@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-const axios = require('axios');
+const axios = require('axios').default;
 const WebSocket = require('ws');
 
 // variables
@@ -120,8 +120,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		})
 			.then((response) => {
 				this.log.debug(
-					`[getAccessToken]: HTTP status response: ${response.status} ${
-						response.statusText
+					`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText
 					}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 						response.headers,
 					)}; data: ${JSON.stringify(response.data)}`,
@@ -168,8 +167,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		})
 			.then(async (response) => {
 				this.log.debug(
-					`[getMowerData]: HTTP status response: ${response.status} ${
-						response.statusText
+					`[getMowerData]: HTTP status response: ${response.status} ${response.statusText
 					}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 						response.headers,
 					)}; data: ${JSON.stringify(response.data)}`,
@@ -204,8 +202,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		// this.log.debug(`[createObjects]: listMowers: ${JSON.stringify(listMowers)}`);
 
 		this.log.debug(
-			`[createObjects]: start objects creation for ${Object.keys(mowerData.data).length} device${
-				Object.keys(mowerData.data).length > 1 ? 's' : ''
+			`[createObjects]: start objects creation for ${Object.keys(mowerData.data).length} device${Object.keys(mowerData.data).length > 1 ? 's' : ''
 			}...`,
 		);
 		if (Object.keys(mowerData.data).length !== 0) {
@@ -225,16 +222,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system`, {
 						type: 'channel',
 						common: {
-							name: 'system',
-							desc: 'system',
-						},
+							name: 'system'						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.type`, {
 						type: 'state',
 						common: {
 							name: 'Device type',
-							desc: 'Device type',
 							type: 'string',
 							role: 'info.type',
 							read: true,
@@ -246,7 +240,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Device ID',
-							desc: 'Device ID',
 							type: 'string',
 							role: 'info.id',
 							read: true,
@@ -259,7 +252,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Device name',
-							desc: 'Device name',
 							type: 'string',
 							role: 'info.name',
 							read: true,
@@ -271,7 +263,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Device model',
-							desc: 'Device model',
 							type: 'string',
 							role: 'info.model',
 							read: true,
@@ -283,7 +274,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Device serialnumber',
-							desc: 'Device serialnumber',
 							type: 'number', // acc. API it should be 'string'
 							role: 'info.serialnumber',
 							read: true,
@@ -297,7 +287,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'channel',
 						common: {
 							name: 'Battery information',
-							desc: 'Battery information',
 						},
 						native: {},
 					});
@@ -305,7 +294,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'The current battery level percentage',
-							desc: 'The current battery level percentage',
 							type: 'number',
 							role: 'value.battery',
 							min: 0,
@@ -322,14 +310,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'channel',
 						common: {
 							name: 'General information about the mower',
-							desc: 'General information about the mower',
 						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.mode`, {
 						type: 'state',
 						common: {
-							desc: 'Information about the mowers current mode',
 							name: 'Information about the mowers current mode',
 							type: 'string',
 							role: 'state',
@@ -351,7 +337,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Information about the mowers current activity',
-							desc: 'Information about the mowers current activity',
 							type: 'string',
 							role: 'state',
 							states: {
@@ -373,7 +358,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Information about the mowers current status',
-							desc: 'Information about the mowers current status',
 							type: 'string',
 							role: 'state',
 							states: {
@@ -401,7 +385,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Information about the mowers current error status',
-							desc: 'Information about the mowers current error status',
 							type: 'number',
 							role: 'state',
 							states: {
@@ -563,7 +546,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
-							desc: 'Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
 							type: 'number',
 							role: 'value.time',
 							read: true,
@@ -572,145 +554,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {},
 					});
 
-					// create channel "calendar"
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar`, {
-						type: 'channel',
-						common: {
-							name: 'Calendar Tasks',
-							desc: 'Calendar Tasks',
-						},
-						native: {},
-					});
-					for (let j = 0; j < numberOfSchedules; j++) {
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}`, {
-							type: 'channel',
-							common: {
-								name: 'Calendar Task ' + j,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.start`, {
-							type: 'state',
-							common: {
-								name: 'Start time expressed in minutes after midnight',
-								desc: 'Start time expressed in minutes after midnight',
-								type: 'number',
-								role: 'value',
-								min: 0,
-								max: 1439,
-								unit: 'min',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.duration`, {
-							type: 'state',
-							common: {
-								name: 'Duration time expressed in minutes',
-								desc: 'Duration time expressed in minutes',
-								type: 'number',
-								role: 'value',
-								min: 0,
-								max: 1440,
-								unit: 'min',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.monday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Mondays',
-								desc: 'Enabled on Mondays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.tuesday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Tuesdays',
-								desc: 'Enabled on Tuesdays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.wednesday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Wednesdays',
-								desc: 'Enabled on Wednesdays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.thursday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Thursdays',
-								desc: 'Enabled on Thursdays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.friday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Fridays',
-								desc: 'Enabled on Fridays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.saturday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Saturdays',
-								desc: 'Enabled on Saturdays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.calendar.${j}.sunday`, {
-							type: 'state',
-							common: {
-								name: 'Enabled on Sundays',
-								desc: 'Enabled on Sundays',
-								type: 'boolean',
-								role: 'indicator',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
-					}
-
 					// create channel "planner"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner`, {
 						type: 'channel',
 						common: {
 							name: 'Actions which are available for this device',
-							desc: 'Actions which are available for this device',
 						},
 						native: {},
 					});
@@ -718,7 +566,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
-							desc: 'Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
 							type: 'number',
 							role: 'value.time',
 							read: true,
@@ -730,7 +577,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'TODO',
-							desc: 'TODO',
 							type: 'string',
 							role: 'state',
 							states: { NOT_ACTIVE: 'Not active', FORCE_PARK: 'Force park', 'FORCE_MOW ': 'Force mow' },
@@ -743,7 +589,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'restrictedReason',
-							desc: 'restrictedReason',
 							type: 'string',
 							role: 'state',
 							states: {
@@ -767,7 +612,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'channel',
 						common: {
 							name: 'Metadata',
-							desc: 'Metadata',
 						},
 						native: {},
 					});
@@ -775,7 +619,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Is the mower currently connected',
-							desc: 'Is the mower currently connected',
 							type: 'boolean',
 							role: 'indicator.connected',
 							read: true,
@@ -787,7 +630,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Is the mower currently connected',
-							desc: 'Is the mower currently connected',
 							type: 'number',
 							role: 'value.time',
 							read: true,
@@ -801,7 +643,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'channel',
 						common: {
 							name: 'Positions',
-							desc: 'Positions',
 						},
 						native: {},
 					});
@@ -809,7 +650,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Position latitude',
-							desc: 'Position latitude',
 							type: 'number',
 							role: 'value.gps.latitude',
 							unit: '°',
@@ -822,7 +662,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Position longitude',
-							desc: 'Position longitude',
 							type: 'number',
 							role: 'value.gps.longitude',
 							unit: '°',
@@ -835,51 +674,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Position "latitude;longitude"',
-							desc: 'Position "latitude;longitude"',
 							type: 'string',
 							role: 'value.gps',
-							read: true,
-							write: false,
-						},
-						native: {},
-					});
-
-					// create channel "settings"
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings`, {
-						type: 'channel',
-						common: {
-							name: 'Settings',
-							desc: 'Settings',
-						},
-						native: {},
-					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {
-						type: 'state',
-						common: {
-							name: 'Prescaled cutting height, Range: 1...9',
-							desc: 'Prescaled cutting height, Range: 1...9',
-							type: 'number',
-							role: 'state',
-							min: 1,
-							max: 9,
-							read: true,
-							write: false,
-						},
-						native: {},
-					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.settings.headlight`, {
-						type: 'state',
-						common: {
-							name: 'Headlight status',
-							desc: 'Headlight status',
-							type: 'string',
-							role: 'state',
-							states: {
-								ALWAYS_ON: 'ALWAYS ON',
-								ALWAYS_OFF: 'ALWAYS OFF',
-								EVENING_ONLY: 'EVENING ONLY',
-								EVENING_AND_NIGHT: 'EVENING AND NIGHT',
-							},
 							read: true,
 							write: false,
 						},
@@ -891,7 +687,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'channel',
 						common: {
 							name: 'Statistics',
-							desc: 'Statistics',
 						},
 						native: {},
 					});
@@ -899,7 +694,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Cutting blade usage time',
-							desc: 'Cutting blade usage time',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -912,7 +706,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Numbers of charging cycles',
-							desc: 'Numbers of charging cycles',
 							type: 'number',
 							role: 'state',
 							read: true,
@@ -924,7 +717,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Numbers of collisions',
-							desc: 'Numbers of collisions',
 							type: 'number',
 							role: 'state',
 							read: true,
@@ -936,7 +728,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Total charging time',
-							desc: 'Total charging time',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -949,7 +740,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Total cutting time',
-							desc: 'Total cutting time',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -962,7 +752,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Total running time',
-							desc: 'Total running time',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -975,7 +764,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Total searching time',
-							desc: 'Total searching time',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -997,7 +785,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Pause mower',
-							desc: 'Pause mower',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -1010,7 +797,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Park mower until next scheduled run',
-							desc: 'Park mower until next scheduled run',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -1023,7 +809,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Park mower until further notice, overriding schedule',
-							desc: 'Park mower until further notice, overriding schedule',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -1045,7 +830,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Park mower for a duration of time, overriding schedule',
-							desc: 'Park mower for a duration of time, overriding schedule',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -1058,7 +842,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Park mower for a duration of time, overriding schedule: Time',
-							desc: 'Park mower for a duration of time, overriding schedule: Time',
 							type: 'number',
 							def: 15,
 							role: 'state',
@@ -1073,7 +856,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Resume mower according to schedule',
-							desc: 'Resume mower according to schedule',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -1095,7 +877,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Start mower and cut for a duration of time, overriding schedule',
-							desc: 'Start mower and cut for a duration of time, overriding schedule',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -1108,7 +889,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Start mower and cut for a duration of time, overriding schedule: Time',
-							desc: 'Start mower and cut for a duration of time, overriding schedule: Time',
 							type: 'number',
 							def: 15,
 							role: 'state',
@@ -1123,7 +903,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Adjust cutting height, Range: 1...9',
-							desc: 'Adjust cutting height, Range: 1...9',
 							type: 'number',
 							role: 'state',
 							min: 1,
@@ -1137,7 +916,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Set headlight status',
-							desc: 'Set headlight status',
 							type: 'string',
 							role: 'value',
 							states: {
@@ -1164,7 +942,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'Save all schedules',
-							desc: 'Save all schedules',
 							type: 'boolean',
 							role: 'button',
 							def: false,
@@ -1186,7 +963,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Start time expressed in minutes after midnight',
-								desc: 'Start time expressed in minutes after midnight',
 								type: 'number',
 								role: 'value',
 								min: 0,
@@ -1202,7 +978,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Duration time expressed in minutes',
-								desc: 'Duration time expressed in minutes',
 								type: 'number',
 								role: 'value',
 								min: 1,
@@ -1218,7 +993,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Mondays',
-								desc: 'Enabled on Mondays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1231,7 +1005,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Tuesdays',
-								desc: 'Enabled on Tuesdays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1244,7 +1017,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Wednesdays',
-								desc: 'Enabled on Wednesdays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1257,7 +1029,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Thursdays',
-								desc: 'Enabled on Thursdays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1270,7 +1041,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Fridays',
-								desc: 'Enabled on Fridays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1283,7 +1053,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Saturdays',
-								desc: 'Enabled on Saturdays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1296,7 +1065,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'Enabled on Sundays',
-								desc: 'Enabled on Sundays',
 								type: 'boolean',
 								role: 'value',
 								def: false,
@@ -1383,39 +1151,39 @@ class HusqvarnaAutomower extends utils.Adapter {
 						Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules);
 						j++
 					) {
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.start`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.start`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].start,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.duration`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.duration`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].duration,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.monday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.monday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].monday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.tuesday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.tuesday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].tuesday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.wednesday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.wednesday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].wednesday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.thursday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.thursday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].thursday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.friday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.friday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].friday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.saturday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.saturday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].saturday,
 							ack: true,
 						});
-						this.setStateAsync(`${mowerData.data[i].id}.calendar.${[j]}.sunday`, {
+						this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.sunday`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].sunday,
 							ack: true,
 						});
@@ -1445,7 +1213,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].attributes.planner.restrictedReason,
 						ack: true,
 					});
-					if(mowerData.data[i].attributes.positions.length > 0){
+					if (mowerData.data[i].attributes.positions.length > 0) {
 						this.setStateAsync(`${mowerData.data[i].id}.positions.latitude`, {
 							val: mowerData.data[i].attributes.positions[0].latitude,
 							ack: true,
@@ -1460,11 +1228,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 					}
 
-					this.setStateAsync(`${mowerData.data[i].id}.settings.cuttingHeight`, {
+					this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`, {
 						val: mowerData.data[i].attributes.settings.cuttingHeight,
 						ack: true,
 					});
-					this.setStateAsync(`${mowerData.data[i].id}.settings.headlight`, {
+					this.setStateAsync(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`, {
 						val: mowerData.data[i].attributes.settings.headlight.mode,
 						ack: true,
 					});
@@ -1554,59 +1322,59 @@ class HusqvarnaAutomower extends utils.Adapter {
 			try {
 				if ('attributes' in message) {
 					if ('cuttingHeight' in message.attributes) {
-						this.setStateAsync(`${message.id}.settings.cuttingHeight`, {
+						this.setStateAsync(`${message.id}.ACTIONS.CUTTINGHEIGHT`, {
 							val: message.attributes.cuttingHeight,
 							ack: true,
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.cuttingHeight: ${message.attributes.cuttingHeight}`);
 					}
 					if ('headlight' in message.attributes) {
-						this.setStateAsync(`${message.id}.settings.headlight`, {
+						this.setStateAsync(`${message.id}.ACTIONS.HEADLIGHT`, {
 							val: message.attributes.headlight.mode,
 							ack: true,
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
-					if ('calendar' in message.attributes) {
+					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
 						// set values in "calendar"
 						for (
 							let i = 0;
 							i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules);
 							i++
 						) {
-							this.setStateAsync(`${message.id}.calendar.${[i]}.start`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.start`, {
 								val: message.attributes.calendar.tasks[i].start,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.duration`, {
 								val: message.attributes.calendar.tasks[i].duration,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.monday`, {
 								val: message.attributes.calendar.tasks[i].monday,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, {
 								val: message.attributes.calendar.tasks[i].tuesday,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, {
 								val: message.attributes.calendar.tasks[i].wednesday,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, {
 								val: message.attributes.calendar.tasks[i].thursday,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.friday`, {
 								val: message.attributes.calendar.tasks[i].friday,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, {
 								val: message.attributes.calendar.tasks[i].saturday,
 								ack: true,
 							});
-							this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, {
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, {
 								val: message.attributes.calendar.tasks[i].sunday,
 								ack: true,
 							});
@@ -1618,15 +1386,15 @@ class HusqvarnaAutomower extends utils.Adapter {
 							i < numberOfSchedules;
 							i++
 						) {
-							this.setStateAsync(`${message.id}.calendar.${[i]}.start`, { val: 0, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.duration`, { val: 0, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.monday`, { val: false, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.tuesday`, { val: false, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.wednesday`, { val: false, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.thursday`, { val: false, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.friday`, { val: false, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.saturday`, { val: false, ack: true });
-							this.setStateAsync(`${message.id}.calendar.${[i]}.sunday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.start`, { val: null, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.duration`, { val: null, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.monday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.friday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, { val: false, ack: true });
+							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, { val: false, ack: true });
 						}
 						// this.log.debug(`[wss.on - message]: message.attributes.calendar: ${JSON.stringify(message.attributes.calendar)}`);
 					}
@@ -1836,8 +1604,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			})
 				.then((response) => {
 					this.log.debug(
-						`[onUnload]: HTTP status response: ${response.status} ${
-							response.statusText
+						`[onUnload]: HTTP status response: ${response.status} ${response.statusText
 						}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 							response.headers,
 						)}; data: ${JSON.stringify(response.data)}`,
@@ -2074,8 +1841,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				})
 					.then((response) => {
 						this.log.debug(
-							`[onStateChange]: HTTP status response: ${response.status} ${
-								response.statusText
+							`[onStateChange]: HTTP status response: ${response.status} ${response.statusText
 							}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
 								response.headers,
 							)}; data: ${JSON.stringify(response.data)}`,
@@ -2088,8 +1854,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
 							this.log.debug(
-								`[onStateChange]: HTTP status response: ${
-									error.response.status
+								`[onStateChange]: HTTP status response: ${error.response.status
 								}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(
 									error.response.data,
 								)}`,
