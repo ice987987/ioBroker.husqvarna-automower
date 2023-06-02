@@ -161,7 +161,7 @@ The following value will be calculated:
 -   Create/update google maps link
 -   Possibility to park mower during rain until next schedule
 
-For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `instance`, `pathLevel1`, `pathLevel2`, `mowerID` and `sID_RainSensor` in section `USER CONFIGURATION`.
+For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `instance`, `pathLevel1`, `pathLevel2`, `mowerID`, `sID_RainSensor` and `targetBladeCuttingTime` in section `USER CONFIGURATION`.
 
 ```
 //***************************************************************************************************
