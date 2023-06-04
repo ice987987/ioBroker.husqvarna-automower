@@ -1,6 +1,6 @@
 {
   "name": "iobroker.husqvarna-automower",
-  "version": "0.4.0-beta.2",
+  "version": "0.4.0-beta.3",
   "description": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",
   "author": {
     "name": "ice987987",
@@ -20,7 +20,7 @@
     "url": "https://github.com/ice987987/ioBroker.husqvarna-automower.git"
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 16.4"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.8",
@@ -40,7 +40,7 @@
     "@types/sinon-chai": "^3.2.9",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^8.41.0",
+    "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "mocha": "^10.2.0",

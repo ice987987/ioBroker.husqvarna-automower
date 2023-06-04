@@ -160,6 +160,7 @@ The following value will be calculated:
 -   Convert start and end time of schedules to minutes and hours
 -   Create/update google maps link
 -   Possibility to park mower during rain until next schedule
+-   Calculation of remaining knive running time in percent
 
 For use, copy the following code into a new [Javascript](https://github.com/ioBroker/ioBroker.javascript)-Script and fill in the following variables: `instance`, `pathLevel1`, `pathLevel2`, `mowerID`, `sID_RainSensor` and `targetBladeCuttingTime` in section `USER CONFIGURATION`.
 
@@ -306,27 +307,27 @@ on({id: sID_HusqvarnaSchedules, change: 'ne', ack: true}, async function (obj) {
     if (obj.id.split('.')[obj.id.split('.').length - 1] === 'start') {
         let m = obj.state.val % 60;
         let h = (obj.state.val - m) / 60;
-        let HHMM = (h < 10 ? '0' : '') + h.toString() + ':' + (m < 10 ? '0' : '') + m.toString();
+        let HHMM = `${(h < 10 ? '0' : '')}${h.toString()}:${(m < 10 ? '0' : '')}${m.toString()}`;
         await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.startTime_${obj.id.split('.')[obj.id.split('.').length - 2]}`, HHMM, true);
         let endTime = obj.state.val + (await getStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 2]}.duration`)).val;
         let m1 = endTime % 60;
         let h1 = (endTime - m1) / 60;
-        let HHMM1 = (h1 < 10 ? '0' : '') + h1.toString() + ':' + (m1 < 10 ? '0' : '') + m1.toString();
+        let HHMM1 = `${(h1 < 10 ? '0' : '')}${h1.toString()}:${(m1 < 10 ? '0' : '')}${m1.toString()}`;
         await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${obj.id.split('.')[obj.id.split('.').length - 2]}`, HHMM1, true);
     } else {
         let startTime = (await getStateAsync(`husqvarna-automower.0.${mowerID}.ACTIONS.schedule.${obj.id.split('.')[obj.id.split('.').length - 2]}.start`)).val;
         let endTime = startTime + obj.state.val;
         let m = endTime % 60;
         let h = (endTime - m) / 60;
-        let HHMM = (h < 10 ? '0' : '') + h.toString() + ':' + (m < 10 ? '0' : '') + m.toString();
+        let HHMM = `${(h < 10 ? '0' : '')}${h.toString()}:${(m < 10 ? '0' : '')}${m.toString()}`;
         await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[1]}.endTime_${obj.id.split('.')[obj.id.split('.').length - 2]}`, HHMM, true);
     };
 });
 
 // update google maps link
 on({id: `husqvarna-automower.0.${mowerID}.positions.latlong`, change: 'ne'}, async function (obj) {
-    let arryLatLong = getState(obj.id).val.split(';');
-    let GoogleLink = `https://www.google.com/maps/place/${arryLatLong[0]},${arryLatLong[1]}/@?hl=de`;
+    let arrayLatLong = getState(obj.id).val.split(';');
+    let GoogleLink = `https://www.google.com/maps/place/${arrayLatLong[0]},${arrayLatLong[1]}/@?hl=de`;
     await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[2]}.GoogleMapsLink`, GoogleLink, true);
 });
 
@@ -365,11 +366,11 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.4.0-beta.2
+### 0.4.0-beta.3
 
 -   (ice987987) BREAKING: `.settings.cuttingHeight` and `.settings.headlight` removed [#99](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/99)
 -   (ice987987) BREAKING: `.calendar.[0-3].start`, `.calendar.[0-3].duration`, `.calendar.[0-3].monday`, `.calendar.[0-3].tuesday`, `.calendar.[0-3].wednesday`, `.calendar.[0-3].thurdsay`, `.calendar.[0-3].friday`, `.calendar.[0-3].saturday` and `.calendar.[0-3].sunday` removed
--   (ice987987) BREAKING: node.js >= v16.0, js-controller >= v4.0.24 and admin >= v6.3.5 is required
+-   (ice987987) BREAKING: node.js >= v16.4 and js-controller >= v4.0.24
 -   (ice987987) dependencies updated
 -   (ice987987) adapter icon updated
 -   (ice987987) script for statistics updated
