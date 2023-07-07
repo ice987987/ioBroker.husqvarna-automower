@@ -1,6 +1,6 @@
 {
   "name": "iobroker.husqvarna-automower",
-  "version": "0.4.0",
+  "version": "0.4.1-beta.1",
   "description": "This adapter for uses the Husqvarna API to request data for your Husqvarna Automower via the connect module.",
   "author": {
     "name": "ice987987",

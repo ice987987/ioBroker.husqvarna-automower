@@ -1290,7 +1290,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 	// https://developer.husqvarnagroup.cloud/apis/automower-connect-api#websocket
 	async connectToWS() {
 		if (this.wss) {
-			this.wss.close(1000, 'Close old websocket connection before start new websocket connection.');
+			this.wss.close(1012, 'Close old websocket connection before start new websocket connection.');
 		}
 
 		this.wss = new WebSocket('wss://ws.openapi.husqvarna.dev/v1', {
@@ -1540,8 +1540,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			try {
 				if (data === 1000) {
-					// do not restart because of shut down of connection from the adapter
-					this.log.debug(`[wss.on - close]: ${reason}`);
+					this.log.debug(`[wss.on - autoclose]: ${reason}`);
+					await this.autoRestart();
 				} else if (data === 1001) {
 					// every 2 hours
 					await this.autoRestart();
@@ -1549,7 +1549,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 					// every 1 day
 					await this.getAccessToken();
 					await this.autoRestart();
-				} else {
+				} else if (data === 1012) {
+					// do not restart because of shut down of connection from the adapter
+					this.log.debug(`[wss.on - close]: ${reason}`);
+				}
+				else {
 					throw new Error('Unknown WebSocket error. (ERR_#011)');
 				}
 			} catch (error) {
