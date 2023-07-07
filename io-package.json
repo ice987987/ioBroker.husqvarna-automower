@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.4.0-beta.3",
+        "version": "0.4.0",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -159,7 +159,7 @@
                 "uk": "проста перевірка, чи містить відповідь додані геодані, оновлені залежності",
                 "zh-cn": "简单检查响应是否包含添加的地理数据、更新的依赖项"
             },
-            "0.4.0-beta.3": {
+            "0.4.0": {
                 "en": "BREAKING: .settings.cuttingHeight and .settings.headlight removed, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3].saturday and .calendar.[0-3].sunday removed, BREAKING: node.js >= v16.4 and js-controller >= v4.0.24, adapter icon updated, script for statistics updated",
                 "de": "BREAKING: .settings.cuttingHeight und .settings.headlight entfernt, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3] .saturday und .calendar.[0-3].sunday entfernt, BREAKING: node.js >= v16.4 und js-controller >= v4.0.24, Adaptersymbol aktualisiert, Skript für Statistiken aktualisiert",
                 "ru": "НАРУШЕНИЕ: .settings.cuttingHeight и .settings.headlight удалены, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].monday, .calendar.[ 0-3].вторник, .календарь.[0-3].среда, .календарь.[0-3].четверг, .календарь.[0-3].пятница, РАЗРЫВ: .календарь.[0-3] .saturday и .calendar.[0-3].sunday удалены, BREAKING: node.js >= v16.4 и js-controller >= v4.0.24, обновлен значок адаптера, обновлен скрипт для статистики",
