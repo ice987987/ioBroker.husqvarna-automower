@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.4.1-beta.1",
+        "version": "0.4.0",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -171,19 +171,6 @@
                 "pl": "BREAKING: usunięto .settings.cuttingHeight i .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].poniedziałek, .calendar.[ 0-3].wtorek, .kalendarz.[0-3].środa, .kalendarz.[0-3].czwartek, .kalendarz.[0-3].piątek, BREAKING: .kalendarz.[0-3] .sobota i .kalendarz.[0-3].sunday usunięto, BREAKING: node.js >= v16.4 i js-controller >= v4.0.24, zaktualizowano ikonę adaptera, zaktualizowano skrypt statystyk",
                 "uk": "ПОРУШЕННЯ: видалено .settings.cuttingHeight і .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].понеділок, .calendar.[ 0-3].вівторок, .календар.[0-3].середа, .календар.[0-3].четвер, .календар.[0-3].п'ятниця, BREAKING: .календар.[0-3] .saturday і .calendar.[0-3].sunday видалено, ПОРУШЕННЯ: node.js >= v16.4 і js-controller >= v4.0.24, значок адаптера оновлено, скрипт для статистики оновлено",
                 "zh-cn": "中断：.settings.cuttingHeight 和 .settings.headlight 已删除，.calendar.[0-3].start，.calendar.[0-3].duration，.calendar.[0-3].monday，.calendar.[ 0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3] .saturday 和 .calendar.[0-3].sunday 已删除，中断：node.js >= v16.4 和 js-controller >= v4.0.24，适配器图标已更新，统计脚本已更新"
-            },
-            "0.4.1-beta.1": {
-                "en": "try to reconnect websocket connection",
-                "de": "Versuchen Sie, die WebSocket-Verbindung wiederherzustellen",
-                "ru": "попробуйте переподключить соединение через веб-сокет",
-                "pt": "tente reconectar a conexão websocket",
-                "nl": "probeer opnieuw verbinding te maken met de websocket",
-                "fr": "essayez de reconnecter la connexion websocket",
-                "it": "prova a riconnettere la connessione websocket",
-                "es": "intente volver a conectar la conexión websocket",
-                "pl": "spróbuj ponownie połączyć połączenie websocket",
-                "uk": "спробуйте повторно підключити веб-сокет",
-                "zh-cn": "尝试重新连接websocket连接"
             }
         },
         "titleLang": {

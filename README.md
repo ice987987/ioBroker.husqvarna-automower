@@ -365,11 +365,8 @@ function round(digit, digits) {
 ## Changelog
 
 <!-- ### **WORK IN PROGRESS** -->
-### 0.4.1-beta.1
 
--   (ice987987) try to reconnect websocket connection
-
-### 0.4.0 (07.07.2023)
+### 0.4.0
 
 -   (ice987987) BREAKING: `.settings.cuttingHeight` and `.settings.headlight` removed [#99](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/99)
 -   (ice987987) BREAKING: `.calendar.[0-3].start`, `.calendar.[0-3].duration`, `.calendar.[0-3].monday`, `.calendar.[0-3].tuesday`, `.calendar.[0-3].wednesday`, `.calendar.[0-3].thurdsay`, `.calendar.[0-3].friday`, `.calendar.[0-3].saturday` and `.calendar.[0-3].sunday` removed
