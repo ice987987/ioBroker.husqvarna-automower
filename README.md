@@ -29,9 +29,9 @@ All product and company names or logos are trademarks™ or registered® tradema
 -   node.js >= v16.4 is required
 -   js-controller >= v4.0.24 is required
 -   admin >= v6.3.5 is required
--   This adapter uses the Husqvarna API-Key to request data (via WebSocket) for your Husqvarna lawn mower. You must sign up at [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) to get an API-Key.
+-   This adapter uses the Husqvarna Automower Connect API to request data (via WebSocket) and send commands (via REST API) for your Husqvarna lawn mower. 
 
-**Please make sure that you have created an account, password and API-Key according to [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started). "OLD" logins will not work.**
+Please create an account and generate your personal `Application key` and `Application secret` by following [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started) via [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/). _(`Redirect URLs` could be `http://localhost:8080`)_
 
 ## Control
 
@@ -43,6 +43,7 @@ You can send the following values to your Husqvarna lawn mower:
 -   `.ACTIONS.park.PARK`: park mower for a duration of time `.ACTIONS.park.parkTime` (in minutes), overriding schedule
 -   `.ACTIONS.RESUMESCHEDULE`: resume mower according to schedule
 -   `.ACTIONS.start.START`: start mower and cut for a duration of time `.ACTIONS.start.startTime` (in minutes), overriding schedule
+-   `.ACTIONS.startInWorkArea.STARTINWORKAREA`: start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId`[^4]
 -   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight and get current status[^2][^3]
 -   `.ACTIONS.HEADLIGHT`: Update headlight and get current status
 -   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday` and get current status [^2]
@@ -53,32 +54,41 @@ You can send the following values to your Husqvarna lawn mower:
 
 You get the following values from your Husqvarna lawn mower:
 
--   `.battery.batteryPercent`: Information about the battery in the mower
--   `.metadata.connected`: is the mower currently connected
--   `.metadata.statusTimestamp`: is the mower currently connected, time in ms
--   `.mower.activity`: Information about the mowers current activity
--   `.mower.errorCode`: Information about the mowers current error status
--   `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower
--   `.mower.mode`: Information about the mowers current mode
--   `.mower.state`: Information about the mowers current status
--   `.planner.action`: TODO
--   `.planner.nextStartTimestamp`: Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower
--   `.planner.restrictedReason`: restrictedReason
+-   `.battery.batteryPercent`: Information about the battery in the Automower.
+-   `.capabilities.position`: If the Automower supports GPS position. If false, no positions are available.
+-   `.capabilities.headlights`: If the Automower supports headlights. If false, no headlights are available.
+-   `.capabilities.workAreas`: If the Automower supports work areas. If false, no work areas are avalilable.
+-   `.capabilities.stayOutZones`: If the Automower supports stay-out zones. If false, no stay-out zones are available.
+-   `.metadata.connected`: Is the mower currently connected to the cloud. The mower needs to be connected to send command to the mower.
+-   `.metadata.statusTimestamp`: Timestamp for the last status update in milliseconds since 1970-01-01T00:00:00 in UTC time. NOTE! This timestamp is generated in the backend and not from the Mower.
+-   `.mower.activity`: Information about the mowers current status.
+-   `.mower.errorCode`: Information about the mowers current error status.
+-   `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
+-   `.mower.mode`: Information about the mowers current mode.
+-   `.mower.state`: Information about the mowers current status.
+-   `.planner.override`: The Planner has an override feature, which can be used to override the operation decided by the Calendar. There is room for one override at a time, and it occurs from now and for a duration of time.
+-   `.planner.nextStartTimestamp`: Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
+-   `.planner.restrictedReason`: Restricted reason.
+-   `.planner.externalReason`: External reason set by i.e. IFTTT, Google Assistant or Amazon Alexa. Ranges: 1000 to 1999: Google Assistant; 2000 to 2999:Amazon Alexa; 3000 to 3999: Developer Portal; 4000 to 4999: IFTTT, Wildlife consideration - 4000, Frost & rain guard - 4001 and Calendar connection - 4002; 100000 to 199 999: IFTTT applets; 200000 to 299 999: Developer Portal.
 -   `.positions.latitude`: Position latitude[^5]
 -   `.positions.longitude`: Position longitude[^5]
 -   `.positions.latlong`: Position "latitude;longitude"[^5]
--   `.statistics.cuttingBladeUsageTime`: Cutting blade usage time, time in s[^4]
--   `.statistics.numberOfChargingCycles`: Numbers of charging cycles, time in s[^4]
--   `.statistics.numberOfCollisions`: Numbers of collisions, time in s[^4]
--   `.statistics.totalChargingTime`: Total charging time, time in s[^4]
--   `.statistics.totalCuttingTime`: Total cutting time, time in s[^4]
--   `.statistics.totalRunningTime`: Total running time, time in s[^4]
--   `.statistics.totalSearchingTime`: Total searching time, time in s[^4]
+-   `.stayOutZones.dirty`: If the stay-out zones are synchronized with the Husqvarna cloud. If the map is dirty you can not enable or disable a stay-out zone.[^4]
+-   `.stayOutZones.zones`: List of all stay-out zones for the Automower.[^4]
+-   `.statistics.cuttingBladeUsageTime`: The number of seconds since the last reset of the cutting blade usage counter.[^4]
+-   `.statistics.numberOfChargingCycles`: Number of charging cycles.[^4]
+-   `.statistics.numberOfCollisions`: The total number of collisions.[^4]
+-   `.statistics.totalChargingTime`: Total charging time in seconds.[^4]
+-   `.statistics.totalCuttingTime`: Total cutting time in seconds.[^4]
+-   `.statistics.totalDrivenDistance`: Total driven distance in meters. It's a calculated value based on totalRunningTime multiply with average speed for the mower depending on the model.[^4]
+-   `.statistics.totalRunningTime`: The total running time in seconds. (the wheel motors have been running)[^4]
+-   `.statistics.totalSearchingTime`: The total searching time in seconds.[^4]
 -   `.system.id`: Device ID
--   `.system.model`: Device model
--   `.system.name`: Device name
--   `.system.serialNumber`: Device serialnumber
+-   `.system.model`: The model name of the Automower
+-   `.system.name`: The name given to the Automower by the user when pairing the Automower
+-   `.system.serialNumber`: The serial number for the Automower
 -   `.system.type`: Device type
+-   `.workAreas.workAreas`: A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.[^4]
     [^4]: If a value is missing or zero (0) the mower does not support the value
     [^5]: If no GPS-Signal is available, those values are not updated
 
@@ -365,6 +375,14 @@ function round(digit, digits) {
 ## Changelog
 
 <!-- ### **WORK IN PROGRESS** -->
+
+### 0.5.0-beta.1 **WORK IN PROGRESS**
+-   (ice987987) state `.ACTIONS.startInWorkArea.STARTINWORKAREA` start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId` added
+-   (ice987987) states `.capabilities.position`, `.capabilities.headlights`, `.capabilities.workAreas`, `.capabilities.stayOutZones`, `.planner.externalReason`, `.stayOutZones.dirty`, `.stayOutZones.zones`, `.statistics.totalDrivenDistance` and `.workAreas.workAreas` added
+-   (ice987987) state `.planner.action` removed
+-   (ice987987) names of several states updated
+-   (ice987987) descriptions of status and error codes updated
+-   (ice987987) dependencies updated
 
 ### 0.4.0 (07.07.2023)
 

@@ -222,7 +222,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system`, {
 						type: 'channel',
 						common: {
-							name: 'system'						},
+							name: 'System information about an Automower'
+						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.type`, {
@@ -251,7 +252,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.name`, {
 						type: 'state',
 						common: {
-							name: 'Device name',
+							name: 'The name given to the Automower by the user when pairing the Automower',
 							type: 'string',
 							role: 'info.name',
 							read: true,
@@ -262,7 +263,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.model`, {
 						type: 'state',
 						common: {
-							name: 'Device model',
+							name: 'The model name of the Automower',
 							type: 'string',
 							role: 'info.model',
 							read: true,
@@ -273,8 +274,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system.serialNumber`, {
 						type: 'state',
 						common: {
-							name: 'Device serialnumber',
-							type: 'number', // acc. API it should be 'string'
+							name: 'The serial number for the Automower',
+							type: 'number',
 							role: 'info.serialnumber',
 							read: true,
 							write: false,
@@ -286,7 +287,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.battery`, {
 						type: 'channel',
 						common: {
-							name: 'Battery information',
+							name: 'Information about the battery in the Automower',
 						},
 						native: {},
 					});
@@ -305,28 +306,80 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {},
 					});
 
+					// create channel "capabilities"
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities`, {
+						type: 'channel',
+						common: {
+							name: 'Information about what capabilities the Automower has',
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.position`, {
+						type: 'state',
+						common: {
+							name: 'If the Automower supports GPS position. If false, no positions are available.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.headlights`, {
+						type: 'state',
+						common: {
+							name: 'If the Automower supports headlights. If false, no headlights are available.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.workAreas`, {
+						type: 'state',
+						common: {
+							name: 'If the Automower supports work areas. If false, no work areas are avalilable.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.stayOutZones`, {
+						type: 'state',
+						common: {
+							name: 'If the Automower supports stay-out zones. If false, no stay-out zones are available.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+
 					// create channel "mower", see https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/status%20description%20and%20error%20codes for descriptions of status and error codes
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower`, {
 						type: 'channel',
 						common: {
-							name: 'General information about the mower',
+							name: 'Information about the mowers current status.',
 						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.mode`, {
 						type: 'state',
 						common: {
-							name: 'Information about the mowers current mode',
+							name: 'Information about the mowers current mode.',
 							type: 'string',
 							role: 'state',
 							states: {
-								MAIN_AREA:
-									'Mower will mow until low battery. Go home and charge. Leave and continue mowing. Week schedule is used. Schedule can be overridden with forced park or forced mowing.',
-								DEMO: 'No blade operation - Mower will mow until low battery. Go home and charge. Leave and continue mowing. Week schedule is used. Schedule can be overridden with forced park or forced mowing.',
-								SECONDARY_AREA:
-									'Mower is in secondary area. Schedule is overridden with forced park or forced mowing. Mower will mow for request time or untill the battery runs out.',
-								HOME: 'Mower goes home and parks forever. Week schedule is not used. Cannot be overridden with forced mowing.',
-								UNKNOWN: 'Unknown mode',
+								MAIN_AREA: 'Mower will mow until low battery. Go home and charge. Leave and continue mowing.',
+								SECONDARY_AREA: 'Mower will mow until empty battery, or a limited time. When done, it stops in the garden.',
+								HOME: 'Mower goes home and parks forever.',
+								DEMO: 'Same as main area, but shorter times. (No blade operation)',
+								UNKNOWN: 'Unknown mode.',
+								POI: 'Point of interest.',
 							},
 							read: true,
 							write: false,
@@ -340,7 +393,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'string',
 							role: 'state',
 							states: {
-								UNKNOWN: 'Unknown activity',
+								UNKNOWN: 'Unknown activity.',
 								NOT_APPLICABLE: 'Manual start required in mower.',
 								MOWING: 'Mower is mowing lawn. If in demo mode the blades are not in operation.',
 								GOING_HOME: 'Mower is going home to the charging station.',
@@ -357,24 +410,22 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.state`, {
 						type: 'state',
 						common: {
-							name: 'Information about the mowers current status',
+							name: 'Information about the mowers current state',
 							type: 'string',
 							role: 'state',
 							states: {
-								UNKNOWN: 'Unknown state',
-								NOT_APPLICABLE: 'Not Applicable',
+								UNKNOWN: 'Unknown state.',
+								NOT_APPLICABLE: 'Not applicable.',
 								PAUSED: 'Mower has been paused by user.',
-								IN_OPERATION: 'See value in activity for status.',
-								WAIT_UPDATING: 'Mower is downloading new firmware.',
-								WAIT_POWER_UP: 'Mower is performing power up tests.',
-								RESTRICTED: 'Mower can currently not mow due to week calender, or override park.',
+								IN_OPERATION: 'Mower is operating according to selected mode. The activity gives information about what it is currently up to.',
+								WAIT_UPDATING: 'Mower is in wait state when updating.',
+								WAIT_POWER_UP: 'Mower is in wait state when powering up.',
+								RESTRICTED: 'The mower is currently restricted from mowing for some reason. It will continue mowing when the restriction is removed. The activity gives information about what the mower is currently up to.',
 								OFF: 'Mower is turned off.',
-								STOPPED: 'Mower is stopped, requires manual action.',
-								ERROR: 'An error has occurred. Check errorCode. Mower requires manual action.',
-								FATAL_ERROR:
-									'An fatal error has occurred. Check errorCode. Mower requires manual action.',
-								ERROR_AT_POWER_UP:
-									'An error at power up has occurred. Check errorCode. Mower requires manual action.',
+								STOPPED: 'Mower is stopped, and cannot be started remotely. Start requirements (safety or other) are not fulfilled.',
+								ERROR: 'A temporary error has occured. If the error is resolved, the mower will resume operation without user interaction. Typically, this happens when the loop signal is lost. When it comes back, the operation is resumed.',
+								FATAL_ERROR: 'A fatal error has occured. Error has to be fixed confirmed to leave this state.',
+								ERROR_AT_POWER_UP: 'An error at power up.'
 							},
 							read: true,
 							write: false,
@@ -533,10 +584,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 								715: 'Connectivity problem',
 								716: 'Connectivity problem',
 								717: 'SMS could not be sent',
-								718: 'Communication circuit board SW must be updated',
+								724: 'Communication circuit board SW must be updated',
 							},
 							min: 0,
-							max: 718,
+							max: 724,
 							read: true,
 							write: false,
 						},
@@ -558,7 +609,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner`, {
 						type: 'channel',
 						common: {
-							name: 'Actions which are available for this device',
+							name: 'Information about the planner. The planner tells when the mower should work.',
 						},
 						native: {},
 					});
@@ -573,13 +624,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.action`, {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.override`, {
 						type: 'state',
 						common: {
-							name: 'TODO',
+							name: 'The Planner has an override feature, which can be used to override the operation decided by the Calendar. There is room for one override at a time, and it occurs from now and for a duration of time.',
 							type: 'string',
 							role: 'state',
-							states: { NOT_ACTIVE: 'Not active', FORCE_PARK: 'Force park', 'FORCE_MOW ': 'Force mow' },
+							states: {
+								NOT_ACTIVE: 'Not active',
+								FORCE_PARK: 'Force park until next start means that no more mowing will be done within the current task. Operation will be resumed at the start of the next task instead',
+								FORCE_MOW: 'Force the mower to mow for the specified amount of time. When the time has elapsed, the override is removed and the Planner reverts to the Calendar instead'
+							},
 							read: true,
 							write: false,
 						},
@@ -588,19 +643,33 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.restrictedReason`, {
 						type: 'state',
 						common: {
-							name: 'restrictedReason',
+							name: 'Restricted reason',
 							type: 'string',
 							role: 'state',
 							states: {
-								NONE: 'None',
-								WEEK_SCHEDULE: 'Week schedule',
-								PARK_OVERRIDE: 'Park Override',
-								SENSOR: 'Sensor',
-								DAILY_LIMIT: 'Daily limit',
-								FOTA: 'Fota',
-								FROST: 'Frost',
-								NOT_APPLICABLE: 'Not Applicable',
+								NONE: 'No restricted reason.',
+								WEEK_SCHEDULE: 'There is no task in the Calendar right now, nothing to do.',
+								PARK_OVERRIDE: 'The restriction is because someone forced us to park, using the override feature.',
+								SENSOR: 'The sensor has decided that the grass is short enough, so there is no need to wear it down even more.',
+								DAILY_LIMIT: 'If a model has a maximum allowed mowing time per day, this restriction will apply when that time has run out.',
+								FOTA: 'When a Fota update is being transferred to the mower, we want to remain in the charging station to ensure that the transfer is successful. The restriction is removed when the transfer is done.',
+								FROST: 'The frost sensor thinks it is too cold to mow.',
+								ALL_WORK_AREAS_COMPLETED: 'All work areas are completed.',
+								EXTERNAL: 'An external reason set by an external tool. Can be IFTTT, Google Assistant or Amazon Alexa. See externalReason for more information.'
 							},
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner.externalReason`, {
+						type: 'state',
+						common: {
+							name: 'External reason set by i.e. IFTTT, Google Assistant or Amazon Alexa.',
+							type: 'number',
+							role: 'state',
+							min: 1000,
+							max: 300000,
 							read: true,
 							write: false,
 						},
@@ -611,14 +680,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.metadata`, {
 						type: 'channel',
 						common: {
-							name: 'Metadata',
+							name: 'Information if the mower is connected to the cloud and when last status was reported by the mower to the cloud.',
 						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.metadata.connected`, {
 						type: 'state',
 						common: {
-							name: 'Is the mower currently connected',
+							name: 'Is the mower currently connected to the cloud. The mower needs to be connected to send command to the mower.',
 							type: 'boolean',
 							role: 'indicator.connected',
 							read: true,
@@ -629,7 +698,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.metadata.statusTimestamp`, {
 						type: 'state',
 						common: {
-							name: 'Is the mower currently connected',
+							name: 'Timestamp for the last status update in milliseconds since 1970-01-01T00:00:00 in UTC time. NOTE! This timestamp is generated in the backend and not from the Mower.',
 							type: 'number',
 							role: 'value.time',
 							read: true,
@@ -642,7 +711,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions`, {
 						type: 'channel',
 						common: {
-							name: 'Positions',
+							name: 'List of the GPS positions. Latest registered position is first in the array and the oldest last in the array. Max number of positions is 50 after that the latest position is removed from the array.',
 						},
 						native: {},
 					});
@@ -686,14 +755,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics`, {
 						type: 'channel',
 						common: {
-							name: 'Statistics',
+							name: 'Information about the statistics. If a value is missing the mower does not support the value.',
 						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.cuttingBladeUsageTime`, {
 						type: 'state',
 						common: {
-							name: 'Cutting blade usage time',
+							name: 'The number of seconds since the last reset of the cutting blade usage counter.',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -705,7 +774,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.numberOfChargingCycles`, {
 						type: 'state',
 						common: {
-							name: 'Numbers of charging cycles',
+							name: 'Numbers of charging cycles.',
 							type: 'number',
 							role: 'state',
 							read: true,
@@ -716,7 +785,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.numberOfCollisions`, {
 						type: 'state',
 						common: {
-							name: 'Numbers of collisions',
+							name: 'The total number of collisions.',
 							type: 'number',
 							role: 'state',
 							read: true,
@@ -727,7 +796,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalChargingTime`, {
 						type: 'state',
 						common: {
-							name: 'Total charging time',
+							name: 'Total charging time in seconds.',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -739,7 +808,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalCuttingTime`, {
 						type: 'state',
 						common: {
-							name: 'Total cutting time',
+							name: 'Total cutting time in seconds.',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -748,10 +817,22 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalDrivenDistance`, {
+						type: 'state',
+						common: {
+							name: 'Total driven distance in meters. It\'s a calculated value based on totalRunningTime multiply with average speed for the mower depending on the model.',
+							type: 'number',
+							role: 'state',
+							unit: 'm',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalRunningTime`, {
 						type: 'state',
 						common: {
-							name: 'Total running time',
+							name: 'The total running time in seconds (the wheel motors have been running).',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -763,7 +844,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalSearchingTime`, {
 						type: 'state',
 						common: {
-							name: 'Total searching time',
+							name: 'The total searching time in seconds.',
 							type: 'number',
 							role: 'state',
 							unit: 's',
@@ -772,6 +853,61 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+
+					// create channel "STAYOUTZONES" if supported
+					if (mowerData.data[i].attributes.capabilities.stayOutZones) {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.stayOutZones`, {
+							type: 'channel',
+							common: {
+								name: 'Information about stay-out zones if supported by the Automower. Stay-out zones are managed in the Automower Connect app. To create a stay-out zone you need to use the Automower Connect app. You can create stay-out zones around areas of your lawn that you do not want the mower to enter: for example, if you have an area with newly sown grass or beautiful spring flowers. The stay-out zone can be activated or deactivated, but not scheduled.',
+							},
+							native: {},
+						});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.stayOutZones.dirty`, {
+							type: 'state',
+							common: {
+								name: 'If the stay-out zones are synchronized with the Husqvarna cloud. If the map is dirty you can not enable or disable a stay-out zone.',
+								type: 'boolean',
+								role: 'state',
+								read: true,
+								write: false,
+							},
+							native: {},
+						});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.stayOutZones.zones`, {
+							type: 'state',
+							common: {
+								name: 'List of all stay-out zones for the Automower.',
+								type: 'array',
+								role: 'state',
+								read: true,
+								write: false,
+							},
+							native: {},
+						});
+					}
+
+					// create channel "WORKAREAS" if supported
+					if (mowerData.data[i].attributes.capabilities.workAreas) {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas`, {
+							type: 'channel',
+							common: {
+								name: 'List of all work areas if supported by the Automower®. If empty list, no work areas are created. By default there should be a default work area with id 0.',
+							},
+							native: {},
+						});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
+							type: 'state',
+							common: {
+								name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
+								type: 'array',
+								role: 'state',
+								read: true,
+								write: false,
+							},
+							native: {},
+						});
+					}
 
 					// create channel "ACTIONS"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS`, {
@@ -784,7 +920,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.PAUSE`, {
 						type: 'state',
 						common: {
-							name: 'Pause mower',
+							name: 'Pause the mower',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -796,7 +932,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.PARKUNTILNEXTSCHEDULE`, {
 						type: 'state',
 						common: {
-							name: 'Park mower until next scheduled run',
+							name: 'Park the mower until next scheduled run.',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -808,7 +944,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.PARKUNTILFURTHERNOTICE`, {
 						type: 'state',
 						common: {
-							name: 'Park mower until further notice, overriding schedule',
+							name: 'Parks the mower for ever. Needs to be manually started again.',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -822,14 +958,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.park`, {
 						type: 'channel',
 						common: {
-							name: 'Action Command for park',
+							name: 'Parks the mower for a period of minutes. The mower will drive to the charching station and park for the duration set by the commands.',
 						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.park.PARK`, {
 						type: 'state',
 						common: {
-							name: 'Park mower for a duration of time, overriding schedule',
+							name: 'Parks the mower for a period of minutes. The mower will drive to the charching station and park for the duration set by the commands.',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -841,7 +977,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.park.parkTime`, {
 						type: 'state',
 						common: {
-							name: 'Park mower for a duration of time, overriding schedule: Time',
+							name: 'Parks the mower for a period of minutes: Time',
 							type: 'number',
 							def: 15,
 							role: 'state',
@@ -855,7 +991,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.RESUMESCHEDULE`, {
 						type: 'state',
 						common: {
-							name: 'Resume mower according to schedule',
+							name: 'Removes any ovveride on the Planner and let the mower resume to the schedule set by the Calendar.',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -869,14 +1005,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.start`, {
 						type: 'channel',
 						common: {
-							name: 'Action Command for start',
+							name: 'Start the mower for a period of minutes.',
 						},
 						native: {},
 					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.start.START`, {
 						type: 'state',
 						common: {
-							name: 'Start mower and cut for a duration of time, overriding schedule',
+							name: 'Start the mower for a period of minutes.',
 							type: 'boolean',
 							def: false,
 							role: 'button',
@@ -888,7 +1024,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.start.startTime`, {
 						type: 'state',
 						common: {
-							name: 'Start mower and cut for a duration of time, overriding schedule: Time',
+							name: 'Start the mower for a period of minutes: Time',
 							type: 'number',
 							def: 15,
 							role: 'state',
@@ -899,10 +1035,61 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+
+					// create channel "ACTIONS.startInWorkArea" if supported
+					if (mowerData.data[i].attributes.capabilities.workAreas) {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.startInWorkArea`, {
+							type: 'channel',
+							common: {
+								name: 'Start the mower in a work area for a period of minutes. If duration is skipped the mower will continue forever.',
+							},
+							native: {},
+						});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.duration`, {
+							type: 'state',
+							common: {
+								name: 'Optional. Duration period in minutes, if zero (0) the override will be forever',
+								type: 'number',
+								def: 0,
+								role: 'state',
+								unit: 'min',
+								min: 0,
+								read: true,
+								write: true,
+							},
+							native: {},
+						});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.workAreaId`, {
+							type: 'state',
+							common: {
+								name: 'Id on the work area',
+								type: 'number',
+								def: 0,
+								role: 'state',
+								min: 0,
+								read: true,
+								write: true,
+							},
+							native: {},
+						});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.STARTINWORKAREA`, {
+							type: 'state',
+							common: {
+								name: 'Start the mower in a work area for a period of minutes. If duration is skipped the mower will continue forever',
+								type: 'boolean',
+								def: false,
+								role: 'button',
+								read: true,
+								write: true,
+							},
+							native: {},
+						});
+					}
+
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`, {
 						type: 'state',
 						common: {
-							name: 'Adjust cutting height, Range: 1...9',
+							name: 'Prescaled cutting height, Range: 1 to 9',
 							type: 'number',
 							role: 'state',
 							min: 1,
@@ -915,14 +1102,14 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`, {
 						type: 'state',
 						common: {
-							name: 'Set headlight status',
+							name: 'Information about headlights. Not all Automower models supports headlight and not all enums are available for all models.',
 							type: 'string',
 							role: 'value',
 							states: {
-								ALWAYS_ON: 'ALWAYS ON',
-								ALWAYS_OFF: 'ALWAYS OFF',
-								EVENING_ONLY: 'EVENING ONLY',
-								EVENING_AND_NIGHT: 'EVENING AND NIGHT',
+								ALWAYS_ON: 'Always on.',
+								ALWAYS_OFF: 'Always off.',
+								EVENING_ONLY: 'Only in the evening.',
+								EVENING_AND_NIGHT: 'In evening and night.',
 							},
 							read: true,
 							write: true,
@@ -1082,6 +1269,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.park.PARK`);
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.RESUMESCHEDULE`);
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.start.START`);
+					if (mowerData.data[i].attributes.capabilities.workAreas) {
+						this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.STARTINWORKAREA`);
+					}
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`);
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`);
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.schedule.SET`);
@@ -1103,8 +1293,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].type,
 						ack: true,
 					});
-					this.setStateAsync(`${mowerData.data[i].id}.system.id`, { val: mowerData.data[i].id, ack: true });
-
+					this.setStateAsync(`${mowerData.data[i].id}.system.id`, {
+						val: mowerData.data[i].id,
+						ack: true
+					});
 					this.setStateAsync(`${mowerData.data[i].id}.system.name`, {
 						val: mowerData.data[i].attributes.system.name,
 						ack: true,
@@ -1120,6 +1312,23 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 					this.setStateAsync(`${mowerData.data[i].id}.battery.batteryPercent`, {
 						val: mowerData.data[i].attributes.battery.batteryPercent,
+						ack: true,
+					});
+
+					this.setStateAsync(`${mowerData.data[i].id}.capabilities.position`, {
+						val: mowerData.data[i].attributes.capabilities.position,
+						ack: true,
+					});
+					this.setStateAsync(`${mowerData.data[i].id}.capabilities.headlights`, {
+						val: mowerData.data[i].attributes.capabilities.headlights,
+						ack: true,
+					});
+					this.setStateAsync(`${mowerData.data[i].id}.capabilities.workAreas`, {
+						val: mowerData.data[i].attributes.capabilities.workAreas,
+						ack: true,
+					});
+					this.setStateAsync(`${mowerData.data[i].id}.capabilities.stayOutZones`, {
+						val: mowerData.data[i].attributes.capabilities.stayOutZones,
 						ack: true,
 					});
 
@@ -1189,23 +1398,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 					}
 
-					if (mowerData.data[i].attributes.planner.nextStartTimestamp) {
-						if (mowerData.data[i].attributes.planner.nextStartTimestamp !== 0) {
-							this.setStateAsync(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
-								val:
-									mowerData.data[i].attributes.planner.nextStartTimestamp +
-									new Date().getTimezoneOffset() * 60000,
-								ack: true,
-							});
-						} else {
-							this.setStateAsync(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
-								val: mowerData.data[i].attributes.planner.nextStartTimestamp,
-								ack: true,
-							});
-						}
-					}
-
-					this.setStateAsync(`${mowerData.data[i].id}.planner.action`, {
+					this.setStateAsync(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
+						val: mowerData.data[i].attributes.planner.nextStartTimestamp,
+						ack: true,
+					});
+					this.setStateAsync(`${mowerData.data[i].id}.planner.override`, {
 						val: mowerData.data[i].attributes.planner.override.action,
 						ack: true,
 					});
@@ -1267,6 +1464,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 					val: mowerData.data[i].attributes.statistics.totalCuttingTime,
 					ack: true,
 				});
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalDrivenDistance`, {
+					val: mowerData.data[i].attributes.statistics.totalDrivenDistance,
+					ack: true,
+				});
 				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalRunningTime`, {
 					val: mowerData.data[i].attributes.statistics.totalRunningTime,
 					ack: true,
@@ -1275,6 +1476,22 @@ class HusqvarnaAutomower extends utils.Adapter {
 					val: mowerData.data[i].attributes.statistics.totalSearchingTime,
 					ack: true,
 				});
+				if (mowerData.data[i].attributes.capabilities.stayOutZones) {
+					this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.dirty`, {
+						val: mowerData.data[i].attributes.stayOutZones.dirty,
+						ack: true,
+					});
+					this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.zones`, {
+						val: mowerData.data[i].attributes.stayOutZones.zones,
+						ack: true,
+					});
+				}
+				if (mowerData.data[i].attributes.capabilities.workAreas) {
+					this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
+						val: mowerData.data[i].attributes.workAreas,
+						ack: true,
+					});
+				}
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#009)');
 			}
@@ -1381,11 +1598,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						}
 
 						// reset values in "calendar" which are not in use
-						for (
-							let i = Object.keys(message.attributes.calendar.tasks).length;
-							i < numberOfSchedules;
-							i++
-						) {
+						for (let i = Object.keys(message.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
 							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.start`, { val: null, ack: true });
 							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.duration`, { val: null, ack: true });
 							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.monday`, { val: false, ack: true });
@@ -1457,7 +1670,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 								ack: true,
 							});
 						} else {
-							this.setStateAsync(`${message.id}.planner.nextStartTimestamp`, { val: null, ack: true });
+							this.setStateAsync(`${message.id}.planner.nextStartTimestamp`, {
+								val: null,
+								ack: true
+							});
 						}
 						this.setStateAsync(`${message.id}.planner.action`, {
 							val: message.attributes.planner.override.action,
@@ -1725,7 +1941,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					};
 					url = 'actions';
 				} else if (command === 'START') {
-					// Park mower for a duration of time, overriding schedule
+					// 	Start the mower for a period of minutes
 					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
 					if (!startTime) {
 						this.log.error('Missing "startTime". Nothing Set. (ERR_#013');
@@ -1736,6 +1952,28 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'Start',
 							attributes: {
 								duration: startTime.val,
+							},
+						},
+					};
+					url = 'actions';
+				} else if (command === 'STARTINWORKAREA') {
+					//	Start the mower in a work area for a period of minutes. If duration is skipped the mower will continue forever
+					const duration = await this.getStateAsync(`${parentPath}.startInWorkArea.duration`);
+					const workAreaId = await this.getStateAsync(`${parentPath}.startInWorkArea.workAreaId`);
+					if (!duration) {
+						this.log.error('Missing "duration". Nothing Set. (ERR_#016');
+						return;
+					}
+					if (!workAreaId) {
+						this.log.error('Missing "workAreaId". Nothing Set. (ERR_#017');
+						return;
+					}
+					data = {
+						data: {
+							type: 'StartInWorkArea',
+							attributes: {
+								duration: duration.val !== 0 ? duration.val : '',
+								workAreaId: workAreaId.val
 							},
 						},
 					};
