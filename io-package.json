@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "husqvarna-automower",
-        "version": "0.5.0-beta.1",
+        "version": "0.5.0-beta.2",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -172,7 +172,7 @@
                 "uk": "ПОРУШЕННЯ: видалено .settings.cuttingHeight і .settings.headlight, .calendar.[0-3].start, .calendar.[0-3].duration, .calendar.[0-3].понеділок, .calendar.[ 0-3].вівторок, .календар.[0-3].середа, .календар.[0-3].четвер, .календар.[0-3].п'ятниця, BREAKING: .календар.[0-3] .saturday і .calendar.[0-3].sunday видалено, ПОРУШЕННЯ: node.js >= v16.4 і js-controller >= v4.0.24, значок адаптера оновлено, скрипт для статистики оновлено",
                 "zh-cn": "中断：.settings.cuttingHeight 和 .settings.headlight 已删除，.calendar.[0-3].start，.calendar.[0-3].duration，.calendar.[0-3].monday，.calendar.[ 0-3].tuesday, .calendar.[0-3].wednesday, .calendar.[0-3].thurdsay, .calendar.[0-3].friday, BREAKING: .calendar.[0-3] .saturday 和 .calendar.[0-3].sunday 已删除，中断：node.js >= v16.4 和 js-controller >= v4.0.24，适配器图标已更新，统计脚本已更新"
             },
-            "0.5.0-beta.1": {
+            "0.5.0-beta.2": {
                 "en": "state .ACTIONS.startInWorkArea.STARTINWORKAREA start mower and cut for a duration of time .ACTIONS.startInWorkArea.duration (in minutes, optional, if zero (0) the override will be forever), in Area with ID .ACTIONS.startInWorkArea.workAreaId added, states .capabilities.position, .capabilities.headlights, .capabilities.workAreas, .capabilities.stayOutZones, .planner.externalReason, .stayOutZones.dirty, .stayOutZones.zones, .statistics.totalDrivenDistance and .workAreas.workAreas added, state .planner.action removed, names of several states updated, descriptions of status and error codes updated, dependencies updated",
                 "de": "Zustand .ACTIONS.startInWorkArea.STARTINWORKAREA Starten Sie den Mäher und schneiden Sie ihn für die Zeitdauer .ACTIONS.startInWorkArea.duration (in Minuten, optional, wenn Null (0) ist die Überschreibung für immer), im Bereich mit der ID .ACTIONS.startInWorkArea.workAreaId hinzugefügt, Staaten .capabilities.position, .capabilities.headlights, .capabilities.workAreas, .capabilities.stayOutZones, .planner.externalReason, .stayOutZones.dirty, .stayOutZones.zones, .statistics.totalDrivenDistance und .workAreas.workAreas hinzugefügt, Zustand .planner.action entfernt, Namen mehrerer Zustände aktualisiert, Beschreibungen von Status und Fehlercodes aktualisiert, Abhängigkeiten aktualisiert",
                 "ru": "состояние .ACTIONS.startInWorkArea.STARTINWORKAREA запустить косилку и стричь в течение определенного периода времени .ACTIONS.startInWorkArea.duration (в минутах, необязательно, если ноль (0), переопределение будет навсегда), в области с идентификатором .ACTIONS.startInWorkArea.workAreaId добавлено, указано .capabilities.position, .capabilities.headlights, .capabilities.workAreas, .capabilities.stayOutZones, .planner.externalReason, .stayOutZones.dirty, .stayOutZones.zones, .statistics.totalDrivenDistance и .workAreas.workAreas добавлено, состояние Удален .planner.action, обновлены названия нескольких состояний, обновлены описания статусов и кодов ошибок, обновлены зависимости",
