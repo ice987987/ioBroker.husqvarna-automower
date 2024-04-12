@@ -26,8 +26,8 @@ All product and company names or logos are trademarks™ or registered® tradema
 
 ## Installation requirements
 
--   node.js >= v16.4 is required
--   js-controller >= v4.0.24 is required
+-   node.js >= v18 is required
+-   js-controller >= v5.0.0 is required
 -   admin >= v6.3.5 is required
 -   This adapter uses the Husqvarna Automower Connect API to request data (via WebSocket) and send commands (via REST API) for your Husqvarna lawn mower.
 
@@ -378,6 +378,7 @@ function round(digit, digits) {
 
 ### 0.5.0-beta.3 **WORK IN PROGRESS**
 
+-   (ice987987) BREAKING: js-controller >= v5.0.0 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
 -   (ice987987) state `.ACTIONS.startInWorkArea.STARTINWORKAREA` start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
 -   (ice987987) states `.capabilities.position`, `.capabilities.headlights`, `.capabilities.workAreas`, `.capabilities.stayOutZones`, `.planner.externalReason`, `.stayOutZones.dirty`, `.stayOutZones.zones`, `.statistics.totalDrivenDistance` and `.workAreas.workAreas` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
