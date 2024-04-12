@@ -29,7 +29,7 @@ All product and company names or logos are trademarks™ or registered® tradema
 -   node.js >= v16.4 is required
 -   js-controller >= v4.0.24 is required
 -   admin >= v6.3.5 is required
--   This adapter uses the Husqvarna Automower Connect API to request data (via WebSocket) and send commands (via REST API) for your Husqvarna lawn mower. 
+-   This adapter uses the Husqvarna Automower Connect API to request data (via WebSocket) and send commands (via REST API) for your Husqvarna lawn mower.
 
 Please create an account and generate your personal `Application key` and `Application secret` by following [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started) via [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/). _(`Redirect URLs` could be `http://localhost:8080`)_
 
@@ -256,7 +256,7 @@ on({id: `husqvarna-automower.0.${mowerID}.mower.activity`, oldVal: 'MOWING'}, fu
     setState(`${instance}.${pathLevel1}.${pathLevel2[0]}.mowingTimeToday`, mowingTimeToday, true);
 
     let currentBladeCuttingTime = getState(`${instance}.${pathLevel1}.${pathLevel2[3]}.currentBladeCuttingTime`).val;
-    
+
     bladeCuttingTime = mowingTime + currentBladeCuttingTime;
     setState(`${instance}.${pathLevel1}.${pathLevel2[3]}.currentBladeCuttingTime`, bladeCuttingTime, true);
 
@@ -285,7 +285,7 @@ on({id: `husqvarna-automower.0.${mowerID}.positions.latlong`, change: 'ne'}, asy
     distanceFromChargingStation = 1000 * (6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(chargingStationLatitude * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(chargingStationLatitude * (Math.PI / 180)) * Math.cos(chargingStationLongitude * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180)))); // reference: https://www.kompf.de/gps/distcalc.html
     log(`distanceFromChargingStation: ${round(distanceFromChargingStation, 2)}m`, 'debug');
     await setStateAsync(`${instance}.${pathLevel1}.${pathLevel2[0]}.distanceFromChargingStation`, distanceFromChargingStation, true);
-    
+
     if (getState(`husqvarna-automower.0.${mowerID}.mower.activity`).val === 'MOWING' || getState(`husqvarna-automower.0.${mowerID}.mower.activity`).val === 'GOING_HOME' || getState(`husqvarna-automower.0.${mowerID}.mower.activity`).val === 'LEAVING') {
         drivenDistance = 6378.388 * Math.acos(Math.sin(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.sin(obj.oldState.val.split(';')[0] * (Math.PI / 180)) + Math.cos(obj.state.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[0] * (Math.PI / 180)) * Math.cos(obj.oldState.val.split(';')[1] * (Math.PI / 180) - obj.state.val.split(';')[1] * (Math.PI / 180))); // reference: https://www.kompf.de/gps/distcalc.html
         log(`distanceDriven: ${round(drivenDistance * 1000, 2)}m`, 'debug');
@@ -376,7 +376,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.5.0-beta.2 **WORK IN PROGRESS**
+### 0.5.0-beta.3 **WORK IN PROGRESS**
 
 -   (ice987987) BREAKING: `.planner.action` removed
 -   (ice987987) state `.ACTIONS.startInWorkArea.STARTINWORKAREA` start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
@@ -479,7 +479,7 @@ function round(digit, digits) {
 
 MIT License
 
-Copyright (c) 2023 ice987987 <mathias.frei1@gmail.com>
+Copyright (c) 2024 ice987987 <mathias.frei1@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

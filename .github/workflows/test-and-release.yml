@@ -5,7 +5,7 @@ name: Test and Release
 on:
     push:
         branches:
-            - '*'
+            - 'main'
         tags:
             # normal versions
             - 'v[0-9]+.[0-9]+.[0-9]+'
@@ -40,7 +40,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                node-version: [16.x, 18.x, 20.x]
+                node-version: [18.x, 20.x]
                 os: [ubuntu-latest, windows-latest, macos-latest]
 
         steps:
@@ -85,7 +85,7 @@ jobs:
 #          # Then uncomment and customize the following block:
 #          sentry: true
 #          sentry-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
-#          sentry-project: "iobroker-husqvarna-automower"
-#          sentry-version-prefix: "iobroker.husqvarna-automower"
+#          sentry-project: "iobroker-template"
+#          sentry-version-prefix: "iobroker.template"
 #          # If your sentry project is linked to a GitHub repository, you can enable the following option
 #          # sentry-github-integration: true
