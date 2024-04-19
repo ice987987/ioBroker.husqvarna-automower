@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-const axios = require('axios').default;
+const axios = require('axios');
 const WebSocket = require('ws');
 
 // variables
@@ -567,6 +567,21 @@ class HusqvarnaAutomower extends utils.Adapter {
 								125: 'Battery needs replacement',
 								126: 'Battery near end of life',
 								127: 'Battery problem',
+								128: 'Multiple reference stations detected',
+								129: 'Auxiliary cutting means blocked',
+								130: 'Imbalanced auxiliary cutting disc detected',
+								131: 'Lifted in link arm',
+								132: 'EPOS accessory missing',
+								133: 'Bluetooth com with CS failed',
+								134: 'Invalid SW configuration',
+								135: 'Radar problem',
+								136: 'Work area tampered',
+								137: 'High temperature in cutting motor, right',
+								138: 'High temperature in cutting motor, center',
+								139: 'High temperature in cutting motor, left',
+								141: 'Wheel brush motor problem',
+								143: 'Accessory power problem',
+								144: 'Boundary wire problem',
 								701: 'Connectivity problem',
 								702: 'Connectivity settings restored',
 								703: 'Connectivity problem',
@@ -819,7 +834,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalDrivenDistance`, {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalDriveDistance`, {
 						type: 'state',
 						common: {
 							name: 'Total driven distance in meters. It\'s a calculated value based on totalRunningTime multiply with average speed for the mower depending on the model.',
@@ -1474,8 +1489,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 					val: mowerData.data[i].attributes.statistics.totalCuttingTime,
 					ack: true,
 				});
-				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalDrivenDistance`, {
-					val: mowerData.data[i].attributes.statistics.totalDrivenDistance,
+				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalDriveDistance`, {
+					val: mowerData.data[i].attributes.statistics.totalDriveDistance,
 					ack: true,
 				});
 				this.setStateAsync(`${mowerData.data[i].id}.statistics.totalRunningTime`, {
