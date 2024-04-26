@@ -119,12 +119,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			data: `grant_type=client_credentials&client_id=${this.config.applicationKey}&client_secret=${this.config.applicationSecret}`,
 		})
 			.then((response) => {
-				this.log.debug(
-					`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText
-					}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
-						response.headers,
-					)}; data: ${JSON.stringify(response.data)}`,
-				);
+				this.log.debug(`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 
 				this.access_token = response.data.access_token;
 
@@ -137,11 +132,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug(
-						`[getAccessToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(
-							error.response.headers,
-						)}; data: ${JSON.stringify(error.response.data)}`,
-					);
+					this.log.debug(`[getAccessToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
 					this.log.debug(`[getAccessToken]: error request: ${error}`);
@@ -166,12 +157,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			},
 		})
 			.then(async (response) => {
-				this.log.debug(
-					`[getMowerData]: HTTP status response: ${response.status} ${response.statusText
-					}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
-						response.headers,
-					)}; data: ${JSON.stringify(response.data)}`,
-				);
+				this.log.debug(`[getMowerData]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 
 				this.mowerData = response.data;
 				this.log.debug(`[getMowerData]: response.data: ${JSON.stringify(response.data)}`);
@@ -179,11 +165,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			.catch((error) => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
-					this.log.debug(
-						`[getMowerData]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(
-							error.response.headers,
-						)}; data: ${JSON.stringify(error.response.data)}`,
-					);
+					this.log.debug(`[getMowerData]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 				} else if (error.request) {
 					// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
 					this.log.debug(`[getMowerData]: error request: ${error}`);
@@ -201,10 +183,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 	async createObjects(mowerData) {
 		// this.log.debug(`[createObjects]: listMowers: ${JSON.stringify(listMowers)}`);
 
-		this.log.debug(
-			`[createObjects]: start objects creation for ${Object.keys(mowerData.data).length} device${Object.keys(mowerData.data).length > 1 ? 's' : ''
-			}...`,
-		);
+		this.log.debug(`[createObjects]: start objects creation for ${Object.keys(mowerData.data).length} device${Object.keys(mowerData.data).length > 1 ? 's' : ''}...`);
 		if (Object.keys(mowerData.data).length !== 0) {
 			for (let i = 0; i < Object.keys(mowerData.data).length; i++) {
 				if (mowerData.data[i].type === 'mower') {
@@ -913,17 +892,67 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {},
 						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-							type: 'state',
-							common: {
-								name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
-								type: 'array',
-								role: 'state',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
+
+						for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
+								type: 'state',
+								common: {
+									name: 'Work area ID',
+									type: 'number',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
+								type: 'state',
+								common: {
+									name: 'Name of the work area',
+									type: 'string',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
+								type: 'state',
+								common: {
+									name: 'Cutting height in percent (0 ... 100%)',
+									type: 'number',
+									role: 'state',
+									min: 0,
+									max: 100,
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
+								type: 'state',
+								common: {
+									name: 'Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.',
+									type: 'array',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+						}
+
+						//await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
+						//	type: 'state',
+						//	common: {
+						//		name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
+						//		type: 'array',
+						//		role: 'state',
+						//		read: true,
+						//		write: false,
+						//	},
+						//	native: {},
+						//});
 					}
 
 					// create channel "ACTIONS"
@@ -1502,20 +1531,46 @@ class HusqvarnaAutomower extends utils.Adapter {
 					ack: true,
 				});
 				if (mowerData.data[i].attributes.capabilities.stayOutZones) {
-					this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.dirty`, {
-						val: mowerData.data[i].attributes.stayOutZones.dirty,
-						ack: true,
-					});
-					this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.zones`, {
-						val: mowerData.data[i].attributes.stayOutZones.zones,
-						ack: true,
-					});
+					if (mowerData.data[i].attributes.stayOutZones.dirty) {
+						this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.dirty`, {
+							val: mowerData.data[i].attributes.stayOutZones.dirty,
+							ack: true,
+						});
+					}
+					if (mowerData.data[i].attributes.stayOutZones.zones) {
+						this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.zones`, {
+							val: mowerData.data[i].attributes.stayOutZones.zones,
+							ack: true,
+						});
+					}
 				}
 				if (mowerData.data[i].attributes.capabilities.workAreas) {
-					this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-						val: mowerData.data[i].attributes.workAreas,
-						ack: true,
-					});
+					for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
+						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
+							val: mowerData.data[i].attributes.workAreas[j].workAreaId,
+							ack: true,
+						});
+						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
+							val: mowerData.data[i].attributes.workAreas[j].name,
+							ack: true,
+						});
+						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
+							val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
+							ack: true,
+						});
+
+						if (mowerData.data[i].workAreas[j].calendar) {
+							this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
+								val: mowerData.data[i].attributes.workAreas[j].calendar,
+								ack: true,
+							});
+						}
+					}
+
+					//this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
+					//	val: mowerData.data[i].attributes.workAreas,
+					//	ack: true,
+					//});
 				}
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#009)');
@@ -1839,21 +1894,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 				},
 			})
 				.then((response) => {
-					this.log.debug(
-						`[onUnload]: HTTP status response: ${response.status} ${response.statusText
-						}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(
-							response.headers,
-						)}; data: ${JSON.stringify(response.data)}`,
-					);
+					this.log.debug(`[onUnload]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 				})
 				.catch((error) => {
 					if (error.response) {
 						// The request was made and the server responded with a status code that falls out of the range of 2xx
-						this.log.debug(
-							`[onUnload]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(
-								error.response.headers,
-							)}; data: ${JSON.stringify(error.response.data)}`,
-						);
+						this.log.debug(`[onUnload]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
 						if (error.response.status === 403) {
 							this.log.info('"Husqvarna Authentication API Access token" successful invalidated.');
 						}

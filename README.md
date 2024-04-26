@@ -18,7 +18,7 @@
 
 ## husqvarna-automower adapter for ioBroker
 
-This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection and works with [Automower Connect API](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API) v1.0.0.
+This adapter fetches data from your Husqvarna lawn mower from [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/) via the "new" WebSocket connection and works with [Automower Connect API](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API) v1.0.0/OAS 3.0.
 
 ## Disclaimer
 
@@ -88,7 +88,10 @@ You get the following values from your Husqvarna lawn mower:
 -   `.system.name`: The name given to the Automower by the user when pairing the Automower
 -   `.system.serialNumber`: The serial number for the Automower
 -   `.system.type`: Device type
--   `.workAreas.workAreas`: A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.[^4]
+-   `.workAreas.[x].workAreas.Id`: Work area ID[^4]
+-   `.workAreas.[x].workAreas.name`: Name of the work area[^4]
+-   `.workAreas.[x].workAreas.cuttingHeight`: Cutting height in percent (0 ... 100%)[^4]
+-   `.workAreas.[x].workAreas.calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4]
     [^4]: If a value is missing or zero (0) the mower does not support the value
     [^5]: If no GPS-Signal is available, those values are not updated
 
@@ -378,7 +381,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.5.0-beta.4 **WORK IN PROGRESS**
+### 0.5.0-beta.5 **WORK IN PROGRESS**
 
 -   (ice987987) BREAKING: js-controller >= v5 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
@@ -390,6 +393,7 @@ function round(digit, digits) {
 -   (ice987987) source code improvements
 -   (ice987987) state description of `.mower.errorCode` updated
 -   (ice987987) state `.statistics.totalDriveDistance` corrected [#162](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/162)
+-   (ice987987) try to fix [#164](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/164)
 
 ### 0.4.0 (07.07.2023)
 
