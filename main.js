@@ -59,23 +59,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 		// check applicationKey
 		if (!isValidApplicationCredential.test(this.config.applicationKey)) {
-			this.log.error(
-				'"Application Key" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#001)',
-			);
+			this.log.error('"Application Key" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#001)');
 			return;
 		}
 		// check applicationSecret
 		if (!isValidApplicationCredential.test(this.config.applicationSecret)) {
-			this.log.error(
-				'"Application Secret" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#002)',
-			);
+			this.log.error('"Application Secret" is not valid (allowed format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) (ERR_#002)');
 			return;
 		}
 		// check statisticsInterval
 		if (this.config.statisticsInterval < 5 && this.config.statisticsInterval > 10080) {
-			this.log.error(
-				'"Time interval to retrieve statistical values" is not valid (5 <= t <= 10080 minutes) (ERR_#003)',
-			);
+			this.log.error('"Time interval to retrieve statistical values" is not valid (5 <= t <= 10080 minutes) (ERR_#003)');
 			return;
 		}
 
@@ -893,66 +887,66 @@ class HusqvarnaAutomower extends utils.Adapter {
 							native: {},
 						});
 
-						for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
-							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
-								type: 'state',
-								common: {
-									name: 'Work area ID',
-									type: 'number',
-									role: 'state',
-									read: true,
-									write: false,
-								},
-								native: {},
-							});
-							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
-								type: 'state',
-								common: {
-									name: 'Name of the work area',
-									type: 'string',
-									role: 'state',
-									read: true,
-									write: false,
-								},
-								native: {},
-							});
-							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
-								type: 'state',
-								common: {
-									name: 'Cutting height in percent (0 ... 100%)',
-									type: 'number',
-									role: 'state',
-									min: 0,
-									max: 100,
-									read: true,
-									write: false,
-								},
-								native: {},
-							});
-							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
-								type: 'state',
-								common: {
-									name: 'Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.',
-									type: 'array',
-									role: 'state',
-									read: true,
-									write: false,
-								},
-								native: {},
-							});
-						}
+						// for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
+						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
+						// 		type: 'state',
+						// 		common: {
+						// 			name: 'Work area ID',
+						// 			type: 'number',
+						// 			role: 'state',
+						// 			read: true,
+						// 			write: false,
+						// 		},
+						// 		native: {},
+						// 	});
+						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
+						// 		type: 'state',
+						// 		common: {
+						// 			name: 'Name of the work area',
+						// 			type: 'string',
+						// 			role: 'state',
+						// 			read: true,
+						// 			write: false,
+						// 		},
+						// 		native: {},
+						// 	});
+						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
+						// 		type: 'state',
+						// 		common: {
+						// 			name: 'Cutting height in percent (0 ... 100%)',
+						// 			type: 'number',
+						// 			role: 'state',
+						// 			min: 0,
+						// 			max: 100,
+						// 			read: true,
+						// 			write: false,
+						// 		},
+						// 		native: {},
+						// 	});
+						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
+						// 		type: 'state',
+						// 		common: {
+						// 			name: 'Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.',
+						// 			type: 'array',
+						// 			role: 'state',
+						// 			read: true,
+						// 			write: false,
+						// 		},
+						// 		native: {},
+						// 	});
+						// }
 
-						//await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-						//	type: 'state',
-						//	common: {
-						//		name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
-						//		type: 'array',
-						//		role: 'state',
-						//		read: true,
-						//		write: false,
-						//	},
-						//	native: {},
-						//});
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
+							type: 'state',
+							common: {
+								name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
+								type: 'array',
+								role: 'state',
+								read: true,
+								write: false,
+							},
+							native: {},
+						});
 					}
 
 					// create channel "ACTIONS"
@@ -1545,32 +1539,31 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 				}
 				if (mowerData.data[i].attributes.capabilities.workAreas) {
-					for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
-						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
-							val: mowerData.data[i].attributes.workAreas[j].workAreaId,
-							ack: true,
-						});
-						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
-							val: mowerData.data[i].attributes.workAreas[j].name,
-							ack: true,
-						});
-						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
-							val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
-							ack: true,
-						});
+					// for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
+					// 	this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
+					// 		val: mowerData.data[i].attributes.workAreas[j].workAreaId,
+					// 		ack: true,
+					// 	});
+					// 	this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
+					// 		val: mowerData.data[i].attributes.workAreas[j].name,
+					// 		ack: true,
+					// 	});
+					// 	this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
+					// 		val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
+					// 		ack: true,
+					// 	});
+					// 	if (mowerData.data[i].workAreas[j].calendar) {
+					// 		this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
+					// 			val: mowerData.data[i].attributes.workAreas[j].calendar,
+					// 			ack: true,
+					// 		});
+					// 	}
+					// }
 
-						if (mowerData.data[i].workAreas[j].calendar) {
-							this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
-								val: mowerData.data[i].attributes.workAreas[j].calendar,
-								ack: true,
-							});
-						}
-					}
-
-					//this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-					//	val: mowerData.data[i].attributes.workAreas,
-					//	ack: true,
-					//});
+					this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
+						val: mowerData.data[i].attributes.workAreas,
+						ack: true,
+					});
 				}
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#009)');
@@ -1601,9 +1594,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				this.log.info('Connection to "Husqvarna WebSocket" established. Ready to get data...');
 				this.firstStart = false;
 			} else {
-				this.log.debug(
-					'[wss.on - open]: Connection to "Husqvarna WebSocket" re-established. Ready to get data...',
-				);
+				this.log.debug('[wss.on - open]: Connection to "Husqvarna WebSocket" re-established. Ready to get data...');
 			}
 
 			this.setStateAsync('info.connection', true, true);
@@ -1634,11 +1625,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
 						// set values in "calendar"
-						for (
-							let i = 0;
-							i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules);
-							i++
-						) {
+						for (let i = 0; i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules); i++) {
 							this.setStateAsync(`${message.id}.ACTIONS.schedule.${[i]}.start`, {
 								val: message.attributes.calendar.tasks[i].start,
 								ack: true,
@@ -1821,9 +1808,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			// every 2 hour:			this.wss.readyState; 3; data: 1001; reason: Going away -> autoRestart()
 			// every 1 day:				this.wss.readyState: 3; data: 1006 (Abnormal Closure) -> getAccessToken() and autoRestart()
 
-			this.log.debug(
-				`[wss.on - close]: this.wss.readyState: ${this.wss.readyState}; data: ${data}; reason: ${reason}`,
-			);
+			this.log.debug(`[wss.on - close]: this.wss.readyState: ${this.wss.readyState}; data: ${data}; reason: ${reason}`);
 
 			this.ping && clearTimeout(this.ping);
 
@@ -1868,9 +1853,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 	}
 
 	async autoRestart() {
-		this.log.debug(
-			'[autoRestart]: WebSocket connection terminated by Husqvarna-Server. Reconnect again in 5 seconds...',
-		);
+		this.log.debug('[autoRestart]: WebSocket connection terminated by Husqvarna-Server. Reconnect again in 5 seconds...');
 		this.autoRestartTimeout = setTimeout(() => {
 			this.connectToWS();
 		}, 5000); // min. 5s = 5000ms
@@ -2106,9 +2089,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					.catch(async (error) => {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
-							this.log.debug(
-								`[onStateChange]: HTTP error response: ${error.response.status}; headers: ${error.response.headers}; data: ${JSON.stringify(error.response.data)}`,
-							);
+							this.log.debug(`[onStateChange]: HTTP error response: ${error.response.status}; headers: ${error.response.headers}; data: ${JSON.stringify(error.response.data)}`);
 							if (error.response.status === 400) {
 								// Invalid schedule format in request body. Parsing message: No tasks.
 								this.log.info(`${error.response.data.errors[0].detail} Nothing set.`);
@@ -2141,9 +2122,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 			} else {
 				// The state was changed by system
-				this.log.debug(
-					`[onStateChange]: state changed by system: ${id}; changed: ${state.val}; (ack = ${state.ack}). NO ACTION PERFORMED.`,
-				);
+				this.log.debug(`[onStateChange]: state changed by system: ${id}; changed: ${state.val}; (ack = ${state.ack}). NO ACTION PERFORMED.`);
 			}
 		} else {
 			// The state was deleted
