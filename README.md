@@ -62,6 +62,7 @@ You get the following values from your Husqvarna lawn mower:
 -   `.metadata.connected`: Is the mower currently connected to the cloud. The mower needs to be connected to send command to the mower.
 -   `.metadata.statusTimestamp`: Timestamp for the last status update in milliseconds since 1970-01-01T00:00:00 in UTC time. NOTE! This timestamp is generated in the backend and not from the Mower.
 -   `.mower.activity`: Information about the mowers current status.
+-   `.mower.inactiveReason`: Inactive reason
 -   `.mower.errorCode`: Information about the mowers current error status.
 -   `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
 -   `.mower.mode`: Information about the mowers current mode.
@@ -382,12 +383,13 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.5.0-beta.6 **WORK IN PROGRESS**
+### 0.5.0-beta.7 **WORK IN PROGRESS**
 
 -   (ice987987) BREAKING: js-controller >= v5 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
 -   (ice987987) state `.ACTIONS.startInWorkArea.STARTINWORKAREA` start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
 -   (ice987987) states `.capabilities.position`, `.capabilities.headlights`, `.capabilities.workAreas`, `.capabilities.stayOutZones`, `.planner.externalReason`, `.stayOutZones.dirty`, `.stayOutZones.zones`, `.statistics.totalDrivenDistance` and `.workAreas.workAreas` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
+-   (ice987987) state `.mower.inactiveReason` added
 -   (ice987987) names of several states updated
 -   (ice987987) descriptions of status and error codes updated
 -   (ice987987) dependencies updated

@@ -380,6 +380,22 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.inactiveReason`, {
+						type: 'state',
+						common: {
+							name: 'Inactive reason',
+							type: 'string',
+							role: 'state',
+							states: {
+								NONE: 'No inactive reason.',
+								PLANNING: 'The mower is planning a path or a work area.',
+								SEARCHING_FOR_SATELLITES: 'Waiting for fix when using EPOS.',
+							},
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.state`, {
 						type: 'state',
 						common: {
@@ -940,7 +956,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
-								type: 'array',
+								type: 'string',
 								role: 'state',
 								read: true,
 								write: false,
@@ -1386,6 +1402,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].attributes.mower.activity,
 						ack: true,
 					});
+					this.setStateAsync(`${mowerData.data[i].id}.mower.inactiveReason`, {
+						val: mowerData.data[i].attributes.mower.inactiveReason,
+						ack: true,
+					});
 					this.setStateAsync(`${mowerData.data[i].id}.mower.state`, {
 						val: mowerData.data[i].attributes.mower.state,
 						ack: true,
@@ -1525,17 +1545,21 @@ class HusqvarnaAutomower extends utils.Adapter {
 					ack: true,
 				});
 				if (mowerData.data[i].attributes.capabilities.stayOutZones) {
-					if (mowerData.data[i].attributes.stayOutZones.dirty) {
-						this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.dirty`, {
-							val: mowerData.data[i].attributes.stayOutZones.dirty,
-							ack: true,
-						});
+					if (mowerData.data[i].attributes.stayOutZones) {
+						if (mowerData.data[i].attributes.stayOutZones.dirty) {
+							this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.dirty`, {
+								val: mowerData.data[i].attributes.stayOutZones.dirty,
+								ack: true,
+							});
+						}
 					}
-					if (mowerData.data[i].attributes.stayOutZones.zones) {
-						this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.zones`, {
-							val: mowerData.data[i].attributes.stayOutZones.zones,
-							ack: true,
-						});
+					if (mowerData.data[i].attributes.stayOutZones) {
+						if (mowerData.data[i].attributes.stayOutZones.zones) {
+							this.setStateAsync(`${mowerData.data[i].id}.stayOutZones.zones`, {
+								val: mowerData.data[i].attributes.stayOutZones.zones,
+								ack: true,
+							});
+						}
 					}
 				}
 				if (mowerData.data[i].attributes.capabilities.workAreas) {
@@ -1561,7 +1585,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					// }
 
 					this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-						val: mowerData.data[i].attributes.workAreas,
+						val: JSON.stringify(mowerData.data[i].attributes.workAreas),
 						ack: true,
 					});
 				}
