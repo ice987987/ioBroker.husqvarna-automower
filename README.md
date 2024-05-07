@@ -92,8 +92,7 @@ You get the following values from your Husqvarna lawn mower:
 -   `.workAreas.[workAreaId].workAreaId`: Work area ID[^4]
 -   `.workAreas.[workAreaId].name`: Name of the work area[^4]
 -   `.workAreas.[workAreaId].cuttingHeight`: Cutting height in percent (0 ... 100%)[^4]
--   `.workAreas.[x].workAreas.calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4]
-
+-   `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4]
     [^4]: If a value is missing or zero (0) the mower does not support the value
     [^5]: If no GPS-Signal is available, those values are not updated
 
@@ -386,7 +385,7 @@ function round(digit, digits) {
 -   (ice987987) BREAKING: js-controller >= v5 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
 -   (ice987987) state `.ACTIONS.startInWorkArea.STARTINWORKAREA` start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
--   (ice987987) states `.capabilities.position`, `.capabilities.headlights`, `.capabilities.workAreas`, `.capabilities.stayOutZones`, `.planner.externalReason`, `.stayOutZones.dirty`, `.stayOutZones.zones`, `.statistics.totalDrivenDistance`, `.workAreas.[workAreaId].workAreaId`, `.workAreas.[workAreaId].name`, `.workAreas.[workAreaId].cuttingHeight` and `.workAreas.[x].workAreas.calendar` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
+-   (ice987987) states `.capabilities.position`, `.capabilities.headlights`, `.capabilities.workAreas`, `.capabilities.stayOutZones`, `.planner.externalReason`, `.stayOutZones.dirty`, `.stayOutZones.zones`, `.statistics.totalDrivenDistance`, `.workAreas.[workAreaId].workAreaId`, `.workAreas.[workAreaId].name`, `.workAreas.[workAreaId].cuttingHeight` and `.workAreas.[workAreaId].calendar` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
 -   (ice987987) state `.mower.inactiveReason` added
 -   (ice987987) names of several states updated
 -   (ice987987) descriptions of status and error codes updated
