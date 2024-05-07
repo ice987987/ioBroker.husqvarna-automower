@@ -72,10 +72,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 			this.log.error('"Time interval to retrieve statistical values" is not valid (5 <= t <= 10080 minutes) (ERR_#003)');
 			return;
 		}
-
 		this.log.debug('The configuration has been checked successfully. Trying to connect "Automower Connect API"...');
 
 		try {
+
 			// get Husqvarna access_token
 			await this.getAccessToken();
 
@@ -893,7 +893,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 					}
 
-					// create channel "WORKAREAS" if supported
+					// create channel "workAreas" if supported
 					if (mowerData.data[i].attributes.capabilities.workAreas) {
 						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas`, {
 							type: 'channel',
@@ -903,66 +903,63 @@ class HusqvarnaAutomower extends utils.Adapter {
 							native: {},
 						});
 
-						// for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
-						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
-						// 		type: 'state',
-						// 		common: {
-						// 			name: 'Work area ID',
-						// 			type: 'number',
-						// 			role: 'state',
-						// 			read: true,
-						// 			write: false,
-						// 		},
-						// 		native: {},
-						// 	});
-						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
-						// 		type: 'state',
-						// 		common: {
-						// 			name: 'Name of the work area',
-						// 			type: 'string',
-						// 			role: 'state',
-						// 			read: true,
-						// 			write: false,
-						// 		},
-						// 		native: {},
-						// 	});
-						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
-						// 		type: 'state',
-						// 		common: {
-						// 			name: 'Cutting height in percent (0 ... 100%)',
-						// 			type: 'number',
-						// 			role: 'state',
-						// 			min: 0,
-						// 			max: 100,
-						// 			read: true,
-						// 			write: false,
-						// 		},
-						// 		native: {},
-						// 	});
-						// 	await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
-						// 		type: 'state',
-						// 		common: {
-						// 			name: 'Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.',
-						// 			type: 'array',
-						// 			role: 'state',
-						// 			read: true,
-						// 			write: false,
-						// 		},
-						// 		native: {},
-						// 	});
-						// }
+						for (let j = 0; j < mowerData.data[i].attributes.workAreas.length; j++) {
+							// create channel "workAreaId"
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}`, {
+								type: 'channel',
+								common: {
+									name: 'Work Area',
+								},
+								native: {},
+							});
 
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-							type: 'state',
-							common: {
-								name: 'A work area is part of your lawn that can be scheduled separately and assigned its own cutting height. The schedule and cutting height set for the work area only applies to this area and only when the mower is operating according to the work area schedule. Work areas are created and managed in the Automower® Connect app. In the app you add, edit or delete a work area. You can also name the area, set shedule and cutting height.',
-								type: 'string',
-								role: 'state',
-								read: true,
-								write: false,
-							},
-							native: {},
-						});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.workAreaId`, {
+								type: 'state',
+								common: {
+									name: 'Work area ID',
+									type: 'number',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.name`, {
+								type: 'state',
+								common: {
+									name: 'Name of the work area',
+									type: 'string',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.cuttingHeight`, {
+								type: 'state',
+								common: {
+									name: 'Cutting height in percent (0 ... 100%)',
+									type: 'number',
+									role: 'state',
+									min: 0,
+									max: 100,
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.calendar`, {
+								type: 'state',
+								common: {
+									name: 'Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.',
+									type: 'string',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+						}
 					}
 
 					// create channel "ACTIONS"
@@ -1563,31 +1560,26 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 				}
 				if (mowerData.data[i].attributes.capabilities.workAreas) {
-					// for (let j = 0; j < mowerData.data[i].workAreas.length; j++) {
-					// 	this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.workAreaId`, {
-					// 		val: mowerData.data[i].attributes.workAreas[j].workAreaId,
-					// 		ack: true,
-					// 	});
-					// 	this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.name`, {
-					// 		val: mowerData.data[i].attributes.workAreas[j].name,
-					// 		ack: true,
-					// 	});
-					// 	this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.cuttingHeight`, {
-					// 		val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
-					// 		ack: true,
-					// 	});
-					// 	if (mowerData.data[i].workAreas[j].calendar) {
-					// 		this.setStateAsync(`${mowerData.data[i].id}.workAreas.${j}.calendar`, {
-					// 			val: mowerData.data[i].attributes.workAreas[j].calendar,
-					// 			ack: true,
-					// 		});
-					// 	}
-					// }
-
-					this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreas`, {
-						val: JSON.stringify(mowerData.data[i].attributes.workAreas),
-						ack: true,
-					});
+					for (let j = 0; j < mowerData.data[i].attributes.workAreas.length; j++) {
+						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.workAreaId`, {
+							val: mowerData.data[i].attributes.workAreas[j].workAreaId,
+							ack: true,
+						});
+						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.name`, {
+							val: mowerData.data[i].attributes.workAreas[j].name,
+							ack: true,
+						});
+						this.setStateAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.cuttingHeight`, {
+							val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
+							ack: true,
+						});
+						if (mowerData.data[i].attributes.workAreas[j].calendar) {
+							this.setStateAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.calendar`, {
+								val: mowerData.data[i].attributes.workAreas[j].calendar,
+								ack: true,
+							});
+						}
+					}
 				}
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#009)');
