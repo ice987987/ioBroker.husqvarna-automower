@@ -380,7 +380,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.5.0-beta.8 **WORK IN PROGRESS**
+### 0.5.0-beta.9 **WORK IN PROGRESS**
 
 -   (ice987987) BREAKING: js-controller >= v5 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
@@ -394,6 +394,7 @@ function round(digit, digits) {
 -   (ice987987) state description of `.mower.errorCode` updated
 -   (ice987987) state `.statistics.totalDriveDistance` corrected [#162](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/162)
 -   (ice987987) try to fix [#164](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/164)
+-   (ice987987) try to fix [#182](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/182)
 
 ### 0.4.0 (07.07.2023)
 
