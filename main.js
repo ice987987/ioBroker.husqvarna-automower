@@ -75,7 +75,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.log.debug('The configuration has been checked successfully. Trying to connect "Automower Connect API"...');
 
 		try {
-
 			// get Husqvarna access_token
 			await this.getAccessToken();
 
@@ -195,7 +194,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.system`, {
 						type: 'channel',
 						common: {
-							name: 'System information about an Automower'
+							name: 'System information about an Automower',
 						},
 						native: {},
 					});
@@ -414,7 +413,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 								STOPPED: 'Mower is stopped, and cannot be started remotely. Start requirements (safety or other) are not fulfilled.',
 								ERROR: 'A temporary error has occured. If the error is resolved, the mower will resume operation without user interaction. Typically, this happens when the loop signal is lost. When it comes back, the operation is resumed.',
 								FATAL_ERROR: 'A fatal error has occured. Error has to be fixed confirmed to leave this state.',
-								ERROR_AT_POWER_UP: 'An error at power up.'
+								ERROR_AT_POWER_UP: 'An error at power up.',
 							},
 							read: true,
 							write: false,
@@ -637,7 +636,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							states: {
 								NOT_ACTIVE: 'Not active',
 								FORCE_PARK: 'Force park until next start means that no more mowing will be done within the current task. Operation will be resumed at the start of the next task instead',
-								FORCE_MOW: 'Force the mower to mow for the specified amount of time. When the time has elapsed, the override is removed and the Planner reverts to the Calendar instead'
+								FORCE_MOW: 'Force the mower to mow for the specified amount of time. When the time has elapsed, the override is removed and the Planner reverts to the Calendar instead',
 							},
 							read: true,
 							write: false,
@@ -659,7 +658,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 								FOTA: 'When a Fota update is being transferred to the mower, we want to remain in the charging station to ensure that the transfer is successful. The restriction is removed when the transfer is done.',
 								FROST: 'The frost sensor thinks it is too cold to mow.',
 								ALL_WORK_AREAS_COMPLETED: 'All work areas are completed.',
-								EXTERNAL: 'An external reason set by an external tool. Can be IFTTT, Google Assistant or Amazon Alexa. See externalReason for more information.'
+								EXTERNAL: 'An external reason set by an external tool. Can be IFTTT, Google Assistant or Amazon Alexa. See externalReason for more information.',
 							},
 							read: true,
 							write: false,
@@ -826,7 +825,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.statistics.totalDriveDistance`, {
 						type: 'state',
 						common: {
-							name: 'Total driven distance in meters. It\'s a calculated value based on totalRunningTime multiply with average speed for the mower depending on the model.',
+							name: "Total driven distance in meters. It's a calculated value based on totalRunningTime multiply with average speed for the mower depending on the model.",
 							type: 'number',
 							role: 'state',
 							unit: 'm',
@@ -1354,7 +1353,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 					this.setState(`${mowerData.data[i].id}.system.id`, {
 						val: mowerData.data[i].id,
-						ack: true
+						ack: true,
 					});
 					this.setState(`${mowerData.data[i].id}.system.name`, {
 						val: mowerData.data[i].attributes.system.name,
@@ -1417,12 +1416,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// set all values in "calendar"
-					for (
-						let j = 0;
-						j <
-						Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules);
-						j++
-					) {
+					for (let j = 0; j < Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules); j++) {
 						this.setState(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.start`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].start,
 							ack: true,
@@ -1747,7 +1741,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					if ('planner' in message.attributes) {
 						this.setState(`${message.id}.planner.nextStartTimestamp`, {
 							val: null,
-							ack: true
+							ack: true,
 						});
 						this.setState(`${message.id}.planner.override`, {
 							val: message.attributes.planner.override.action,
@@ -1925,7 +1919,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 			callback();
 			this.log.info('cleaned everything up... (#1)');
-		} catch (e) {
+		} catch {
 			callback();
 			this.log.info('cleaned everything up... (#2)');
 		}
@@ -2048,26 +2042,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 						const scheduleSaturday = await this.getStateAsync(`${parentPath}.schedule.${i}.saturday`);
 						const scheduleSunday = await this.getStateAsync(`${parentPath}.schedule.${i}.sunday`);
 
-						if (
-							scheduleStart &&
-							scheduleDuration &&
-							scheduleMonday &&
-							scheduleThuesday &&
-							scheduleWednesday &&
-							scheduleThursday &&
-							scheduleFriday &&
-							scheduleSaturday &&
-							scheduleSunday
-						) {
-							if (
-								scheduleMonday.val ||
-								scheduleThuesday.val ||
-								scheduleWednesday.val ||
-								scheduleThursday.val ||
-								scheduleFriday.val ||
-								scheduleSaturday.val ||
-								scheduleSunday.val
-							) {
+						if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday) {
+							if (scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) {
 								data_tasks.push({
 									start: scheduleStart.val,
 									duration: scheduleDuration.val,
