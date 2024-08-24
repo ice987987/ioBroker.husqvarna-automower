@@ -9,6 +9,7 @@
   "homepage": "https://github.com/ice987987/ioBroker.husqvarna-automower",
   "license": "MIT",
   "keywords": [
+    "iobroker",
     "husqvarna-automower",
     "husqvarna",
     "automower",
