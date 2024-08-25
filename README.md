@@ -27,7 +27,7 @@ All product and company names or logos are trademarks™ or registered® tradema
 ## Installation requirements
 
 -   node.js >= v18 is required
--   ioBroker.js-controller >= v5 is required
+-   ioBroker.js-controller >=5.0.19 is required
 -   ioBroker.admin >= v6.3.5 is required
 -   This adapter uses the Husqvarna Automower Connect API to request data (via WebSocket) and send commands (via REST API) for your Husqvarna lawn mower.
 
@@ -382,7 +382,7 @@ function round(digit, digits) {
 
 ### 0.5.0-beta.9 **WORK IN PROGRESS**
 
--   (ice987987) BREAKING: js-controller >= v5 and node >= v18 is required
+-   (ice987987) BREAKING: js-controller >= v5.0.19 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
 -   (ice987987) state `.ACTIONS.startInWorkArea.STARTINWORKAREA` start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
 -   (ice987987) states `.capabilities.position`, `.capabilities.headlights`, `.capabilities.workAreas`, `.capabilities.stayOutZones`, `.planner.externalReason`, `.stayOutZones.dirty`, `.stayOutZones.zones`, `.statistics.totalDrivenDistance`, `.workAreas.[workAreaId].workAreaId`, `.workAreas.[workAreaId].name`, `.workAreas.[workAreaId].cuttingHeight` and `.workAreas.[workAreaId].calendar` added [#124](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/124)
@@ -441,49 +441,6 @@ function round(digit, digits) {
 -   (ice987987) support new login procedure to husqvarna's webservice using "Application key" and "Application secret" instead of "username (emailadress)" and "password" (issue [#33](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/33))
 -   (ice987987) update links to husqvarna homepage due to their updated homepage
 -   (ice987987) improved bug-report form
-
-### 0.1.0 (05.06.2022)
-
--   (ice987987) password encryption added (user need to reenter the password once after update, this change requires admin >= v4.0.9)
--   (ice987987) clean up code
--   (ice987987) implementation of JSON config (this change requires js-controller >= v3.3.19 and admin >= v5.1.28)
--   (ice987987) node.js >= v14.0 is required
--   (ice987987) update dependencies
-
-### 0.0.6 (26.05.2022)
-
--   (ice987987) update dependencies
--   (ice987987) add some more limitations in readme
-
-### 0.0.5 (02.05.2022)
-
--   (ice987987) fix issue [#10](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/10)
--   (ice987987) store all GPS-values (delay of 500ms if more than one was received)
--   (ice987987) improved error handling
--   (ice987987) improved debug output messages
-
-### 0.0.4 (16.04.2022)
-
--   (ice987987) update dependencies
--   (ice978987) add section "Available values" in readme
--   (ice987987) add section "ioBroker.vis bindings" in readme
--   (ice987987) add section "How to report issues and feature requests" in readme
--   (ice987987) fix calendar (max 4)
--   (ice987987) preload values after first install
--   (ice987987) fix issue [#9](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/9)
--   (ice987987) update `common.states` of `.mower.errorCode`
-
-### 0.0.3 (14.03.2022)
-
--   (ice987987) initial npm release
-
-### 0.0.2 (11.03.2022)
-
--   (ice987987) initial npm release
-
-### 0.0.1 (04.03.2022)
-
--   (ice987987) initial release
 
 ## License
 

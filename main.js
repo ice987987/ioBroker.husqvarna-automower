@@ -347,11 +347,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 							role: 'state',
 							states: {
 								MAIN_AREA: 'Mower will mow until low battery. Go home and charge. Leave and continue mowing.',
+								DEMO: 'Same as main area, but shorter times. (No blade operation)',
 								SECONDARY_AREA: 'Mower will mow until empty battery, or a limited time. When done, it stops in the garden.',
 								HOME: 'Mower goes home and parks forever.',
-								DEMO: 'Same as main area, but shorter times. (No blade operation)',
 								UNKNOWN: 'Unknown mode.',
-								POI: 'Point of interest.',
 							},
 							read: true,
 							write: false,
