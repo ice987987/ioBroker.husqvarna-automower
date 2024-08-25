@@ -98,11 +98,12 @@ You get the following values from your Husqvarna lawn mower:
 -   `.workAreas.[workAreaId].enabled`: If the work area is enabled or disabled.[^4]
 -   `.workAreas.[workAreaId].progress`: The progrss on a work are. Only available for EPOS mowers and systematic mowing work areas.[^4]
 -   `.workAreas.[workAreaId].lastTimeCompleted`: Timestamp in seconds from 1970-01-01 when the work area was last completed. The timestamp is in local time on the mower. Only available for EPOS mowers and systematic mowing work areas.
-<!--
--   `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4]
-    -->
-    [^4]: If a value is missing or zero (0) the mower does not support the value
-    [^5]: If no GPS-Signal is available, those values are not updated
+
+    <!-- `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4] -->
+
+[^4]: If a value is missing or zero (0) the mower does not support the value
+
+[^5]: If no GPS-Signal is available, those values are not updated
 
 ## Limitation
 

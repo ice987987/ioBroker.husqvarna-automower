@@ -48,6 +48,7 @@
 		"_divider": {
 			"newLine": true,
 			"type": "divider",
+			"color": "primary",
 			"xs": 12,
 			"sm": 12,
 			"md": 8,
