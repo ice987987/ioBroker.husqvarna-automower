@@ -286,10 +286,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.position`, {
+
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.canConfirmError`, {
 						type: 'state',
 						common: {
-							name: 'If the Automower supports GPS position. If false, no positions are available.',
+							name: 'If the Automower supports the command confirm error. The error also needs to be confirmable.',
 							type: 'boolean',
 							role: 'state',
 							read: true,
@@ -308,10 +309,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.workAreas`, {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.position`, {
 						type: 'state',
 						common: {
-							name: 'If the Automower supports work areas. If false, no work areas are avalilable.',
+							name: 'If the Automower supports GPS position. If false, no positions are available.',
 							type: 'boolean',
 							role: 'state',
 							read: true,
@@ -323,6 +324,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'If the Automower supports stay-out zones. If false, no stay-out zones are available.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.workAreas`, {
+						type: 'state',
+						common: {
+							name: 'If the Automower supports work areas. If false, no work areas are avalilable.',
 							type: 'boolean',
 							role: 'state',
 							read: true,
@@ -414,6 +426,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 								FATAL_ERROR: 'A fatal error has occured. Error has to be fixed confirmed to leave this state.',
 								ERROR_AT_POWER_UP: 'An error at power up.',
 							},
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.workAreaId`, {
+						type: 'state',
+						common: {
+							name: 'Current work area id. If the mower supports work areas and the mower is working on a work area. If no current work area is selected this attribute is not set.',
+							type: 'number',
+							role: 'state',
 							read: true,
 							write: false,
 						},
@@ -601,6 +624,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 							name: 'Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.',
 							type: 'number',
 							role: 'value.time',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.isErrorConfirmable`, {
+						type: 'state',
+						common: {
+							name: 'If the mower has an errorCode this attribute state if the error is confirmable.',
+							type: 'boolean',
+							role: 'state',
 							read: true,
 							write: false,
 						},
@@ -946,6 +980,42 @@ class HusqvarnaAutomower extends utils.Adapter {
 								},
 								native: {},
 							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.enabled`, {
+								type: 'state',
+								common: {
+									name: 'If the work area is enabled or disabled.',
+									type: 'boolean',
+									role: 'indicator.connected',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.progress`, {
+								type: 'state',
+								common: {
+									name: 'The progrss on a work are. Only available for EPOS mowers and systematic mowing work areas.',
+									type: 'number',
+									role: 'state',
+									min: 0,
+									max: 100,
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.lastTimeCompleted`, {
+								type: 'state',
+								common: {
+									name: 'Timestamp in seconds from 1970-01-01 when the work area was last completed. The timestamp is in local time on the mower. Only available for EPOS mowers and systematic mowing work areas.',
+									type: 'number',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							/*
 							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.calendar`, {
 								type: 'state',
 								common: {
@@ -957,6 +1027,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 								},
 								native: {},
 							});
+							*/
 						}
 					}
 
@@ -1372,20 +1443,24 @@ class HusqvarnaAutomower extends utils.Adapter {
 						ack: true,
 					});
 
-					this.setState(`${mowerData.data[i].id}.capabilities.position`, {
-						val: mowerData.data[i].attributes.capabilities.position,
+					this.setState(`${mowerData.data[i].id}.capabilities.canConfirmError`, {
+						val: mowerData.data[i].attributes.capabilities.canConfirmError,
 						ack: true,
 					});
 					this.setState(`${mowerData.data[i].id}.capabilities.headlights`, {
 						val: mowerData.data[i].attributes.capabilities.headlights,
 						ack: true,
 					});
-					this.setState(`${mowerData.data[i].id}.capabilities.workAreas`, {
-						val: mowerData.data[i].attributes.capabilities.workAreas,
+					this.setState(`${mowerData.data[i].id}.capabilities.position`, {
+						val: mowerData.data[i].attributes.capabilities.position,
 						ack: true,
 					});
 					this.setState(`${mowerData.data[i].id}.capabilities.stayOutZones`, {
 						val: mowerData.data[i].attributes.capabilities.stayOutZones,
+						ack: true,
+					});
+					this.setState(`${mowerData.data[i].id}.capabilities.workAreas`, {
+						val: mowerData.data[i].attributes.capabilities.workAreas,
 						ack: true,
 					});
 
@@ -1405,12 +1480,20 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].attributes.mower.state,
 						ack: true,
 					});
+					this.setState(`${mowerData.data[i].id}.mower.workAreaId`, {
+						val: mowerData.data[i].attributes.mower.workAreaId,
+						ack: true,
+					});
 					this.setState(`${mowerData.data[i].id}.mower.errorCode`, {
 						val: mowerData.data[i].attributes.mower.errorCode,
 						ack: true,
 					});
 					this.setState(`${mowerData.data[i].id}.mower.errorCodeTimestamp`, {
 						val: mowerData.data[i].attributes.mower.errorCodeTimestamp,
+						ack: true,
+					});
+					this.setState(`${mowerData.data[i].id}.mower.isErrorConfirmable`, {
+						val: mowerData.data[i].attributes.mower.isErrorConfirmable,
 						ack: true,
 					});
 
@@ -1566,12 +1649,26 @@ class HusqvarnaAutomower extends utils.Adapter {
 							val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
 							ack: true,
 						});
+						this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.enabled`, {
+							val: mowerData.data[i].attributes.workAreas[j].enabled,
+							ack: true,
+						});
+						this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.lastTimeCompleted`, {
+							val: mowerData.data[i].attributes.workAreas[j].lastTimeCompleted,
+							ack: true,
+						});
+						this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.progress`, {
+							val: mowerData.data[i].attributes.workAreas[j].progress,
+							ack: true,
+						});
+						/*
 						if (mowerData.data[i].attributes.workAreas[j].calendar) {
 							this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.calendar`, {
 								val: mowerData.data[i].attributes.workAreas[j].calendar,
 								ack: true,
 							});
 						}
+						*/
 					}
 				}
 			} else {

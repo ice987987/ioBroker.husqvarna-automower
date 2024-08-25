@@ -55,18 +55,21 @@ You can send the following values to your Husqvarna lawn mower:
 You get the following values from your Husqvarna lawn mower:
 
 -   `.battery.batteryPercent`: Information about the battery in the Automower.
--   `.capabilities.position`: If the Automower supports GPS position. If false, no positions are available.
+-   `.capabilities.canConfirmError`: If the Automower supports the command confirm error. The error also needs to be confirmable.
 -   `.capabilities.headlights`: If the Automower supports headlights. If false, no headlights are available.
--   `.capabilities.workAreas`: If the Automower supports work areas. If false, no work areas are avalilable.
+-   `.capabilities.position`: If the Automower supports GPS position. If false, no positions are available.
 -   `.capabilities.stayOutZones`: If the Automower supports stay-out zones. If false, no stay-out zones are available.
+-   `.capabilities.workAreas`: If the Automower supports work areas. If false, no work areas are avalilable.
 -   `.metadata.connected`: Is the mower currently connected to the cloud. The mower needs to be connected to send command to the mower.
 -   `.metadata.statusTimestamp`: Timestamp for the last status update in milliseconds since 1970-01-01T00:00:00 in UTC time. NOTE! This timestamp is generated in the backend and not from the Mower.
+-   `.mower.mode`: Information about the mowers current mode.
 -   `.mower.activity`: Information about the mowers current status.
 -   `.mower.inactiveReason`: Inactive reason
+-   `.mower.state`: Information about the mowers current status.
+-   `.mower.workAreaId`: Current work area id. If the mower supports work areas and the mower is working on a work area. If no current work area is selected this attribute is not set.
 -   `.mower.errorCode`: Information about the mowers current error status.
 -   `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
--   `.mower.mode`: Information about the mowers current mode.
--   `.mower.state`: Information about the mowers current status.
+-   `.mower.isErrorConfirmable`: If the mower has an errorCode this attribute state if the error is confirmable..
 -   `.planner.override`: The Planner has an override feature, which can be used to override the operation decided by the Calendar. There is room for one override at a time, and it occurs from now and for a duration of time.
 -   `.planner.nextStartTimestamp`: Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
 -   `.planner.restrictedReason`: Restricted reason.
@@ -92,7 +95,12 @@ You get the following values from your Husqvarna lawn mower:
 -   `.workAreas.[workAreaId].workAreaId`: Work area ID[^4]
 -   `.workAreas.[workAreaId].name`: Name of the work area[^4]
 -   `.workAreas.[workAreaId].cuttingHeight`: Cutting height in percent (0 ... 100%)[^4]
+-   `.workAreas.[workAreaId].enabled`: If the work area is enabled or disabled.[^4]
+-   `.workAreas.[workAreaId].progress`: The progrss on a work are. Only available for EPOS mowers and systematic mowing work areas.[^4]
+-   `.workAreas.[workAreaId].lastTimeCompleted`: Timestamp in seconds from 1970-01-01 when the work area was last completed. The timestamp is in local time on the mower. Only available for EPOS mowers and systematic mowing work areas.
+<!--
 -   `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4]
+    -->
     [^4]: If a value is missing or zero (0) the mower does not support the value
     [^5]: If no GPS-Signal is available, those values are not updated
 
@@ -379,6 +387,11 @@ function round(digit, digits) {
 ## Changelog
 
 <!-- ### **WORK IN PROGRESS** -->
+
+### 0.6.0-beta.1 **WORK IN PROGRESS**
+
+-   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress` added.
+-   (ice987987) state `.workAreas.[workAreaId].calendar` removed
 
 ### 0.5.0-beta.9 **WORK IN PROGRESS**
 
