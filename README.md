@@ -46,7 +46,7 @@ You can send the following values to your Husqvarna lawn mower:
 -   `.ACTIONS.startInWorkArea.STARTINWORKAREA`: start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId`[^4]
 -   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight and get current status[^2][^3]
 -   `.ACTIONS.HEADLIGHT`: Update headlight and get current status[^4]
--   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday` and get current status [^2]
+-   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[i].start` (minutes after midnight), `.ACTIONS.schedule.[i].duration` (in minutes), `.ACTIONS.schedule.[i].monday`, `.ACTIONS.schedule.[i].tuesday`, `.ACTIONS.schedule.[i].wednesday`, `.ACTIONS.schedule.[i].thursday`, `.ACTIONS.schedule.[i].friday`, `.ACTIONS.schedule.[i].saturday`, `.ACTIONS.schedule.[i].sunday` and `.ACTIONS.schedule.[i].workAreaId` and get current status [^2]
     [^2]: Do not use for 550 EPOS and Ceora due to [Husqvarna's API-limitation](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme)
     [^3]: not supported models: 405X, 415X and 435X AWD (you will get the error "This mower use missions and can not be updated by this endpoint")
 
@@ -104,11 +104,6 @@ You get the following values from your Husqvarna lawn mower:
 [^4]: If a value is missing or zero (0) the mower does not support the value
 
 [^5]: If no GPS-Signal is available, those values are not updated
-
-## Limitation
-
--   maximum 4 schedules are available[^1]
-    [^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose).
 
 ## ioBroker.vis bindings
 
@@ -389,10 +384,12 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.1 **WORK IN PROGRESS**
+### 0.6.0-beta.2 **WORK IN PROGRESS**
 
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress` added.
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
+-   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
+-   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`
 
 ### 0.5.0-beta.9 **WORK IN PROGRESS**
 

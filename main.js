@@ -40,6 +40,8 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.ping = null;
 
 		this.statisticsInterval = null;
+
+		this.numberOfSchedules = 0;
 	}
 
 	/**
@@ -1264,11 +1266,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {},
 					});
 
-					for (let j = 0; j < numberOfSchedules; j++) {
+					this.numberOfSchedules = mowerData.data[i].attributes.calendar.tasks.length;
+					for (let j = 0; j < mowerData.data[i].attributes.calendar.tasks.length; j++) {
 						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}`, {
 							type: 'channel',
 							common: {
-								name: 'Scheduled Task ' + j,
+								name: `Scheduled Task ${j}`,
 							},
 							native: {},
 						});
@@ -1386,6 +1389,20 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {},
 						});
+						// create state "workAreaId" if supported
+						if (mowerData.data[i].attributes.capabilities.workAreas) {
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.workAreaId`, {
+								type: 'state',
+								common: {
+									name: 'Workarea ID',
+									type: 'number',
+									role: 'state',
+									read: true,
+									write: true,
+								},
+								native: {},
+							});
+						}
 					}
 
 					// subscribeStates
@@ -1498,7 +1515,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					});
 
 					// set all values in "calendar"
-					for (let j = 0; j < Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules); j++) {
+					for (let j = 0; j < Object.keys(mowerData.data[i].attributes.calendar.tasks).length; j++) {
 						this.setState(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.start`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].start,
 							ack: true,
@@ -1535,6 +1552,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 							val: mowerData.data[i].attributes.calendar.tasks[j].sunday,
 							ack: true,
 						});
+						if (mowerData.data[i].attributes.capabilities.workAreas) {
+							this.setState(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.workAreaId`, {
+								val: mowerData.data[i].attributes.calendar.tasks[j].workAreaId,
+								ack: true,
+							});
+						}
 					}
 
 					this.setState(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
@@ -1730,60 +1753,201 @@ class HusqvarnaAutomower extends utils.Adapter {
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
 					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
-						// set values in "calendar"
-						for (let i = 0; i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules); i++) {
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.start`, {
+						if (Object.keys(message.attributes.calendar.tasks).length !== this.numberOfSchedules) {
+							// set values in "calendar"
+							this.log.debug(`numbers of calendars changed`);
+
+							// delete all existing entries
+							for (let j = 0; j < this.numberOfSchedules; j++) {
+								await this.delObjectAsync(`${message.id}.ACTIONS.schedule.${j}`, { recursive: true });
+							}
+
+							for (let k = 0; k < Object.keys(message.attributes.calendar.tasks).length; k++) {
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}`, {
+									type: 'channel',
+									common: {
+										name: `Scheduled Task ${k}`,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.start`, {
+									type: 'state',
+									common: {
+										name: 'Start time expressed in minutes after midnight',
+										type: 'number',
+										role: 'value',
+										min: 0,
+										max: 1439,
+										unit: 'min',
+										def: 720,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.duration`, {
+									type: 'state',
+									common: {
+										name: 'Duration time expressed in minutes',
+										type: 'number',
+										role: 'value',
+										min: 1,
+										max: 1440,
+										unit: 'min',
+										def: 30,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.monday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Mondays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.tuesday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Tuesdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.wednesday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Wednesdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.thursday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Thursdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.friday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Fridays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.saturday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Saturdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.sunday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Sundays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								// create state "workAreaId" if supported
+								if (message.attributes.calendar.workAreas) {
+									await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.workAreaId`, {
+										type: 'state',
+										common: {
+											name: 'Workarea ID',
+											type: 'number',
+											role: 'state',
+											read: true,
+											write: true,
+										},
+										native: {},
+									});
+								}
+							}
+							Object.keys(message.attributes.calendar.tasks).length = this.numberOfSchedules;
+						}
+
+						for (let i = 0; i < Object.keys(message.attributes.calendar.tasks).length; i++) {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.start`, {
 								val: message.attributes.calendar.tasks[i].start,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.duration`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.duration`, {
 								val: message.attributes.calendar.tasks[i].duration,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.monday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.monday`, {
 								val: message.attributes.calendar.tasks[i].monday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, {
 								val: message.attributes.calendar.tasks[i].tuesday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, {
 								val: message.attributes.calendar.tasks[i].wednesday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, {
 								val: message.attributes.calendar.tasks[i].thursday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.friday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.friday`, {
 								val: message.attributes.calendar.tasks[i].friday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, {
 								val: message.attributes.calendar.tasks[i].saturday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, {
 								val: message.attributes.calendar.tasks[i].sunday,
 								ack: true,
 							});
+							if (message.attributes.calendar.tasks[i].workAreaId) {
+								await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.workAreaId`, {
+									val: message.attributes.calendar.tasks[i].workAreaId,
+									ack: true,
+								});
+							}
 						}
-
-						// reset values in "calendar" which are not in use
-						for (let i = Object.keys(message.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.start`, { val: null, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.duration`, { val: null, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.monday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.friday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, { val: false, ack: true });
-						}
-						// this.log.debug(`[wss.on - message]: message.attributes.calendar: ${JSON.stringify(message.attributes.calendar)}`);
 					}
+
 					if ('positions' in message.attributes) {
 						if (Object.keys(message.attributes.positions).length > 0) {
 							for (let i = 0; i < Object.keys(message.attributes.positions).length; i++) {
