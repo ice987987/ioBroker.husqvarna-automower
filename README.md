@@ -47,6 +47,7 @@ You can send the following values to your Husqvarna lawn mower:
 -   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight and get current status[^2][^3]
 -   `.ACTIONS.HEADLIGHT`: Update headlight and get current status[^4]
 -   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[i].start` (minutes after midnight), `.ACTIONS.schedule.[i].duration` (in minutes), `.ACTIONS.schedule.[i].monday`, `.ACTIONS.schedule.[i].tuesday`, `.ACTIONS.schedule.[i].wednesday`, `.ACTIONS.schedule.[i].thursday`, `.ACTIONS.schedule.[i].friday`, `.ACTIONS.schedule.[i].saturday`, `.ACTIONS.schedule.[i].sunday` and `.ACTIONS.schedule.[i].workAreaId` and get current status [^2]
+-   `.ACTIONS.REFRESHSTATISTICS`: Refresh statistic values outside the regular configured schedule
     [^2]: Do not use for 550 EPOS and Ceora due to [Husqvarna's API-limitation](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme)
     [^3]: not supported models: 405X, 415X and 435X AWD (you will get the error "This mower use missions and can not be updated by this endpoint")
 
@@ -384,9 +385,9 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.2 **WORK IN PROGRESS**
+### 0.6.0-beta.3 **WORK IN PROGRESS**
 
--   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress` added.
+-   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
 -   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
 -   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`

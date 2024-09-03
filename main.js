@@ -13,7 +13,6 @@ const axios = require('axios');
 const WebSocket = require('ws');
 
 // variables
-const numberOfSchedules = 4;
 const isValidApplicationCredential = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/; // format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 class HusqvarnaAutomower extends utils.Adapter {
@@ -42,6 +41,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.statisticsInterval = null;
 
 		this.numberOfSchedules = 0;
+		this.capabilities = [];
 	}
 
 	/**
@@ -1404,6 +1404,18 @@ class HusqvarnaAutomower extends utils.Adapter {
 							});
 						}
 					}
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.REFRESHSTATISTICS`, {
+						type: 'state',
+						common: {
+							name: 'Refresh statistic values outside the regular configured schedule',
+							type: 'boolean',
+							def: false,
+							role: 'button',
+							read: true,
+							write: true,
+						},
+						native: {},
+					});
 
 					// subscribeStates
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.PAUSE`);
@@ -1420,6 +1432,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`);
 					}
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.schedule.SET`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.REFRESHSTATISTICS`);
 				} else {
 					throw new Error('No mower found, no Objects created. Check API (ERR_#007).');
 				}
@@ -1694,11 +1707,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 						*/
 					}
 				}
+				this.capabilities.push({ id: mowerData.data[i].id, workAreas: mowerData.data[i].attributes.capabilities.workAreas, numbersOfCalendars: Object.keys(mowerData.data[i].attributes.calendar.tasks).length });
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#009)');
 			}
 		}
 		if (this.firstStart) {
+			this.log.info(`this.capabilities: ${JSON.stringify(this.capabilities)}`);
 			this.log.info('Mowerdata initially saved.');
 		} else {
 			this.log.debug('Mowerstatistics updated.');
@@ -1753,7 +1768,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
 					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
-						if (Object.keys(message.attributes.calendar.tasks).length !== this.numberOfSchedules) {
+						if (Object.keys(message.attributes.calendar.tasks).length !== this.capabilities.find((o) => o.id === message.id).numbersOfCalendars) {
 							// set values in "calendar"
 							this.log.debug(`numbers of calendars changed`);
 
@@ -1899,7 +1914,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 									});
 								}
 							}
-							Object.keys(message.attributes.calendar.tasks).length = this.numberOfSchedules;
+							this.capabilities[this.capabilities.findIndex((obj) => obj.id == message.id)].numbersOfCalendars = Object.keys(message.attributes.calendar.tasks).length;
 						}
 
 						for (let i = 0; i < Object.keys(message.attributes.calendar.tasks).length; i++) {
@@ -2212,85 +2227,78 @@ class HusqvarnaAutomower extends utils.Adapter {
 				this.log.debug(`[onStateChange]: parentPath: ${parentPath}`);
 				this.log.debug(`[onStateChange]: command: ${command}`);
 
-				const data_command = { data: {} };
-				const data_attributes = {};
-				const data_tasks = [];
+				const data_command = {};
 				let url = '';
+				const data_tasks = [];
 
-				if (command === 'PAUSE') {
+				if (command === 'START') {
+					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
+					if (startTime && startTime.val) {
+						data_command.data = { type: 'Start' };
+						data_command.attributes = { duration: startTime.val };
+						url = 'actions';
+					} else {
+						this.log.error('Missing "startTime". Nothing Set. (ERR_#0xx');
+						return;
+					}
+				} else if (command === 'STARTINWORKAREA') {
+					const startTime = await this.getStateAsync(`${parentPath}.StartInWorkArea.startTime`);
+					const workAreaId = await this.getStateAsync(`${parentPath}.StartInWorkArea.workAreaId`);
+					if (startTime && startTime.val) {
+						if (workAreaId && workAreaId.val) {
+							data_command.data = { type: 'StartInWorkArea' };
+							data_command.attributes = { duration: startTime.val, workAreaId: workAreaId.val };
+							url = 'actions';
+						} else {
+							this.log.error('Missing "workAreaId". Nothing Set. (ERR_#0xx');
+							return;
+						}
+					} else {
+						this.log.error('Missing "startTime". Nothing Set. (ERR_#0xx');
+						return;
+					}
+				} else if (command === 'RESUMESCHEDULE') {
+					data_command.data = { type: 'ResumeSchedule' };
+					url = 'actions';
+				} else if (command === 'PAUSE') {
 					// Pause mower
-					data_command.data.type = 'Pause';
-					url = 'actions';
-				} else if (command === 'PARKUNTILNEXTSCHEDULE') {
-					// Park mower until next scheduled run
-					data_command.data.type = 'ParkUntilNextSchedule';
-					url = 'actions';
-				} else if (command === 'PARKUNTILFURTHERNOTICE') {
-					// Park mower until further notice, overriding schedule
-					data_command.data.type = 'ParkUntilFurtherNotice';
+					data_command.data = { type: 'Pause' };
 					url = 'actions';
 				} else if (command === 'PARK') {
-					// Park mower for a duration of time, overriding schedule
 					const parkTime = await this.getStateAsync(`${parentPath}.park.parkTime`);
-					if (!parkTime) {
-						this.log.error('Missing "parkTime". Nothing Set. (ERR_#012');
+					if (parkTime && parkTime.val) {
+						data_command.data = { type: 'Park' };
+						data_command.attributes = { duration: parkTime.val };
+						url = 'actions';
+					} else {
+						this.log.error('Missing "parkTime". Nothing Set. (ERR_#0xx');
 						return;
 					}
-					data_command.data.type = 'Park';
-					data_attributes.duration = parkTime.val;
-					data_command.data['attributes'] = data_attributes;
+				} else if (command === 'PARKUNTILNEXTSCHEDULE') {
+					data_command.data = { type: 'ParkUntilNextSchedule' };
 					url = 'actions';
-				} else if (command === 'RESUMESCHEDULE') {
-					// Park mower for a duration of time, overriding schedule
-					data_command.data.type = 'ResumeSchedule';
-					url = 'actions';
-				} else if (command === 'START') {
-					// 	Start the mower for a period of minutes
-					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
-					if (!startTime) {
-						this.log.error('Missing "startTime". Nothing Set. (ERR_#013');
-						return;
-					}
-					data_command.data.type = 'Start';
-					data_attributes.duration = startTime.val;
-					data_command.data['attributes'] = data_attributes;
-					url = 'actions';
-				} else if (command === 'STARTINWORKAREA') {
-					//	Start the mower in a work area for a period of minutes. If duration is skipped the mower will continue forever
-					const duration = await this.getStateAsync(`${parentPath}.startInWorkArea.duration`);
-					const workAreaId = await this.getStateAsync(`${parentPath}.startInWorkArea.workAreaId`);
-					if (!duration) {
-						this.log.error('Missing "duration". Nothing Set. (ERR_#016');
-						return;
-					}
-					if (!workAreaId) {
-						this.log.error('Missing "workAreaId". Nothing Set. (ERR_#017');
-						return;
-					}
-					data_command.data.type = 'StartInWorkArea';
-					if (duration.val !== 0) {
-						data_attributes.duration = duration.val;
-						data_command.data['attributes'] = data_attributes;
-					}
-					data_attributes.workAreaId = workAreaId.val;
-					data_command.data['attributes'] = data_attributes;
+				} else if (command === 'PARKUNTILFURTHERNOTICE') {
+					data_command.data = { type: 'ParkUntilFurtherNotice' };
 					url = 'actions';
 				} else if (command === 'CUTTINGHEIGHT') {
-					// Adjust cutting Height
-					data_command.data.type = 'settings';
-					data_attributes.cuttingHeight = state.val;
-					data_command.data['attributes'] = data_attributes;
+					data_command.data = { type: 'settings' };
+					data_command.attributes = { cuttingHeight: state.val };
+					url = 'settings';
+				} else if (command === 'DATETIME') {
+					data_command.data = { type: 'dateTime' };
+					data_command.attributes = { dateTime: state.val };
 					url = 'settings';
 				} else if (command === 'HEADLIGHT') {
-					// Update headlight
-					data_command.data.type = 'settings';
-					data_attributes.headlight = state.val;
-					data_command.data['attributes'] = data_attributes;
-					url = 'settings';
+					if (state.val === 'ALWAYS_ON' || state.val === 'ALWAYS OFF' || state.val === 'EVENING_ONLY' || state.val === 'EVENING_AND_NIGHT') {
+						data_command.data = { type: 'HeadLight' };
+						data_command.attributes = { mode: state.val };
+						url = 'settings';
+					} else {
+						this.log.error('HEADLIGHT not valid. Nothing Set. (ERR_#0xx');
+						return;
+					}
 				} else if (command === 'SET') {
-					// Update mower schedule
-
-					for (let i = 0; i < numberOfSchedules; i++) {
+					for (let i = 0; i < this.capabilities.find((o) => o.id === mowerId).numbersOfCalendars; i++) {
 						// create variables and get additional values
 						const scheduleStart = await this.getStateAsync(`${parentPath}.schedule.${i}.start`);
 						const scheduleDuration = await this.getStateAsync(`${parentPath}.schedule.${i}.duration`);
@@ -2301,29 +2309,59 @@ class HusqvarnaAutomower extends utils.Adapter {
 						const scheduleFriday = await this.getStateAsync(`${parentPath}.schedule.${i}.friday`);
 						const scheduleSaturday = await this.getStateAsync(`${parentPath}.schedule.${i}.saturday`);
 						const scheduleSunday = await this.getStateAsync(`${parentPath}.schedule.${i}.sunday`);
-
-						if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday) {
-							if (scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) {
-								data_tasks.push({
-									start: scheduleStart.val,
-									duration: scheduleDuration.val,
-									monday: scheduleMonday.val,
-									tuesday: scheduleThuesday.val,
-									wednesday: scheduleWednesday.val,
-									thursday: scheduleThursday.val,
-									friday: scheduleFriday.val,
-									saturday: scheduleSaturday.val,
-									sunday: scheduleSunday.val,
-								});
+						if (this.capabilities.find((o) => o.id === mowerId).workAreas) {
+							const scheduleWorkAreaId = await this.getStateAsync(`${parentPath}.schedule.${i}.workAreaId`);
+							if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday && scheduleWorkAreaId) {
+								if ((scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) && scheduleWorkAreaId.val) {
+									data_tasks.push({
+										start: scheduleStart.val,
+										duration: scheduleDuration.val,
+										monday: scheduleMonday.val,
+										tuesday: scheduleThuesday.val,
+										wednesday: scheduleWednesday.val,
+										thursday: scheduleThursday.val,
+										friday: scheduleFriday.val,
+										saturday: scheduleSaturday.val,
+										sunday: scheduleSunday.val,
+										workAreaId: scheduleWorkAreaId.val,
+									});
+								}
 							}
+							url = `workAreas/${scheduleWorkAreaId}/calendar`;
+						} else {
+							if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday) {
+								if (scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) {
+									data_tasks.push({
+										start: scheduleStart.val,
+										duration: scheduleDuration.val,
+										monday: scheduleMonday.val,
+										tuesday: scheduleThuesday.val,
+										wednesday: scheduleWednesday.val,
+										thursday: scheduleThursday.val,
+										friday: scheduleFriday.val,
+										saturday: scheduleSaturday.val,
+										sunday: scheduleSunday.val,
+									});
+								}
+							}
+							url = 'calendar';
 						}
 					}
-
-					data_command.data.type = 'calendar';
-					data_command.data['attributes'] = data_tasks;
+					data_command.data = { type: 'calendar' };
+					data_command.attributes = data_tasks;
 					// this.log.debug(`[onStateChange]: data_command: ${JSON.stringify(data_command)}`);
-					url = 'calendar';
+				} else if (command === 'REFRESHSTATISTICS') {
+					try {
+						await this.getMowerData();
+						await this.fillObjects(this.mowerData);
+					} catch (error) {
+						this.log.debug(`${error} (ERR_#0xx)`);
+					}
+					return;
 				}
+
+				// this.log.debug(`url: https://api.amc.husqvarna.dev/v1/mowers/${mowerId}/${url}`);
+				// this.log.debug(`data: ${JSON.stringify(data_command)}`);
 
 				await axios({
 					method: 'POST',
