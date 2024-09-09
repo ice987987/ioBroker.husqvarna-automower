@@ -45,6 +45,7 @@ You can send the following values to your Husqvarna lawn mower:
 -   `.ACTIONS.start.START`: start mower and cut for a duration of time `.ACTIONS.start.startTime` (in minutes), overriding schedule
 -   `.ACTIONS.startInWorkArea.STARTINWORKAREA`: start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId`[^4]
 -   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight and get current status[^2][^3]
+-   `.ACTIONS.DATETIME`: Date and time in seconds from 1970-01-01 in the mower. The timestamp is used by the mower to trigger the schedule. At the moment you can not get the timestamp from the mower.
 -   `.ACTIONS.HEADLIGHT`: Update headlight and get current status[^4]
 -   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[i].start` (minutes after midnight), `.ACTIONS.schedule.[i].duration` (in minutes), `.ACTIONS.schedule.[i].monday`, `.ACTIONS.schedule.[i].tuesday`, `.ACTIONS.schedule.[i].wednesday`, `.ACTIONS.schedule.[i].thursday`, `.ACTIONS.schedule.[i].friday`, `.ACTIONS.schedule.[i].saturday`, `.ACTIONS.schedule.[i].sunday` and `.ACTIONS.schedule.[i].workAreaId` and get current status [^2]
 -   `.ACTIONS.REFRESHSTATISTICS`: Refresh statistic values outside the regular configured schedule
@@ -385,9 +386,9 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.3 **WORK IN PROGRESS**
+### 0.6.0-beta.5 **WORK IN PROGRESS**
 
--   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` added
+-   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
 -   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
 -   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`
