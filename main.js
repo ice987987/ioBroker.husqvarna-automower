@@ -1223,7 +1223,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.DATETIME`, {
 						type: 'state',
 						common: {
@@ -2248,7 +2247,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				if (command === 'START') {
 					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
 					if (startTime && startTime.val) {
-						if (startTime.val >= 0 && startTime.val <= 1439) {
+						if (Number(startTime.val) >= 0 && Number(startTime.val) <= 1439) {
 							data_command.data = { type: 'Start' };
 							data_command.attributes = { duration: startTime.val };
 							url = 'actions';
@@ -2264,9 +2263,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 					const startTime = await this.getStateAsync(`${parentPath}.StartInWorkArea.startTime`);
 					const workAreaId = await this.getStateAsync(`${parentPath}.StartInWorkArea.workAreaId`);
 					if (startTime && startTime.val) {
-						if (startTime.val >= 0 && startTime.val <= 1439) {
+						if (Number(startTime.val) >= 0 && Number(Number(startTime.val) <= 1439)) {
 							if (workAreaId && workAreaId.val) {
-								if (workAreaId.val > 0) {
+								if (Number(workAreaId.val) > 0) {
 									data_command.data = { type: 'StartInWorkArea' };
 									data_command.attributes = { duration: startTime.val, workAreaId: workAreaId.val };
 									url = 'actions';
@@ -2274,7 +2273,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 									this.log.error('Missing "workAreaId". Nothing Set. (ERR_#0xx');
 									return;
 								}
-									
 							} else {
 								this.log.error('Inputvalue "workAreaId" not valid. Nothing Set. (ERR_#0xx');
 								return;
@@ -2296,7 +2294,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				} else if (command === 'PARK') {
 					const parkTime = await this.getStateAsync(`${parentPath}.park.parkTime`);
 					if (parkTime && parkTime.val) {
-						if (parkTime.val > 0) {
+						if (Number(parkTime.val) > 0) {
 							data_command.data = { type: 'Park' };
 							data_command.attributes = { duration: parkTime.val };
 							url = 'actions';
@@ -2315,7 +2313,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					data_command.data = { type: 'ParkUntilFurtherNotice' };
 					url = 'actions';
 				} else if (command === 'CUTTINGHEIGHT') {
-					if (state.val >= 1 && state.val >= 9) {
+					if (Number(state.val) >= 1 && Number(state.val) >= 9) {
 						data_command.data = { type: 'settings' };
 						data_command.attributes = { cuttingHeight: state.val };
 						url = 'settings';
@@ -2324,7 +2322,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						return;
 					}
 				} else if (command === 'DATETIME') {
-					if (state.val > 1725141600) {
+					if (Number(state.val) > 1725141600) {
 						data_command.data = { type: 'dateTime' };
 						data_command.attributes = { dateTime: state.val };
 						url = 'settings';
