@@ -386,7 +386,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.5 **WORK IN PROGRESS**
+### 0.6.0-beta.6 **WORK IN PROGRESS**
 
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
