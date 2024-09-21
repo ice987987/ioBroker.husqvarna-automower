@@ -1786,8 +1786,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 							this.log.debug(`numbers of calendars changed`);
 
 							// delete all existing entries
-							for (let j = 0; j < this.numberOfSchedules; j++) {
+							for (let j = 0; j < this.capabilities.find((o) => o.id === message.id).numbersOfCalendars; j++) {
 								await this.delObjectAsync(`${message.id}.ACTIONS.schedule.${j}`, { recursive: true });
+								this.log.debug(`${message.id}.ACTIONS.schedule.${j}`);
 							}
 
 							for (let k = 0; k < Object.keys(message.attributes.calendar.tasks).length; k++) {
@@ -2401,7 +2402,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						}
 					}
 					data_command.data = { type: 'calendar' };
-					data_command.attributes = data_tasks;
+					data_command.data.attributes = { tasks: data_tasks };
 					// this.log.debug(`[onStateChange]: data_command: ${JSON.stringify(data_command)}`);
 				} else if (command === 'REFRESHSTATISTICS') {
 					try {
