@@ -789,6 +789,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions.positions`, {
+						type: 'state',
+						common: {
+							name: 'Positions',
+							type: 'string',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
 					// }
 
 					// create channel "statistics"
@@ -1611,6 +1622,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 							val: `${mowerData.data[i].attributes.positions[0].latitude};${mowerData.data[i].attributes.positions[0].longitude}`,
 							ack: true,
 						});
+						this.setState(`${mowerData.data[i].id}.positions.positions`, {
+							val: `${JSON.stringify(mowerData.data[i].attributes.positions)}`,
+							ack: true,
+						});
 					}
 
 					this.setState(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`, {
@@ -1979,6 +1994,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 					if ('positions' in message.attributes) {
 						if (Object.keys(message.attributes.positions).length > 0) {
+							this.setState(`${message.id}.positions.positions`, {
+								val: JSON.stringify(message.attributes.positions),
+								ack: true,
+							});
 							for (let i = 0; i < Object.keys(message.attributes.positions).length; i++) {
 								this.setState(`${message.id}.positions.latitude`, {
 									val: message.attributes.positions[i].latitude,

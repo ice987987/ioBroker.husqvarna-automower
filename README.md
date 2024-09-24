@@ -386,12 +386,13 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.6 **WORK IN PROGRESS**
+### 0.6.0-beta.7 **WORK IN PROGRESS**
 
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
 -   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
 -   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`
+-   (ice987987) state `.positions.positions` added [#191](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/191)
 
 ### 0.5.0-beta.9 **WORK IN PROGRESS**
 
