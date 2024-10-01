@@ -79,6 +79,7 @@ You get the following values from your Husqvarna lawn mower:
 -   `.positions.latitude`: Position latitude[^5]
 -   `.positions.longitude`: Position longitude[^5]
 -   `.positions.latlong`: Position "latitude;longitude"[^5]
+-   `.positions.positions`: Positions[^5]
 -   `.stayOutZones.dirty`: If the stay-out zones are synchronized with the Husqvarna cloud. If the map is dirty you can not enable or disable a stay-out zone.[^4]
 -   `.stayOutZones.zones`: List of all stay-out zones for the Automower.[^4]
 -   `.statistics.cuttingBladeUsageTime`: The number of seconds since the last reset of the cutting blade usage counter.[^4]
@@ -101,7 +102,7 @@ You get the following values from your Husqvarna lawn mower:
 -   `.workAreas.[workAreaId].progress`: The progrss on a work are. Only available for EPOS mowers and systematic mowing work areas.[^4]
 -   `.workAreas.[workAreaId].lastTimeCompleted`: Timestamp in seconds from 1970-01-01 when the work area was last completed. The timestamp is in local time on the mower. Only available for EPOS mowers and systematic mowing work areas.
 
-    <!-- `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4] -->
+<!-- `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4] -->
 
 [^4]: If a value is missing or zero (0) the mower does not support the value
 
@@ -386,13 +387,14 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.7 **WORK IN PROGRESS**
+### 0.6.0-beta.8 **WORK IN PROGRESS**
 
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
 -   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
 -   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`
 -   (ice987987) state `.positions.positions` added [#191](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/191)
+-   (ice987987) try to fix [#197](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/197)
 
 ### 0.5.0-beta.9 **WORK IN PROGRESS**
 

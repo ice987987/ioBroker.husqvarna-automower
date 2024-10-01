@@ -2048,7 +2048,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 					if ('planner' in message.attributes) {
 						this.setState(`${message.id}.planner.nextStartTimestamp`, {
-							val: null,
+							val: message.attributes.planner.nextStartTimestamp,
 							ack: true,
 						});
 						this.setState(`${message.id}.planner.override`, {
