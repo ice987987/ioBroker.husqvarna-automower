@@ -380,7 +380,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.5.0-beta.9 **WORK IN PROGRESS**
+### 0.5.0 (17.02.2025)
 
 -   (ice987987) BREAKING: js-controller >= v5.0.19 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
