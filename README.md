@@ -396,7 +396,7 @@ function round(digit, digits) {
 -   (ice987987) state `.positions.positions` added [#191](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/191)
 -   (ice987987) try to fix [#197](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/197)
 
-### 0.5.0-beta.9 **WORK IN PROGRESS**
+### 0.5.0 (17.02.2025)
 
 -   (ice987987) BREAKING: js-controller >= v5.0.19 and node >= v18 is required
 -   (ice987987) BREAKING: `.planner.action` removed
