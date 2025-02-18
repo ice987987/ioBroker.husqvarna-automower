@@ -113,7 +113,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
 			data: `grant_type=client_credentials&client_id=${this.config.applicationKey}&client_secret=${this.config.applicationSecret}`,
 		})
-			.then((response) => {
+			.then(response => {
 				this.log.debug(`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 
 				this.access_token = response.data.access_token;
@@ -124,7 +124,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.log.debug('"Husqvarna Authentication API Access token" received.');
 				}
 			})
-			.catch((error) => {
+			.catch(error => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
 					this.log.debug(`[getAccessToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
@@ -151,13 +151,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 				'Authorization-Provider': 'husqvarna',
 			},
 		})
-			.then(async (response) => {
+			.then(async response => {
 				this.log.debug(`[getMowerData]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 
 				this.mowerData = response.data;
 				this.log.debug(`[getMowerData]: response.data: ${JSON.stringify(response.data)}`);
 			})
-			.catch((error) => {
+			.catch(error => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
 					this.log.debug(`[getMowerData]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
@@ -1796,12 +1796,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
 					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
-						if (Object.keys(message.attributes.calendar.tasks).length !== this.capabilities.find((o) => o.id === message.id).numbersOfCalendars) {
+						if (Object.keys(message.attributes.calendar.tasks).length !== this.capabilities.find(o => o.id === message.id).numbersOfCalendars) {
 							// set values in "calendar"
 							this.log.debug(`numbers of calendars changed`);
 
 							// delete all existing entries
-							for (let j = 0; j < this.capabilities.find((o) => o.id === message.id).numbersOfCalendars; j++) {
+							for (let j = 0; j < this.capabilities.find(o => o.id === message.id).numbersOfCalendars; j++) {
 								await this.delObjectAsync(`${message.id}.ACTIONS.schedule.${j}`, { recursive: true });
 								this.log.debug(`${message.id}.ACTIONS.schedule.${j}`);
 							}
@@ -1943,7 +1943,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 									});
 								}
 							}
-							this.capabilities[this.capabilities.findIndex((obj) => obj.id == message.id)].numbersOfCalendars = Object.keys(message.attributes.calendar.tasks).length;
+							this.capabilities[this.capabilities.findIndex(obj => obj.id == message.id)].numbersOfCalendars = Object.keys(message.attributes.calendar.tasks).length;
 						}
 
 						for (let i = 0; i < Object.keys(message.attributes.calendar.tasks).length; i++) {
@@ -2161,7 +2161,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			//this.wsHeartbeat();
 		});
 
-		this.wss.on('error', (error) => {
+		this.wss.on('error', error => {
 			this.log.debug(`[wss.on - error]: ${error}`);
 		});
 	}
@@ -2183,6 +2183,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
+	 *
 	 * @param {() => void} callback
 	 */
 	async onUnload(callback) {
@@ -2198,10 +2199,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 					'Authorization-Provider': 'husqvarna',
 				},
 			})
-				.then((response) => {
+				.then(response => {
 					this.log.debug(`[onUnload]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 				})
-				.catch((error) => {
+				.catch(error => {
 					if (error.response) {
 						// The request was made and the server responded with a status code that falls out of the range of 2xx
 						this.log.debug(`[onUnload]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
@@ -2235,6 +2236,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 	/**
 	 * Is called if a subscribed state changes
+	 *
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
@@ -2360,7 +2362,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						return;
 					}
 				} else if (command === 'SET') {
-					for (let i = 0; i < this.capabilities.find((o) => o.id === mowerId).numbersOfCalendars; i++) {
+					for (let i = 0; i < this.capabilities.find(o => o.id === mowerId).numbersOfCalendars; i++) {
 						const scheduleStart = await this.getStateAsync(`${parentPath}.schedule.${i}.start`);
 						const scheduleDuration = await this.getStateAsync(`${parentPath}.schedule.${i}.duration`);
 						const scheduleMonday = await this.getStateAsync(`${parentPath}.schedule.${i}.monday`);
@@ -2370,7 +2372,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						const scheduleFriday = await this.getStateAsync(`${parentPath}.schedule.${i}.friday`);
 						const scheduleSaturday = await this.getStateAsync(`${parentPath}.schedule.${i}.saturday`);
 						const scheduleSunday = await this.getStateAsync(`${parentPath}.schedule.${i}.sunday`);
-						if (this.capabilities.find((o) => o.id === mowerId).workAreas) {
+						if (this.capabilities.find(o => o.id === mowerId).workAreas) {
 							const scheduleWorkAreaId = await this.getStateAsync(`${parentPath}.schedule.${i}.workAreaId`);
 							if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday && scheduleWorkAreaId) {
 								if ((scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) && scheduleWorkAreaId.val) {
@@ -2447,13 +2449,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 					},
 					data: data_command,
 				})
-					.then((response) => {
+					.then(response => {
 						this.log.debug(`[onStateChange]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${response.headers}; data: ${JSON.stringify(response.data)}`);
 						if (response.status === 202) {
 							this.log.info(`${response.statusText}. Command ${command} Set.`);
 						}
 					})
-					.catch(async (error) => {
+					.catch(async error => {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
 							this.log.debug(`[onStateChange]: HTTP error response: ${error.response.status}; headers: ${error.response.headers}; data: ${JSON.stringify(error.response.data)}`);
@@ -2503,7 +2505,7 @@ if (require.main !== module) {
 	/**
 	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
-	module.exports = (options) => new HusqvarnaAutomower(options);
+	module.exports = options => new HusqvarnaAutomower(options);
 } else {
 	// otherwise start the instance directly
 	new HusqvarnaAutomower();

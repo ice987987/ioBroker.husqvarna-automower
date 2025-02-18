@@ -387,7 +387,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.8 **WORK IN PROGRESS**
+### 0.6.0-beta.9 **WORK IN PROGRESS**
 
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
@@ -462,7 +462,7 @@ function round(digit, digits) {
 
 MIT License
 
-Copyright (c) 2024 ice987987 <mathias.frei1@gmail.com>
+Copyright (c) 2025 ice987987 <mathias.frei1@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
