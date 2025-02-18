@@ -13,7 +13,6 @@ const axios = require('axios');
 const WebSocket = require('ws');
 
 // variables
-const numberOfSchedules = 4;
 const isValidApplicationCredential = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}/; // format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 class HusqvarnaAutomower extends utils.Adapter {
@@ -40,6 +39,9 @@ class HusqvarnaAutomower extends utils.Adapter {
 		this.ping = null;
 
 		this.statisticsInterval = null;
+
+		this.numberOfSchedules = 0;
+		this.capabilities = [];
 	}
 
 	/**
@@ -111,7 +113,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			url: 'https://api.authentication.husqvarnagroup.dev/v1/oauth2/token',
 			data: `grant_type=client_credentials&client_id=${this.config.applicationKey}&client_secret=${this.config.applicationSecret}`,
 		})
-			.then((response) => {
+			.then(response => {
 				this.log.debug(`[getAccessToken]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 
 				this.access_token = response.data.access_token;
@@ -122,7 +124,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					this.log.debug('"Husqvarna Authentication API Access token" received.');
 				}
 			})
-			.catch((error) => {
+			.catch(error => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
 					this.log.debug(`[getAccessToken]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
@@ -149,13 +151,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 				'Authorization-Provider': 'husqvarna',
 			},
 		})
-			.then(async (response) => {
+			.then(async response => {
 				this.log.debug(`[getMowerData]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 
 				this.mowerData = response.data;
 				this.log.debug(`[getMowerData]: response.data: ${JSON.stringify(response.data)}`);
 			})
-			.catch((error) => {
+			.catch(error => {
 				if (error.response) {
 					// The request was made and the server responded with a status code that falls out of the range of 2xx
 					this.log.debug(`[getMowerData]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
@@ -286,10 +288,11 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.position`, {
+
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.canConfirmError`, {
 						type: 'state',
 						common: {
-							name: 'If the Automower supports GPS position. If false, no positions are available.',
+							name: 'If the Automower supports the command confirm error. The error also needs to be confirmable.',
 							type: 'boolean',
 							role: 'state',
 							read: true,
@@ -308,10 +311,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
-					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.workAreas`, {
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.position`, {
 						type: 'state',
 						common: {
-							name: 'If the Automower supports work areas. If false, no work areas are avalilable.',
+							name: 'If the Automower supports GPS position. If false, no positions are available.',
 							type: 'boolean',
 							role: 'state',
 							read: true,
@@ -323,6 +326,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 						type: 'state',
 						common: {
 							name: 'If the Automower supports stay-out zones. If false, no stay-out zones are available.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.capabilities.workAreas`, {
+						type: 'state',
+						common: {
+							name: 'If the Automower supports work areas. If false, no work areas are avalilable.',
 							type: 'boolean',
 							role: 'state',
 							read: true,
@@ -414,6 +428,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 								FATAL_ERROR: 'A fatal error has occured. Error has to be fixed confirmed to leave this state.',
 								ERROR_AT_POWER_UP: 'An error at power up.',
 							},
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.workAreaId`, {
+						type: 'state',
+						common: {
+							name: 'Current work area id. If the mower supports work areas and the mower is working on a work area. If no current work area is selected this attribute is not set.',
+							type: 'number',
+							role: 'state',
 							read: true,
 							write: false,
 						},
@@ -606,6 +631,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.mower.isErrorConfirmable`, {
+						type: 'state',
+						common: {
+							name: 'If the mower has an errorCode this attribute state if the error is confirmable.',
+							type: 'boolean',
+							role: 'state',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
 
 					// create channel "planner"
 					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.planner`, {
@@ -748,6 +784,17 @@ class HusqvarnaAutomower extends utils.Adapter {
 							name: 'Position "latitude;longitude"',
 							type: 'string',
 							role: 'value.gps',
+							read: true,
+							write: false,
+						},
+						native: {},
+					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.positions.positions`, {
+						type: 'state',
+						common: {
+							name: 'Positions',
+							type: 'string',
+							role: 'state',
 							read: true,
 							write: false,
 						},
@@ -946,6 +993,42 @@ class HusqvarnaAutomower extends utils.Adapter {
 								},
 								native: {},
 							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.enabled`, {
+								type: 'state',
+								common: {
+									name: 'If the work area is enabled or disabled.',
+									type: 'boolean',
+									role: 'indicator.connected',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.progress`, {
+								type: 'state',
+								common: {
+									name: 'The progrss on a work are. Only available for EPOS mowers and systematic mowing work areas.',
+									type: 'number',
+									role: 'state',
+									min: 0,
+									max: 100,
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.lastTimeCompleted`, {
+								type: 'state',
+								common: {
+									name: 'Timestamp in seconds from 1970-01-01 when the work area was last completed. The timestamp is in local time on the mower. Only available for EPOS mowers and systematic mowing work areas.',
+									type: 'number',
+									role: 'state',
+									read: true,
+									write: false,
+								},
+								native: {},
+							});
+							/*
 							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.calendar`, {
 								type: 'state',
 								common: {
@@ -957,6 +1040,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 								},
 								native: {},
 							});
+							*/
 						}
 					}
 
@@ -1150,6 +1234,18 @@ class HusqvarnaAutomower extends utils.Adapter {
 						},
 						native: {},
 					});
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.DATETIME`, {
+						type: 'state',
+						common: {
+							name: 'Date and time in seconds from 1970-01-01 in the mower. The timestamp is used by the mower to trigger the schedule',
+							type: 'number',
+							role: 'state',
+							min: 1725141600,
+							read: true,
+							write: true,
+						},
+						native: {},
+					});
 
 					// create DP "ACTIONS.HEADLIGHT" if supported
 					if (mowerData.data[i].attributes.capabilities.headlights) {
@@ -1193,11 +1289,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						native: {},
 					});
 
-					for (let j = 0; j < numberOfSchedules; j++) {
+					this.numberOfSchedules = mowerData.data[i].attributes.calendar.tasks.length;
+					for (let j = 0; j < mowerData.data[i].attributes.calendar.tasks.length; j++) {
 						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}`, {
 							type: 'channel',
 							common: {
-								name: 'Scheduled Task ' + j,
+								name: `Scheduled Task ${j}`,
 							},
 							native: {},
 						});
@@ -1315,7 +1412,33 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {},
 						});
+						// create state "workAreaId" if supported
+						if (mowerData.data[i].attributes.capabilities.workAreas) {
+							await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.schedule.${j}.workAreaId`, {
+								type: 'state',
+								common: {
+									name: 'Workarea ID',
+									type: 'number',
+									role: 'state',
+									read: true,
+									write: true,
+								},
+								native: {},
+							});
+						}
 					}
+					await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.REFRESHSTATISTICS`, {
+						type: 'state',
+						common: {
+							name: 'Refresh statistic values outside the regular configured schedule',
+							type: 'boolean',
+							def: false,
+							role: 'button',
+							read: true,
+							write: true,
+						},
+						native: {},
+					});
 
 					// subscribeStates
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.PAUSE`);
@@ -1328,10 +1451,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 						this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.STARTINWORKAREA`);
 					}
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.DATETIME`);
 					if (mowerData.data[i].attributes.capabilities.headlights) {
 						this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.HEADLIGHT`);
 					}
 					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.schedule.SET`);
+					this.subscribeStates(`${mowerData.data[i].id}.ACTIONS.REFRESHSTATISTICS`);
 				} else {
 					throw new Error('No mower found, no Objects created. Check API (ERR_#007).');
 				}
@@ -1372,20 +1497,24 @@ class HusqvarnaAutomower extends utils.Adapter {
 						ack: true,
 					});
 
-					this.setState(`${mowerData.data[i].id}.capabilities.position`, {
-						val: mowerData.data[i].attributes.capabilities.position,
+					this.setState(`${mowerData.data[i].id}.capabilities.canConfirmError`, {
+						val: mowerData.data[i].attributes.capabilities.canConfirmError,
 						ack: true,
 					});
 					this.setState(`${mowerData.data[i].id}.capabilities.headlights`, {
 						val: mowerData.data[i].attributes.capabilities.headlights,
 						ack: true,
 					});
-					this.setState(`${mowerData.data[i].id}.capabilities.workAreas`, {
-						val: mowerData.data[i].attributes.capabilities.workAreas,
+					this.setState(`${mowerData.data[i].id}.capabilities.position`, {
+						val: mowerData.data[i].attributes.capabilities.position,
 						ack: true,
 					});
 					this.setState(`${mowerData.data[i].id}.capabilities.stayOutZones`, {
 						val: mowerData.data[i].attributes.capabilities.stayOutZones,
+						ack: true,
+					});
+					this.setState(`${mowerData.data[i].id}.capabilities.workAreas`, {
+						val: mowerData.data[i].attributes.capabilities.workAreas,
 						ack: true,
 					});
 
@@ -1405,6 +1534,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].attributes.mower.state,
 						ack: true,
 					});
+					this.setState(`${mowerData.data[i].id}.mower.workAreaId`, {
+						val: mowerData.data[i].attributes.mower.workAreaId,
+						ack: true,
+					});
 					this.setState(`${mowerData.data[i].id}.mower.errorCode`, {
 						val: mowerData.data[i].attributes.mower.errorCode,
 						ack: true,
@@ -1413,9 +1546,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 						val: mowerData.data[i].attributes.mower.errorCodeTimestamp,
 						ack: true,
 					});
+					this.setState(`${mowerData.data[i].id}.mower.isErrorConfirmable`, {
+						val: mowerData.data[i].attributes.mower.isErrorConfirmable,
+						ack: true,
+					});
 
 					// set all values in "calendar"
-					for (let j = 0; j < Math.min(Object.keys(mowerData.data[i].attributes.calendar.tasks).length, numberOfSchedules); j++) {
+					for (let j = 0; j < Object.keys(mowerData.data[i].attributes.calendar.tasks).length; j++) {
 						this.setState(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.start`, {
 							val: mowerData.data[i].attributes.calendar.tasks[j].start,
 							ack: true,
@@ -1452,6 +1589,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 							val: mowerData.data[i].attributes.calendar.tasks[j].sunday,
 							ack: true,
 						});
+						if (mowerData.data[i].attributes.capabilities.workAreas) {
+							this.setState(`${mowerData.data[i].id}.ACTIONS.schedule.${[j]}.workAreaId`, {
+								val: mowerData.data[i].attributes.calendar.tasks[j].workAreaId,
+								ack: true,
+							});
+						}
 					}
 
 					this.setState(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
@@ -1477,6 +1620,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						this.setState(`${mowerData.data[i].id}.positions.latlong`, {
 							val: `${mowerData.data[i].attributes.positions[0].latitude};${mowerData.data[i].attributes.positions[0].longitude}`,
+							ack: true,
+						});
+						this.setState(`${mowerData.data[i].id}.positions.positions`, {
+							val: `${JSON.stringify(mowerData.data[i].attributes.positions)}`,
 							ack: true,
 						});
 					}
@@ -1566,19 +1713,35 @@ class HusqvarnaAutomower extends utils.Adapter {
 							val: mowerData.data[i].attributes.workAreas[j].cuttingHeight,
 							ack: true,
 						});
+						this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.enabled`, {
+							val: mowerData.data[i].attributes.workAreas[j].enabled,
+							ack: true,
+						});
+						this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.lastTimeCompleted`, {
+							val: mowerData.data[i].attributes.workAreas[j].lastTimeCompleted,
+							ack: true,
+						});
+						this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.progress`, {
+							val: mowerData.data[i].attributes.workAreas[j].progress,
+							ack: true,
+						});
+						/*
 						if (mowerData.data[i].attributes.workAreas[j].calendar) {
 							this.setState(`${mowerData.data[i].id}.workAreas.${mowerData.data[i].attributes.workAreas[j].workAreaId}.calendar`, {
 								val: mowerData.data[i].attributes.workAreas[j].calendar,
 								ack: true,
 							});
 						}
+						*/
 					}
 				}
+				this.capabilities.push({ id: mowerData.data[i].id, workAreas: mowerData.data[i].attributes.capabilities.workAreas, numbersOfCalendars: Object.keys(mowerData.data[i].attributes.calendar.tasks).length });
 			} else {
 				this.log.error('[fillObjects]: No values found. Nothing updated (ERR_#009)');
 			}
 		}
 		if (this.firstStart) {
+			// this.log.info(`this.capabilities: ${JSON.stringify(this.capabilities)}`);
 			this.log.info('Mowerdata initially saved.');
 		} else {
 			this.log.debug('Mowerstatistics updated.');
@@ -1633,62 +1796,208 @@ class HusqvarnaAutomower extends utils.Adapter {
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
 					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
-						// set values in "calendar"
-						for (let i = 0; i < Math.min(Object.keys(message.attributes.calendar.tasks).length, numberOfSchedules); i++) {
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.start`, {
+						if (Object.keys(message.attributes.calendar.tasks).length !== this.capabilities.find(o => o.id === message.id).numbersOfCalendars) {
+							// set values in "calendar"
+							this.log.debug(`numbers of calendars changed`);
+
+							// delete all existing entries
+							for (let j = 0; j < this.capabilities.find(o => o.id === message.id).numbersOfCalendars; j++) {
+								await this.delObjectAsync(`${message.id}.ACTIONS.schedule.${j}`, { recursive: true });
+								this.log.debug(`${message.id}.ACTIONS.schedule.${j}`);
+							}
+
+							for (let k = 0; k < Object.keys(message.attributes.calendar.tasks).length; k++) {
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}`, {
+									type: 'channel',
+									common: {
+										name: `Scheduled Task ${k}`,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.start`, {
+									type: 'state',
+									common: {
+										name: 'Start time expressed in minutes after midnight',
+										type: 'number',
+										role: 'value',
+										min: 0,
+										max: 1439,
+										unit: 'min',
+										def: 720,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.duration`, {
+									type: 'state',
+									common: {
+										name: 'Duration time expressed in minutes',
+										type: 'number',
+										role: 'value',
+										min: 1,
+										max: 1440,
+										unit: 'min',
+										def: 30,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.monday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Mondays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.tuesday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Tuesdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.wednesday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Wednesdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.thursday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Thursdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.friday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Fridays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.saturday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Saturdays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.sunday`, {
+									type: 'state',
+									common: {
+										name: 'Enabled on Sundays',
+										type: 'boolean',
+										role: 'value',
+										def: false,
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								// create state "workAreaId" if supported
+								if (message.attributes.calendar.workAreas) {
+									await this.setObjectNotExistsAsync(`${message.id}.ACTIONS.schedule.${k}.workAreaId`, {
+										type: 'state',
+										common: {
+											name: 'Workarea ID',
+											type: 'number',
+											role: 'state',
+											read: true,
+											write: true,
+										},
+										native: {},
+									});
+								}
+							}
+							this.capabilities[this.capabilities.findIndex(obj => obj.id == message.id)].numbersOfCalendars = Object.keys(message.attributes.calendar.tasks).length;
+						}
+
+						for (let i = 0; i < Object.keys(message.attributes.calendar.tasks).length; i++) {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.start`, {
 								val: message.attributes.calendar.tasks[i].start,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.duration`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.duration`, {
 								val: message.attributes.calendar.tasks[i].duration,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.monday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.monday`, {
 								val: message.attributes.calendar.tasks[i].monday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, {
 								val: message.attributes.calendar.tasks[i].tuesday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, {
 								val: message.attributes.calendar.tasks[i].wednesday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, {
 								val: message.attributes.calendar.tasks[i].thursday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.friday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.friday`, {
 								val: message.attributes.calendar.tasks[i].friday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, {
 								val: message.attributes.calendar.tasks[i].saturday,
 								ack: true,
 							});
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, {
+							await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, {
 								val: message.attributes.calendar.tasks[i].sunday,
 								ack: true,
 							});
+							if (message.attributes.calendar.tasks[i].workAreaId) {
+								await this.setState(`${message.id}.ACTIONS.schedule.${[i]}.workAreaId`, {
+									val: message.attributes.calendar.tasks[i].workAreaId,
+									ack: true,
+								});
+							}
 						}
-
-						// reset values in "calendar" which are not in use
-						for (let i = Object.keys(message.attributes.calendar.tasks).length; i < numberOfSchedules; i++) {
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.start`, { val: null, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.duration`, { val: null, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.monday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.tuesday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.wednesday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.thursday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.friday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.saturday`, { val: false, ack: true });
-							this.setState(`${message.id}.ACTIONS.schedule.${[i]}.sunday`, { val: false, ack: true });
-						}
-						// this.log.debug(`[wss.on - message]: message.attributes.calendar: ${JSON.stringify(message.attributes.calendar)}`);
 					}
+
 					if ('positions' in message.attributes) {
 						if (Object.keys(message.attributes.positions).length > 0) {
+							this.setState(`${message.id}.positions.positions`, {
+								val: JSON.stringify(message.attributes.positions),
+								ack: true,
+							});
 							for (let i = 0; i < Object.keys(message.attributes.positions).length; i++) {
 								this.setState(`${message.id}.positions.latitude`, {
 									val: message.attributes.positions[i].latitude,
@@ -1739,7 +2048,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 					if ('planner' in message.attributes) {
 						this.setState(`${message.id}.planner.nextStartTimestamp`, {
-							val: null,
+							val: message.attributes.planner.nextStartTimestamp,
 							ack: true,
 						});
 						this.setState(`${message.id}.planner.override`, {
@@ -1852,7 +2161,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 			//this.wsHeartbeat();
 		});
 
-		this.wss.on('error', (error) => {
+		this.wss.on('error', error => {
 			this.log.debug(`[wss.on - error]: ${error}`);
 		});
 	}
@@ -1874,6 +2183,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!
+	 *
 	 * @param {() => void} callback
 	 */
 	async onUnload(callback) {
@@ -1889,10 +2199,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 					'Authorization-Provider': 'husqvarna',
 				},
 			})
-				.then((response) => {
+				.then(response => {
 					this.log.debug(`[onUnload]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${JSON.stringify(response.headers)}; data: ${JSON.stringify(response.data)}`);
 				})
-				.catch((error) => {
+				.catch(error => {
 					if (error.response) {
 						// The request was made and the server responded with a status code that falls out of the range of 2xx
 						this.log.debug(`[onUnload]: HTTP status response: ${error.response.status}; headers: ${JSON.stringify(error.response.headers)}; data: ${JSON.stringify(error.response.data)}`);
@@ -1926,6 +2236,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 
 	/**
 	 * Is called if a subscribed state changes
+	 *
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
@@ -1948,89 +2259,110 @@ class HusqvarnaAutomower extends utils.Adapter {
 					command = idSplit[5];
 					parentPath = idSplit.slice(0, idSplit.length - 2).join('.');
 				}
-				this.log.debug(`[onStateChange]: parentPath: ${parentPath}`);
 				this.log.debug(`[onStateChange]: command: ${command}`);
+				this.log.debug(`[onStateChange]: parentPath: ${parentPath}`);
 
-				const data_command = { data: {} };
-				const data_attributes = {};
-				const data_tasks = [];
+				const data_command = {};
 				let url = '';
+				const data_tasks = [];
 
-				if (command === 'PAUSE') {
-					// Pause mower
-					data_command.data.type = 'Pause';
+				if (command === 'START') {
+					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
+					if (startTime && startTime.val) {
+						if (Number(startTime.val) >= 0 && Number(startTime.val) <= 1439) {
+							data_command.data = { type: 'Start' };
+							data_command.attributes = { duration: startTime.val };
+							url = 'actions';
+						} else {
+							this.log.error('Inputvalue "startTime" not valid. Nothing Set. (ERR_#0xx');
+							return;
+						}
+					} else {
+						this.log.error('Missing "startTime". Nothing Set. (ERR_#0xx');
+						return;
+					}
+				} else if (command === 'STARTINWORKAREA') {
+					const startTime = await this.getStateAsync(`${parentPath}.StartInWorkArea.startTime`);
+					const workAreaId = await this.getStateAsync(`${parentPath}.StartInWorkArea.workAreaId`);
+					if (startTime && startTime.val) {
+						if (Number(startTime.val) >= 0 && Number(Number(startTime.val) <= 1439)) {
+							if (workAreaId && workAreaId.val) {
+								if (Number(workAreaId.val) > 0) {
+									data_command.data = { type: 'StartInWorkArea' };
+									data_command.attributes = { duration: startTime.val, workAreaId: workAreaId.val };
+									url = 'actions';
+								} else {
+									this.log.error('Missing "workAreaId". Nothing Set. (ERR_#0xx');
+									return;
+								}
+							} else {
+								this.log.error('Inputvalue "workAreaId" not valid. Nothing Set. (ERR_#0xx');
+								return;
+							}
+						} else {
+							this.log.error('Inputvalue "startTime" not valid. Nothing Set. (ERR_#0xx');
+							return;
+						}
+					} else {
+						this.log.error('Missing "startTime". Nothing Set. (ERR_#0xx');
+						return;
+					}
+				} else if (command === 'RESUMESCHEDULE') {
+					data_command.data = { type: 'ResumeSchedule' };
 					url = 'actions';
-				} else if (command === 'PARKUNTILNEXTSCHEDULE') {
-					// Park mower until next scheduled run
-					data_command.data.type = 'ParkUntilNextSchedule';
-					url = 'actions';
-				} else if (command === 'PARKUNTILFURTHERNOTICE') {
-					// Park mower until further notice, overriding schedule
-					data_command.data.type = 'ParkUntilFurtherNotice';
+				} else if (command === 'PAUSE') {
+					data_command.data = { type: 'Pause' };
 					url = 'actions';
 				} else if (command === 'PARK') {
-					// Park mower for a duration of time, overriding schedule
 					const parkTime = await this.getStateAsync(`${parentPath}.park.parkTime`);
-					if (!parkTime) {
-						this.log.error('Missing "parkTime". Nothing Set. (ERR_#012');
+					if (parkTime && parkTime.val) {
+						if (Number(parkTime.val) > 0) {
+							data_command.data = { type: 'Park' };
+							data_command.attributes = { duration: parkTime.val };
+							url = 'actions';
+						} else {
+							this.log.error('Inputvalue "parkTime" not valid. Nothing Set. (ERR_#0xx');
+							return;
+						}
+					} else {
+						this.log.error('Missing "parkTime". Nothing Set. (ERR_#0xx');
 						return;
 					}
-					data_command.data.type = 'Park';
-					data_attributes.duration = parkTime.val;
-					data_command.data['attributes'] = data_attributes;
+				} else if (command === 'PARKUNTILNEXTSCHEDULE') {
+					data_command.data = { type: 'ParkUntilNextSchedule' };
 					url = 'actions';
-				} else if (command === 'RESUMESCHEDULE') {
-					// Park mower for a duration of time, overriding schedule
-					data_command.data.type = 'ResumeSchedule';
-					url = 'actions';
-				} else if (command === 'START') {
-					// 	Start the mower for a period of minutes
-					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
-					if (!startTime) {
-						this.log.error('Missing "startTime". Nothing Set. (ERR_#013');
-						return;
-					}
-					data_command.data.type = 'Start';
-					data_attributes.duration = startTime.val;
-					data_command.data['attributes'] = data_attributes;
-					url = 'actions';
-				} else if (command === 'STARTINWORKAREA') {
-					//	Start the mower in a work area for a period of minutes. If duration is skipped the mower will continue forever
-					const duration = await this.getStateAsync(`${parentPath}.startInWorkArea.duration`);
-					const workAreaId = await this.getStateAsync(`${parentPath}.startInWorkArea.workAreaId`);
-					if (!duration) {
-						this.log.error('Missing "duration". Nothing Set. (ERR_#016');
-						return;
-					}
-					if (!workAreaId) {
-						this.log.error('Missing "workAreaId". Nothing Set. (ERR_#017');
-						return;
-					}
-					data_command.data.type = 'StartInWorkArea';
-					if (duration.val !== 0) {
-						data_attributes.duration = duration.val;
-						data_command.data['attributes'] = data_attributes;
-					}
-					data_attributes.workAreaId = workAreaId.val;
-					data_command.data['attributes'] = data_attributes;
+				} else if (command === 'PARKUNTILFURTHERNOTICE') {
+					data_command.data = { type: 'ParkUntilFurtherNotice' };
 					url = 'actions';
 				} else if (command === 'CUTTINGHEIGHT') {
-					// Adjust cutting Height
-					data_command.data.type = 'settings';
-					data_attributes.cuttingHeight = state.val;
-					data_command.data['attributes'] = data_attributes;
-					url = 'settings';
+					if (Number(state.val) >= 1 && Number(state.val) >= 9) {
+						data_command.data = { type: 'settings' };
+						data_command.attributes = { cuttingHeight: state.val };
+						url = 'settings';
+					} else {
+						this.log.error('Inputvalue "CUTTINGHEIGHT" not valid. Nothing Set. (ERR_#0xx');
+						return;
+					}
+				} else if (command === 'DATETIME') {
+					if (Number(state.val) > 1725141600) {
+						data_command.data = { type: 'dateTime' };
+						data_command.attributes = { dateTime: state.val };
+						url = 'settings';
+					} else {
+						this.log.error('Inputvalue "DATETIME" not valid. Nothing Set. (ERR_#0xx');
+						return;
+					}
 				} else if (command === 'HEADLIGHT') {
-					// Update headlight
-					data_command.data.type = 'settings';
-					data_attributes.headlight = state.val;
-					data_command.data['attributes'] = data_attributes;
-					url = 'settings';
+					if (state.val === 'ALWAYS_ON' || state.val === 'ALWAYS OFF' || state.val === 'EVENING_ONLY' || state.val === 'EVENING_AND_NIGHT') {
+						data_command.data = { type: 'HeadLight' };
+						data_command.attributes = { mode: state.val };
+						url = 'settings';
+					} else {
+						this.log.error('Inputvalue "HEADLIGHT" not valid. Nothing Set. (ERR_#0xx');
+						return;
+					}
 				} else if (command === 'SET') {
-					// Update mower schedule
-
-					for (let i = 0; i < numberOfSchedules; i++) {
-						// create variables and get additional values
+					for (let i = 0; i < this.capabilities.find(o => o.id === mowerId).numbersOfCalendars; i++) {
 						const scheduleStart = await this.getStateAsync(`${parentPath}.schedule.${i}.start`);
 						const scheduleDuration = await this.getStateAsync(`${parentPath}.schedule.${i}.duration`);
 						const scheduleMonday = await this.getStateAsync(`${parentPath}.schedule.${i}.monday`);
@@ -2040,29 +2372,71 @@ class HusqvarnaAutomower extends utils.Adapter {
 						const scheduleFriday = await this.getStateAsync(`${parentPath}.schedule.${i}.friday`);
 						const scheduleSaturday = await this.getStateAsync(`${parentPath}.schedule.${i}.saturday`);
 						const scheduleSunday = await this.getStateAsync(`${parentPath}.schedule.${i}.sunday`);
-
-						if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday) {
-							if (scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) {
-								data_tasks.push({
-									start: scheduleStart.val,
-									duration: scheduleDuration.val,
-									monday: scheduleMonday.val,
-									tuesday: scheduleThuesday.val,
-									wednesday: scheduleWednesday.val,
-									thursday: scheduleThursday.val,
-									friday: scheduleFriday.val,
-									saturday: scheduleSaturday.val,
-									sunday: scheduleSunday.val,
-								});
+						if (this.capabilities.find(o => o.id === mowerId).workAreas) {
+							const scheduleWorkAreaId = await this.getStateAsync(`${parentPath}.schedule.${i}.workAreaId`);
+							if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday && scheduleWorkAreaId) {
+								if ((scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) && scheduleWorkAreaId.val) {
+									data_tasks.push({
+										start: scheduleStart.val,
+										duration: scheduleDuration.val,
+										monday: scheduleMonday.val,
+										tuesday: scheduleThuesday.val,
+										wednesday: scheduleWednesday.val,
+										thursday: scheduleThursday.val,
+										friday: scheduleFriday.val,
+										saturday: scheduleSaturday.val,
+										sunday: scheduleSunday.val,
+										workAreaId: scheduleWorkAreaId.val,
+									});
+								} else {
+									this.log.error('Inputvalue "SCHEDULE" not valid. Nothing Set. (ERR_#0xx');
+									return;
+								}
+							} else {
+								this.log.error('Inputvalue "SCHEDULE" not valid. Nothing Set. (ERR_#0xx');
+								return;
 							}
+							url = `workAreas/${scheduleWorkAreaId.val}/calendar`;
+						} else {
+							if (scheduleStart && scheduleDuration && scheduleMonday && scheduleThuesday && scheduleWednesday && scheduleThursday && scheduleFriday && scheduleSaturday && scheduleSunday) {
+								if (scheduleMonday.val || scheduleThuesday.val || scheduleWednesday.val || scheduleThursday.val || scheduleFriday.val || scheduleSaturday.val || scheduleSunday.val) {
+									data_tasks.push({
+										start: scheduleStart.val,
+										duration: scheduleDuration.val,
+										monday: scheduleMonday.val,
+										tuesday: scheduleThuesday.val,
+										wednesday: scheduleWednesday.val,
+										thursday: scheduleThursday.val,
+										friday: scheduleFriday.val,
+										saturday: scheduleSaturday.val,
+										sunday: scheduleSunday.val,
+									});
+								} else {
+									this.log.error('Inputvalue "SCHEDULE" not valid. Nothing Set. (ERR_#0xx');
+									return;
+								}
+							} else {
+								this.log.error('Inputvalue "SCHEDULE" not valid. Nothing Set. (ERR_#0xx');
+								return;
+							}
+							url = 'calendar';
 						}
 					}
-
-					data_command.data.type = 'calendar';
-					data_command.data['attributes'] = data_tasks;
+					data_command.data = { type: 'calendar' };
+					data_command.data.attributes = { tasks: data_tasks };
 					// this.log.debug(`[onStateChange]: data_command: ${JSON.stringify(data_command)}`);
-					url = 'calendar';
+				} else if (command === 'REFRESHSTATISTICS') {
+					try {
+						await this.getMowerData();
+						await this.fillObjects(this.mowerData);
+					} catch (error) {
+						this.log.debug(`${error} (ERR_#0xx)`);
+					}
+					return;
 				}
+
+				this.log.debug(`url: https://api.amc.husqvarna.dev/v1/mowers/${mowerId}/${url}`);
+				this.log.debug(`data: ${JSON.stringify(data_command)}`);
 
 				await axios({
 					method: 'POST',
@@ -2075,13 +2449,13 @@ class HusqvarnaAutomower extends utils.Adapter {
 					},
 					data: data_command,
 				})
-					.then((response) => {
+					.then(response => {
 						this.log.debug(`[onStateChange]: HTTP status response: ${response.status} ${response.statusText}; config: ${JSON.stringify(response.config)}; headers: ${response.headers}; data: ${JSON.stringify(response.data)}`);
 						if (response.status === 202) {
 							this.log.info(`${response.statusText}. Command ${command} Set.`);
 						}
 					})
-					.catch(async (error) => {
+					.catch(async error => {
 						if (error.response) {
 							// The request was made and the server responded with a status code that falls out of the range of 2xx
 							this.log.debug(`[onStateChange]: HTTP error response: ${error.response.status}; headers: ${error.response.headers}; data: ${JSON.stringify(error.response.data)}`);
@@ -2131,7 +2505,7 @@ if (require.main !== module) {
 	/**
 	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
-	module.exports = (options) => new HusqvarnaAutomower(options);
+	module.exports = options => new HusqvarnaAutomower(options);
 } else {
 	// otherwise start the instance directly
 	new HusqvarnaAutomower();

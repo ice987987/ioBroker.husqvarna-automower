@@ -45,8 +45,10 @@ You can send the following values to your Husqvarna lawn mower:
 -   `.ACTIONS.start.START`: start mower and cut for a duration of time `.ACTIONS.start.startTime` (in minutes), overriding schedule
 -   `.ACTIONS.startInWorkArea.STARTINWORKAREA`: start mower and cut for a duration of time `.ACTIONS.startInWorkArea.duration` (in minutes, optional, if zero (0) the override will be forever), in Area with ID `.ACTIONS.startInWorkArea.workAreaId`[^4]
 -   `.ACTIONS.CUTTINGHEIGHT`: Update cuttingHeight and get current status[^2][^3]
+-   `.ACTIONS.DATETIME`: Date and time in seconds from 1970-01-01 in the mower. The timestamp is used by the mower to trigger the schedule. At the moment you can not get the timestamp from the mower.
 -   `.ACTIONS.HEADLIGHT`: Update headlight and get current status[^4]
--   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[0-3].start` (minutes after midnight), `.ACTIONS.schedule.[0-3].duration` (in minutes), `.ACTIONS.schedule.[0-3].monday`, `.ACTIONS.schedule.[0-3].tuesday`, `.ACTIONS.schedule.[0-3].wednesday`, `.ACTIONS.schedule.[0-3].thursday`, `.ACTIONS.schedule.[0-3].friday`, `.ACTIONS.schedule.[0-3].saturday` and `.ACTIONS.schedule.[0-3].sunday` and get current status [^2]
+-   `.ACTIONS.schedule.SET`: Update mower schedule with `.ACTIONS.schedule.[i].start` (minutes after midnight), `.ACTIONS.schedule.[i].duration` (in minutes), `.ACTIONS.schedule.[i].monday`, `.ACTIONS.schedule.[i].tuesday`, `.ACTIONS.schedule.[i].wednesday`, `.ACTIONS.schedule.[i].thursday`, `.ACTIONS.schedule.[i].friday`, `.ACTIONS.schedule.[i].saturday`, `.ACTIONS.schedule.[i].sunday` and `.ACTIONS.schedule.[i].workAreaId` and get current status [^2]
+-   `.ACTIONS.REFRESHSTATISTICS`: Refresh statistic values outside the regular configured schedule
     [^2]: Do not use for 550 EPOS and Ceora due to [Husqvarna's API-limitation](https://developer.husqvarnagroup.cloud/apis/Automower+Connect+API#/readme)
     [^3]: not supported models: 405X, 415X and 435X AWD (you will get the error "This mower use missions and can not be updated by this endpoint")
 
@@ -55,18 +57,21 @@ You can send the following values to your Husqvarna lawn mower:
 You get the following values from your Husqvarna lawn mower:
 
 -   `.battery.batteryPercent`: Information about the battery in the Automower.
--   `.capabilities.position`: If the Automower supports GPS position. If false, no positions are available.
+-   `.capabilities.canConfirmError`: If the Automower supports the command confirm error. The error also needs to be confirmable.
 -   `.capabilities.headlights`: If the Automower supports headlights. If false, no headlights are available.
--   `.capabilities.workAreas`: If the Automower supports work areas. If false, no work areas are avalilable.
+-   `.capabilities.position`: If the Automower supports GPS position. If false, no positions are available.
 -   `.capabilities.stayOutZones`: If the Automower supports stay-out zones. If false, no stay-out zones are available.
+-   `.capabilities.workAreas`: If the Automower supports work areas. If false, no work areas are avalilable.
 -   `.metadata.connected`: Is the mower currently connected to the cloud. The mower needs to be connected to send command to the mower.
 -   `.metadata.statusTimestamp`: Timestamp for the last status update in milliseconds since 1970-01-01T00:00:00 in UTC time. NOTE! This timestamp is generated in the backend and not from the Mower.
+-   `.mower.mode`: Information about the mowers current mode.
 -   `.mower.activity`: Information about the mowers current status.
 -   `.mower.inactiveReason`: Inactive reason
+-   `.mower.state`: Information about the mowers current status.
+-   `.mower.workAreaId`: Current work area id. If the mower supports work areas and the mower is working on a work area. If no current work area is selected this attribute is not set.
 -   `.mower.errorCode`: Information about the mowers current error status.
 -   `.mower.errorTimestamp`: Timestamp for the last error code in milliseconds since 1970-01-01T00:00:00 in local time. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
--   `.mower.mode`: Information about the mowers current mode.
--   `.mower.state`: Information about the mowers current status.
+-   `.mower.isErrorConfirmable`: If the mower has an errorCode this attribute state if the error is confirmable..
 -   `.planner.override`: The Planner has an override feature, which can be used to override the operation decided by the Calendar. There is room for one override at a time, and it occurs from now and for a duration of time.
 -   `.planner.nextStartTimestamp`: Timestamp for the next auto start in milliseconds since 1970-01-01T00:00:00 in local time. If the mower is charging then the value is the estimated time when it will be leaving the charging station. If the value is 0 then the mower should start now. NOTE! This timestamp is in local time for the mower and is coming directly from the mower.
 -   `.planner.restrictedReason`: Restricted reason.
@@ -74,6 +79,7 @@ You get the following values from your Husqvarna lawn mower:
 -   `.positions.latitude`: Position latitude[^5]
 -   `.positions.longitude`: Position longitude[^5]
 -   `.positions.latlong`: Position "latitude;longitude"[^5]
+-   `.positions.positions`: Positions[^5]
 -   `.stayOutZones.dirty`: If the stay-out zones are synchronized with the Husqvarna cloud. If the map is dirty you can not enable or disable a stay-out zone.[^4]
 -   `.stayOutZones.zones`: List of all stay-out zones for the Automower.[^4]
 -   `.statistics.cuttingBladeUsageTime`: The number of seconds since the last reset of the cutting blade usage counter.[^4]
@@ -92,14 +98,15 @@ You get the following values from your Husqvarna lawn mower:
 -   `.workAreas.[workAreaId].workAreaId`: Work area ID[^4]
 -   `.workAreas.[workAreaId].name`: Name of the work area[^4]
 -   `.workAreas.[workAreaId].cuttingHeight`: Cutting height in percent (0 ... 100%)[^4]
--   `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4]
-    [^4]: If a value is missing or zero (0) the mower does not support the value
-    [^5]: If no GPS-Signal is available, those values are not updated
+-   `.workAreas.[workAreaId].enabled`: If the work area is enabled or disabled.[^4]
+-   `.workAreas.[workAreaId].progress`: The progrss on a work are. Only available for EPOS mowers and systematic mowing work areas.[^4]
+-   `.workAreas.[workAreaId].lastTimeCompleted`: Timestamp in seconds from 1970-01-01 when the work area was last completed. The timestamp is in local time on the mower. Only available for EPOS mowers and systematic mowing work areas.
 
-## Limitation
+<!-- `.workAreas.[workAreaId].calendar`: Information about the calendar tasks. An Automower® can have several tasks. If the mower supports work areas the property workAreaId is required to connect the task to an work area.[^4] -->
 
--   maximum 4 schedules are available[^1]
-    [^1]: If more schedules are needed, please open a [GitHub issue](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/new/choose).
+[^4]: If a value is missing or zero (0) the mower does not support the value
+
+[^5]: If no GPS-Signal is available, those values are not updated
 
 ## ioBroker.vis bindings
 
@@ -380,6 +387,15 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
+### 0.6.0-beta.9 **WORK IN PROGRESS**
+
+-   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
+-   (ice987987) state `.workAreas.[workAreaId].calendar` removed
+-   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
+-   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`
+-   (ice987987) state `.positions.positions` added [#191](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/191)
+-   (ice987987) try to fix [#197](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/197)
+
 ### 0.5.0 (17.02.2025)
 
 -   (ice987987) BREAKING: js-controller >= v5.0.19 and node >= v18 is required
@@ -446,7 +462,7 @@ function round(digit, digits) {
 
 MIT License
 
-Copyright (c) 2024 ice987987 <mathias.frei1@gmail.com>
+Copyright (c) 2025 ice987987 <mathias.frei1@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
