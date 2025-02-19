@@ -14,7 +14,8 @@
 			"xs": 12,
 			"sm": 12,
 			"md": 8,
-			"lg": 8
+			"lg": 8,
+			"xl": 8
 		},
 		"applicationSecret": {
 			"newLine": true,
@@ -28,7 +29,8 @@
 			"xs": 12,
 			"sm": 12,
 			"md": 8,
-			"lg": 8
+			"lg": 8,
+			"xl": 8
 		},
 		"statisticsInterval": {
 			"newLine": true,
@@ -43,7 +45,8 @@
 			"xs": 12,
 			"sm": 12,
 			"md": 8,
-			"lg": 8
+			"lg": 8,
+			"xl": 8
 		},
 		"_divider": {
 			"newLine": true,
@@ -52,7 +55,8 @@
 			"xs": 12,
 			"sm": 12,
 			"md": 8,
-			"lg": 8
+			"lg": 8,
+			"xl": 8
 		},
 		"_helpLink": {
 			"newLine": true,
@@ -65,7 +69,8 @@
 			"xs": 12,
 			"sm": 12,
 			"md": 8,
-			"lg": 8
+			"lg": 8,
+			"xl": 8
 		}
 	}
 }

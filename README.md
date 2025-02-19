@@ -395,6 +395,7 @@ function round(digit, digits) {
 -   (ice987987) schedule-limitation removed `.ACTIONS.schedule.[i].`
 -   (ice987987) state `.positions.positions` added [#191](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/191)
 -   (ice987987) try to fix [#197](https://github.com/ice987987/ioBroker.husqvarna-automower/issues/197)
+-   (ice987987) dependencies updated
 
 ### 0.5.0 (17.02.2025)
 
