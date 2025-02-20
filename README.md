@@ -28,7 +28,7 @@ All product and company names or logos are trademarks™ or registered® tradema
 
 -   node.js >= v18 is required
 -   ioBroker.js-controller >=5.0.19 is required
--   ioBroker.admin >= v6.3.5 is required
+-   ioBroker.admin >= v7.4.10 is required
 -   This adapter uses the Husqvarna Automower Connect API to request data (via WebSocket) and send commands (via REST API) for your Husqvarna lawn mower.
 
 Please create an account and generate your personal `Application key` and `Application secret` by following [these instructions](https://developer.husqvarnagroup.cloud/docs/get-started) via [https://developer.husqvarnagroup.cloud](https://developer.husqvarnagroup.cloud/). _(`Redirect URLs` could be `http://localhost:8080`)_
@@ -389,6 +389,7 @@ function round(digit, digits) {
 
 ### 0.6.0-beta.9 **WORK IN PROGRESS**
 
+-   (ice987987) BREAKING: admin >= v7.4.10 is required
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
 -   (ice987987) state `.workAreas.[workAreaId].calendar` removed
 -   (ice987987) state `.ACTIONS.schedule.[i].workAreaId` added, if supportet by the model
