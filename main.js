@@ -1180,7 +1180,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							},
 							native: {},
 						});
-						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.duration`, {
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.ACTIONS.startInWorkArea.startTime`, {
 							type: 'state',
 							common: {
 								name: 'Optional. Duration period in minutes, if zero (0) the override will be forever',
@@ -1629,7 +1629,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					}
 
 					this.setState(`${mowerData.data[i].id}.ACTIONS.CUTTINGHEIGHT`, {
-						val: mowerData.data[i].attributes.settings.cuttingHeight,
+						val: mowerData.data[i].attributes.settings.cuttingHeight.height,
 						ack: true,
 					});
 					if (mowerData.data[i].attributes.capabilities.headlights) {
@@ -2285,7 +2285,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					const startTime = await this.getStateAsync(`${parentPath}.StartInWorkArea.startTime`);
 					const workAreaId = await this.getStateAsync(`${parentPath}.StartInWorkArea.workAreaId`);
 					if (startTime && startTime.val) {
-						if (Number(startTime.val) >= 0 && Number(Number(startTime.val) <= 1439)) {
+						if (Number(startTime.val) >= 0 && Number(startTime.val) <= 1439) {
 							if (workAreaId && workAreaId.val) {
 								if (Number(workAreaId.val) > 0) {
 									data_command.data = { type: 'StartInWorkArea' };
