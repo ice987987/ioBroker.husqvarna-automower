@@ -1783,11 +1783,12 @@ class HusqvarnaAutomower extends utils.Adapter {
 				if ('attributes' in message) {
 					if ('cuttingHeight' in message.attributes) {
 						this.setState(`${message.id}.ACTIONS.CUTTINGHEIGHT`, {
-							val: message.attributes.cuttingHeight,
+							val: message.attributes.cuttingHeight.height,
 							ack: true,
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.cuttingHeight: ${message.attributes.cuttingHeight}`);
 					}
+
 					if ('headlight' in message.attributes) {
 						this.setState(`${message.id}.ACTIONS.HEADLIGHT`, {
 							val: message.attributes.headlight.mode,
@@ -1795,6 +1796,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.headlight.mode: ${message.attributes.headlight.mode}`);
 					}
+
 					if ('calendar' in message.attributes && Object.keys(message.attributes.calendar.tasks).length !== 0) {
 						if (Object.keys(message.attributes.calendar.tasks).length !== this.capabilities.find(o => o.id === message.id).numbersOfCalendars) {
 							// set values in "calendar"
@@ -2016,6 +2018,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							// this.log.debug(`[wss.on - message]: message.attributes.positions: ${JSON.stringify(message.attributes.positions)}`);
 						}
 					}
+
 					if ('battery' in message.attributes) {
 						this.setState(`${message.id}.battery.batteryPercent`, {
 							val: message.attributes.battery.batteryPercent,
@@ -2023,6 +2026,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.battery: ${JSON.stringify(message.attributes.battery)}`);
 					}
+
 					if ('mower' in message.attributes) {
 						this.setState(`${message.id}.mower.mode`, {
 							val: message.attributes.mower.mode,
@@ -2046,6 +2050,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.mower: ${JSON.stringify(message.attributes.mower)}`);
 					}
+
 					if ('planner' in message.attributes) {
 						this.setState(`${message.id}.planner.nextStartTimestamp`, {
 							val: message.attributes.planner.nextStartTimestamp,
@@ -2065,6 +2070,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.planner: ${JSON.stringify(message.attributes.planner)}`);
 					}
+
 					if ('metadata' in message.attributes) {
 						this.setState(`${message.id}.metadata.connected`, {
 							val: message.attributes.metadata.connected,
@@ -2076,6 +2082,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 						// this.log.debug(`[wss.on - message]: message.attributes.metadata: ${JSON.stringify(message.attributes.metadata)}`);
 					}
+
 					if ('statistics' in message.attributes) {
 						this.setState(`${message.id}.statistics.cuttingBladeUsageTime`, {
 							val: message.attributes.statistics.cuttingBladeUsageTime,

@@ -387,7 +387,7 @@ function round(digit, digits) {
 
 <!-- ### **WORK IN PROGRESS** -->
 
-### 0.6.0-beta.10 **WORK IN PROGRESS**
+### 0.6.0-beta.11 **WORK IN PROGRESS**
 
 -   (ice987987) BREAKING: admin >= v7.4.10 is required
 -   (ice987987) states `.capabilities.canConfirmError`, `mower.workAreaId`, `.workAreas.[workAreaId].enabled`, `.workAreas.[workAreaId].lastTimeCompleted`, `.workAreas.[workAreaId].progress`,`ACTIONS.REFRESHSTATISTICS` and `.ACTIONS.DATETIME` added
