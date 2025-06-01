@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.4.0",
-    "@iobroker/eslint-config": "^2.0.1",
+    "@iobroker/eslint-config": "^2.0.2",
     "@iobroker/testing": "^5.0.4",
     "@tsconfig/node18": "^18.2.4",
     "@types/chai": "^5.2.1",
