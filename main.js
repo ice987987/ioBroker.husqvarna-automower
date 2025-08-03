@@ -929,7 +929,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 							type: 'state',
 							common: {
 								name: 'List of all stay-out zones for the Automower.',
-								type: 'array',
+								type: 'string',
 								role: 'state',
 								read: true,
 								write: false,
@@ -1683,7 +1683,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 				});
 				if (mowerData.data[i].attributes.capabilities.stayOutZones) {
 					if (mowerData.data[i].attributes.stayOutZones) {
-						if (mowerData.data[i].attributes.stayOutZones.dirty) {
+						if ('dirty' in mowerData.data[i].attributes.stayOutZones) {
 							this.setState(`${mowerData.data[i].id}.stayOutZones.dirty`, {
 								val: mowerData.data[i].attributes.stayOutZones.dirty,
 								ack: true,
@@ -1693,7 +1693,7 @@ class HusqvarnaAutomower extends utils.Adapter {
 					if (mowerData.data[i].attributes.stayOutZones) {
 						if (mowerData.data[i].attributes.stayOutZones.zones) {
 							this.setState(`${mowerData.data[i].id}.stayOutZones.zones`, {
-								val: mowerData.data[i].attributes.stayOutZones.zones,
+								val: JSON.stringify(mowerData.data[i].attributes.stayOutZones.zones),
 								ack: true,
 							});
 						}
