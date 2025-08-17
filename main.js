@@ -1041,6 +1041,20 @@ class HusqvarnaAutomower extends utils.Adapter {
 								native: {},
 							});
 							*/
+						// additional datapoint with comma-separated list of all workAreaIds
+						const workAreaIds = mowerData.data[i].attributes.workAreas.map(wa => wa.workAreaId).join(',');
+						await this.setObjectNotExistsAsync(`${mowerData.data[i].id}.workAreas.workAreaList`, {
+							type: 'state',
+							common: {
+								name: 'Comma-separated list of all workAreaIds',
+								type: 'string',
+								role: 'text',
+								read: true,
+								write: false
+							},
+							native: {}
+						});
+						await this.setStateAsync(`${mowerData.data[i].id}.workAreas.workAreaList`, workAreaIds, true);
 						}
 					}
 
