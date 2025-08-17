@@ -2276,8 +2276,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 					const startTime = await this.getStateAsync(`${parentPath}.start.startTime`);
 					if (startTime && startTime.val) {
 						if (Number(startTime.val) >= 0 && Number(startTime.val) <= 1439) {
-							data_command.data = { type: 'Start' };
-							data_command.attributes = { duration: startTime.val };
+							data_command.data = {
+								type: 'Start',
+								attributes: { duration: startTime.val }
+							};
 							url = 'actions';
 						} else {
 							this.log.error('Inputvalue "startTime" not valid. Nothing Set. (ERR_#0xx');
@@ -2288,14 +2290,16 @@ class HusqvarnaAutomower extends utils.Adapter {
 						return;
 					}
 				} else if (command === 'STARTINWORKAREA') {
-					const startTime = await this.getStateAsync(`${parentPath}.StartInWorkArea.startTime`);
-					const workAreaId = await this.getStateAsync(`${parentPath}.StartInWorkArea.workAreaId`);
+					const startTime = await this.getStateAsync(`${parentPath}.startInWorkArea.startTime`);
+					const workAreaId = await this.getStateAsync(`${parentPath}.startInWorkArea.workAreaId`);
 					if (startTime && startTime.val) {
 						if (Number(startTime.val) >= 0 && Number(startTime.val) <= 1439) {
 							if (workAreaId && workAreaId.val) {
 								if (Number(workAreaId.val) > 0) {
-									data_command.data = { type: 'StartInWorkArea' };
-									data_command.attributes = { duration: startTime.val, workAreaId: workAreaId.val };
+									data_command.data = {
+										type: 'StartInWorkArea',
+										attributes: { duration: startTime.val, workAreaId: workAreaId.val }
+									};
 									url = 'actions';
 								} else {
 									this.log.error('Missing "workAreaId". Nothing Set. (ERR_#0xx');
@@ -2428,8 +2432,10 @@ class HusqvarnaAutomower extends utils.Adapter {
 							url = 'calendar';
 						}
 					}
-					data_command.data = { type: 'calendar' };
-					data_command.data.attributes = { tasks: data_tasks };
+					data_command.data = {
+						type: 'calendar',
+						attributes: { tasks: data_tasks }
+					};
 					// this.log.debug(`[onStateChange]: data_command: ${JSON.stringify(data_command)}`);
 				} else if (command === 'REFRESHSTATISTICS') {
 					try {
