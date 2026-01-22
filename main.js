@@ -1597,18 +1597,6 @@ class HusqvarnaAutomower extends utils.Adapter {
 						}
 					}
 
-					this.setState(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
-						val: mowerData.data[i].attributes.planner.nextStartTimestamp,
-						ack: true,
-					});
-					this.setState(`${mowerData.data[i].id}.planner.override`, {
-						val: mowerData.data[i].attributes.planner.override.action,
-						ack: true,
-					});
-					this.setState(`${mowerData.data[i].id}.planner.restrictedReason`, {
-						val: mowerData.data[i].attributes.planner.restrictedReason,
-						ack: true,
-					});
 					if (mowerData.data[i].attributes.capabilities.position && mowerData.data[i].attributes.positions.length > 0) {
 						this.setState(`${mowerData.data[i].id}.positions.latitude`, {
 							val: mowerData.data[i].attributes.positions[0].latitude,
@@ -1639,6 +1627,19 @@ class HusqvarnaAutomower extends utils.Adapter {
 						});
 					}
 				}
+
+				this.setState(`${mowerData.data[i].id}.planner.nextStartTimestamp`, {
+					val: mowerData.data[i].attributes.planner.nextStartTimestamp,
+					ack: true,
+				});
+				this.setState(`${mowerData.data[i].id}.planner.override`, {
+					val: mowerData.data[i].attributes.planner.override.action,
+					ack: true,
+				});
+				this.setState(`${mowerData.data[i].id}.planner.restrictedReason`, {
+					val: mowerData.data[i].attributes.planner.restrictedReason,
+					ack: true,
+				});
 
 				this.setState(`${mowerData.data[i].id}.metadata.connected`, {
 					val: mowerData.data[i].attributes.metadata.connected,
